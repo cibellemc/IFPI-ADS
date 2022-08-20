@@ -2,7 +2,7 @@
 
 #include <stdio.h>
 
-main(){
+int main(){
 	float vel_ms, vel_kh;
 	
 	printf("Informe a velocidade em m/s: ");
@@ -11,4 +11,6 @@ main(){
 	vel_kh = vel_ms * 3.6;
 	
 	printf("A velocidade corresponde a %.1f km/h", vel_kh);
+	
+	return 0;
 }
