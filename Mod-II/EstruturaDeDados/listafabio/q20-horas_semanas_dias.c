@@ -5,7 +5,7 @@
 int main(){
 	int horas, sem, dias, hrs;
 	
-	printf("Número de horas: ");
+	printf("Numero de horas: ");
 	scanf("%d", &horas);
 	
 	// 1 semana = 168 horas
