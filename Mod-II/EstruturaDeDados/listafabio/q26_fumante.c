@@ -4,20 +4,27 @@
 #include <stdio.h>
 
 int main(){
-	float preco_carteira, qtd_dinheiro, cigarros_dia, anos_fumando;
+/*	int anos_fumando, cigarros_dia;
+	float preco_carteira, qtd_dinheiro;
 	
 	printf("Ha quantos anos voce fuma? ");
-	scanf("%f", &anos_fumando);
+	scanf("%d", &anos_fumando);
 	
 	printf("Quantos cigarros voce fuma por dia? ");
-	scanf("%f", &cigarros_dia);
+	scanf("%d", &cigarros_dia);
 	
 	printf("Quantos custa uma carteira de cigarros? ");
 	scanf("%f", &preco_carteira);
 	
+	//variavel float recebe multiplicacao com inteiros
 	qtd_dinheiro = ((anos_fumando * 365 * cigarros_dia) / 20) * preco_carteira;
 	
-	printf("Em %.0f anos, voce ja gastou R$%.2f em cigarros.", anos_fumando, qtd_dinheiro);
+	printf("Em %d ano(s), voce ja gastou R$%.2f em cigarros.", anos_fumando, qtd_dinheiro);*/
+	
+	int x = 9;
+	float div;
+	div = 9 / 2.0;
+	printf("%f", div);
 	
 	return 0;
 }

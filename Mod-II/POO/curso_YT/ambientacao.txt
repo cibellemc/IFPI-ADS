@@ -1,0 +1,19 @@
+1.  Baixar typescript:
+    npm install -g typescript
+
+2.  package.json
+    npm init -y
+
+3.  Tsc confing
+    tsc --init
+
+4.  npm install -g typescript -d 
+
+5.  tsc (compilar)
+
+6.  tsc -w (compilar auto)
+
+7.  npm i -g ts-node (não gera js)
+    executa com ts-node <nome arquivo>
+
+8. npm i prompt-sync

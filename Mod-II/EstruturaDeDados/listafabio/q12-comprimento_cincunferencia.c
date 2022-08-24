@@ -1,6 +1,7 @@
 //Leia o valor do raio de uma circunferência, calcule e escreva seu comprimento.(c = 2 * pi *r)
 
 #include <stdio.h>
+// define substitui as ocorrencias pelo valor estabelecido
 #define pi 3.14
 
 int main(){
