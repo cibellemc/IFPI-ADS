@@ -25,6 +25,7 @@ Percentual de gordura: academia
 Saldo em conta: banco
 Etnia: cotas
 
+
 4) Considerando os objetos Pessoa e Conta:
 a. Seria interessante em um sistema bancário um objeto "conta" possuir uma "pessoa" como um atributo interno representando o titular da conta?
 Sim, para a identificação das reservas e débitos é necessário um responsável.
@@ -32,7 +33,9 @@ Sim, para a identificação das reservas e débitos é necessário um responsáv
 b. Olhando no sentido inverso, seria interessante uma pessoa possuir mais de uma conta como atributo? Que elemento da programação estruturada melhor representaria o conjunto de contas de uma pessoa?
 Sim, pois uma pessoa pode ter vários tipos de contas e até mesmo contas de mesmo tipo mas em diferentes bancos.
 
+
 5) Professor, disciplina, pai de aluno, funcionário de TI, curso.
+
 
 6) Imagine um jogo qualquer. Identifique o máximo de objetos possíveis e eventuais características (atributos) e comportamentos (métodos) que os mesmos poderiam ter.
 - Jogador: nome, idade, altura, nacionalidade, time, posicao, habilidadeDestra. Correr(), saltar(), sacar(), marcar ponto()
