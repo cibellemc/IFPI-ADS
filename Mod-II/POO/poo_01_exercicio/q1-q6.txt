@@ -36,5 +36,4 @@ Sim, pois uma pessoa pode ter vários tipos de contas e até mesmo contas de mes
 
 6) Imagine um jogo qualquer. Identifique o máximo de objetos possíveis e eventuais características (atributos) e comportamentos (métodos) que os mesmos poderiam ter.
 - Jogador: nome, idade, altura, nacionalidade, time, posicao, habilidadeDestra. Correr(), saltar(), sacar(), marcar ponto()
-- Técnico: nome, idade, nacionalidade, time
-- Time: nome, técnico, anoFundacao
+- Técnico: nome, idade, nacionalidade, time. Treinar(), incentivar(), brigar() 
