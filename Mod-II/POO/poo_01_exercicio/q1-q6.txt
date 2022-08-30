@@ -1,0 +1,40 @@
+1) Qual a diferença entre objetos e classes? Exemplifique.
+Classes são a "soma" entre atributos e métodos. Objetos são a representação de uma classe.
+Ex: Classe Mamíferos 
+- Atributos: dataNascimento, peso, energia 
+- Métodos: comer(), mover()
+Objetos: macaco, ser humano, boi
+
+
+2) De forma breve, conceitue atributos e métodos. Pesquise e exemplifique um exemplo de objeto que possua atributos e métodos (notação livre).
+R - Atributos são características do objeto, métodos são comportamentos que o objeto pode realizar
+Ex: Classe Carro 
+- Atributos: marca, modelo, ano, potencia 
+- Métodos: trocarMarcha(), acelerar()
+Objeto: Fiat Bravo 2014 110cv
+
+
+3) A abstração visa focar no que é importante para um sistema. Você concorda que um atributo de uma pessoa pode ser importante ou não dependendo do contexto
+do sistema. Enumere na tabela abaixo contextos/sistemas distintos em que os atributos abaixo seriam relevantes:
+
+Peso: nutricionista
+Tipo de CNH: trânsito
+Tipo sanguíneo: doação de sangue
+Habilidade destra: esportes
+Percentual de gordura: academia
+Saldo em conta: banco
+Etnia: cotas
+
+4) Considerando os objetos Pessoa e Conta:
+a. Seria interessante em um sistema bancário um objeto "conta" possuir uma "pessoa" como um atributo interno representando o titular da conta?
+Sim, para a identificação das reservas e débitos é necessário um responsável.
+
+b. Olhando no sentido inverso, seria interessante uma pessoa possuir mais de uma conta como atributo? Que elemento da programação estruturada melhor representaria o conjunto de contas de uma pessoa?
+Sim, pois uma pessoa pode ter vários tipos de contas e até mesmo contas de mesmo tipo mas em diferentes bancos.
+
+5) Professor, disciplina, pai de aluno, funcionário de TI, curso.
+
+6) Imagine um jogo qualquer. Identifique o máximo de objetos possíveis e eventuais características (atributos) e comportamentos (métodos) que os mesmos poderiam ter.
+- Jogador: nome, idade, altura, nacionalidade, time, posicao, habilidadeDestra. Correr(), saltar(), sacar(), marcar ponto()
+- Técnico: nome, idade, nacionalidade, time
+- Time: nome, técnico, anoFundacao
