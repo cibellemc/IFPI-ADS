@@ -1,0 +1,17 @@
+1) Qual a diferença entre tipagem dinâmica e tipagem estática?
+
+Na tipagem estática, o tipo de uma variável é declarado explicitamente no código. Ela poderá assumir outros valores, mas não outro tipo.
+A verificação desses dados é feita em tempo de compilação, proporcionando um melhor desempenho e reduzindo chances de erros, já que as verificações
+ocorreram anteriormente à execução. De maneira contrária, no caso de linguagens com tipagem dinâmica, uma mesma variável pode receber dados com tipos 
+diferentes em momentos diferentes no programa, sendo a linguagem responsável por inferir o que mais se encaixa.
+
+Exemplos - Tipagem dinâmica: JavaScript, Python
+Exemplos - Tipagem estática: Java, C
+
+
+2) Qual o principal problema do uso de tipagem dinâmica?
+
+Erros só são percebidos em tempo de execução.
+
+
+6) Não.
