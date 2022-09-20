@@ -14,4 +14,10 @@ Exemplos - Tipagem estática: Java, C
 Erros só são percebidos em tempo de execução.
 
 
-6) Não.
+5) Pesquise e, se encontrar, um exemplo onde o tipo any seria benéfico.
+
+O any é um escape-hatch que te permite abrir mão de certa segurança por flexibilidade. É uma conveniência que vale a pena em ocasiões como a migração gradual.
+Quando TypeScript está sendo utilizado desde o dia zero, raramente faz sentido, já que se abre mão de segurança.
+
+
+6) Poderíamos dizer que a tipagem do TypeScript é fraca por uma variável do tipo number aceitar tanto inteiros como ponto flutuante?
