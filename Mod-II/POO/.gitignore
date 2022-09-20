@@ -1,3 +1,5 @@
-*.json
 *.js
+*.json
+*.vscode
 node_modules/
+
