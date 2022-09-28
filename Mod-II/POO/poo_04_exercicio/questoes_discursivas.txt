@@ -1,0 +1,78 @@
+1) Suponha uma classe Hotel que sirva apenas para guardar a quantidade de
+solicitações de reservas feitas conforme abaixo:
+
+class Hotel {
+    quantReservas : number;
+    adicionarReserva() : void {
+    quantReservas++;
+    }
+}
+
+Podemos afirmar que haverá um problema de compilação, pois a variável inteira não
+foi inicializada previamente? Justifique.
+
+R- Sim. Já que o construtor não é acionado para inicialização, faria-se necessário a "inicialização manual" de quantReservas
+(quantReservas : number = 0, por exemplo) ou a inicialização como nulo (quantReservas! : number)
+
+
+3) Considere a classe Radio e as instruções que fazem seu uso abaixo:
+
+class Radio {
+    volume : number;
+    constructor(volume : number) {
+    this.volume = volume;
+    }
+}
+
+let r : Radio = new Radio();
+r.volume = 10;
+
+Justifique o erro de compilação e proponha uma solução.
+
+R- O erro se dá no momento da instanciação. É necessário a passagem de um parâmetro que atenda a declaração do construtor.
+
+// Solução 1: incializar o volume sem um construtor
+
+class Radio1 {
+    volume : number = 0;
+}
+
+let r1 : Radio1 = new Radio1()
+r1.volume = 10
+console.log(r1.volume)
+
+
+// Solução 2: passar o valor do volume, exigido pelo construtor no momento da instanciação
+
+class Radio2 {
+    volume : number
+    constructor(volume : number) {
+    this.volume = volume
+    }
+}
+
+let r2 : Radio2 = new Radio2(10)
+console.log(r2.volume)
+
+
+4) Considerando o uso da classe Conta apresentada em aula e seu uso abaixo: 
+
+let c1: Conta = new Conta("1",100); 
+let c2: Conta = new Conta("2",100); 
+let c3: Conta; 
+
+c1 = c2; 
+c3 = c1; 
+
+c1.sacar(10);
+c1.transferir(c2,50); 
+
+console.log(c1.consultarSaldo()); 
+console.log(c2.consultarSaldo()); 
+console.log(c3.consultarSaldo()); 
+
+a. Qual o resultado dos dois "prints"? Justifique sua resposta.  
+R- Os três prints terão como resultado 90. c1 e c2 iniciam-se com r$100, é sacado r$10 de c1, logo, passa a ser r$90
+c1 aponta para c2, portanto recebe 90. c3 aponta para c1 e também recebe 90.
+
+b. O que acontece com o objeto para o qual a referência c1 apontava? 
