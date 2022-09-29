@@ -38,79 +38,18 @@ class Triangulo{
         return (this.ehTriangulo(a, b, c) && !this.ehEquilatero(a, b, c) && !this.ehEscaleno(a, b, c))
     }
 }
+
 function main(){
     console.log("Lados do triângulo separados por espaço (Ex: 7 4 9)");
     let lados = (input("> ")).split(" ").map(Number)
+
     let novoTriangulo : Triangulo = new Triangulo()
-    console.log(lados)
     
     menu()
     let option = Number(input("> "))
 
-    while (option !== 6){
-        if (option == 0 ){
-            console.log(lados)
-            menu()
-        } else if (novoTriangulo.ehTriangulo(lados[0], lados[1], lados[2])){
-            switch (option){
-                case 1:
-                    if(novoTriangulo.ehTriangulo(lados[0], lados[1], lados[2])){
-                        console.log("Os lados formam um triângulo!")
-                    } else{
-                        console.log("Os lados não atendem as condições de existência de um triângulo!")
-                    }
-                    let w = input("press <enter> to continue...")
-                    menu()
-                    break
-                case 2:
-                    if(novoTriangulo.ehEquilatero(lados[0], lados[1], lados[2])){
-                        console.log("Triângulo equilátero!")
-                    } else{
-                        console.log("Não é equilátero!")
-                    }
-                    let a = input("press <enter> to continue...")
-                    menu()
-                    break
-                case 3:
-                    if(novoTriangulo.ehIsoceles(lados[0], lados[1], lados[2])){
-                        console.log("Triângulo isósceles!")
-                    } else{
-                        console.log("Não é isósceles!") 
-                    }
-                    let i = input("press <enter> to continue...")
-                    menu()
-                    break
-                case 4:
-                    if(novoTriangulo.ehEscaleno(lados[0], lados[1], lados[2])){
-                        console.log("Triângulo escaleno!")
-                    } else{
-                        console.log("Não é escaleno!")
-                    }
-                    let t = input("press <enter> to continue...")
-                    menu()
-                    break
-                case 5: 
-                    lados = (input("> ")).split(" ").map(Number)
-                    let espera = input("press <enter> to continue...")
-                    menu()
-                    break
-                default:
-                    console.log("Ops.. Algo de errado aconteceu!")
-            }
-            
-        } else {
-            console.log("Não é um triângulo")
-            let espera = input("press <enter> to continue...")
-            menu()
-            break
-        }
-        option = Number(input("> "))
-        
-        
-
-    }
-    
-
+    operacoes(option,lados,novoTriangulo )
+   
     /*let eq : Triangulo = new Triangulo()
     let es : Triangulo = new Triangulo()
     let is : Triangulo = new Triangulo()
@@ -118,6 +57,78 @@ function main(){
 
     console.log(eq.ehTriangulo(7,7,7))*/
 
+}
+
+function operacoes(option: number, lados: number[], novoTriangulo: Triangulo){
+
+    while (option !== 6){
+
+        if (option == 0 ){
+            console.log(lados)
+            let wait = input("press <enter> to continue...\n")
+            menu()
+
+        } else if (option == 5){
+            lados = (input("> ")).split(" ").map(Number)
+            let espera = input("press <enter> to continue...\n")
+            menu()
+
+        } else if (novoTriangulo.ehTriangulo(lados[0], lados[1], lados[2])){
+
+            switch (option){
+                case 1:
+                    if(novoTriangulo.ehTriangulo(lados[0], lados[1], lados[2])){
+                        console.log("Os lados formam um triângulo!")
+                    } else{
+                        console.log("Os lados não atendem as condições de existência de um triângulo!")
+                    }
+                    let w = input("press <enter> to continue...\n")
+                    menu()
+                    break
+
+                case 2:
+                    if(novoTriangulo.ehEquilatero(lados[0], lados[1], lados[2])){
+                        console.log("Triângulo equilátero!")
+                    } else{
+                        console.log("Não é equilátero!")
+                    }
+                    let a = input("press <enter> to continue...\n")
+                    menu()
+                    break
+
+                case 3:
+                    if(novoTriangulo.ehIsoceles(lados[0], lados[1], lados[2])){
+                        console.log("Triângulo isósceles!")
+                    } else{
+                        console.log("Não é isósceles!") 
+                    }
+                    let i = input("press <enter> to continue...\n")
+                    menu()
+                    break
+
+                case 4:
+                    if(novoTriangulo.ehEscaleno(lados[0], lados[1], lados[2])){
+                        console.log("Triângulo escaleno!")
+                    } else{
+                        console.log("Não é escaleno!")
+                    }
+                    let t = input("press <enter> to continue...\n")
+                    menu()
+                    break
+
+                default:
+                    console.log("Ops.. Algo de errado aconteceu!")
+            }
+            
+        } else {
+            console.log("Não é um triângulo")
+            let espera = input("press <enter> to continue...\n")
+            menu()
+        }
+
+        option = Number(input("> "))
+
+    }
 }
 
 function menu(){
@@ -130,7 +141,6 @@ function menu(){
     console.log("4 - Verificar se é um triângulo escaleno");
     console.log("5 - Definir novas medidas");
     console.log("6 - Sair");
-    
 }
 
 
