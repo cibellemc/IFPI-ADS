@@ -4,8 +4,8 @@
 
 typedef struct pilha{
 	int max; //tamanho da pilha
-	int topo; //último elemento colocado
-	char *item; //vetor
+	int topo; //ï¿½ltimo elemento colocado
+	int *item; //vetor
 	
 }Pilha;
 
@@ -13,42 +13,57 @@ Pilha* pilha(int tamanho){ //inicializando a pilha
 	Pilha *p = (Pilha*)malloc(sizeof(Pilha)); //alocando memoria pra pilha
 	p->max = tamanho;
 	p->topo = -1; 
-	p->item = (char*)malloc(m*sizeof(char)); //alocando memoria pra item
-	return p; //retorna endereço da pilha
+	p->item = (int*)malloc(tamanho*sizeof(int)); //alocando memoria pra item
+	return p; //retorna endereï¿½o da pilha
 }
 
-void push(Pilha *p, char valor){
-	if (!pilhaCheia(p)){ //se a pilha não estiver cheia, aumento o topo e add um elemento nessa posição
+int getTopo(Pilha *p){
+	return p->topo; //a posiï¿½ï¿½o, nï¿½o o valor
+}
+
+int pilhaVazia(Pilha *p){
+	return getTopo(p) == -1; //verifica se nï¿½o hï¿½ nenhum elemento
+}
+		
+int pilhaCheia(Pilha *p){
+	return getTopo(p) == p-> max - 1; //verifica se hï¿½ elementos no tamanho mï¿½x
+}
+
+void push(int valor, Pilha *p){
+	if (!pilhaCheia(p)){ //se a pilha nï¿½o estiver cheia, aumento o topo e add um elemento nessa posiï¿½ï¿½o
 		p->topo++;
 		p->item[p->topo] = valor;
 	} 		
 }
+
+void preencherPilha(Pilha *p){
+	int i; float item;
+    for(i = 0; i < p->max; i++) {
+        scanf("%f", &item);
+        push(item, p);
+    }
+}
 		
-char pop(Pilha *p){
-	if (!pilhaVazia){ 
-		char removido = p->item[getTopo(p)]; //armazena item a remover
-		pilha->topo--; //decrementa o topo
+int pop(Pilha *p){
+	if (!pilhaVazia(p)){ 
+		int removido = p->item[getTopo(p)]; //armazena item a remover
+		p->topo--; //decrementa o topo
 		
 		return removido;
 	}
-}
-
-int pilhaVazia(Pilha *p){
-	return getTopo(p) == -1; //verifica se não há nenhum elemento
-	}
-		
-int pilhaCheia(Pilha *p){
-	return getTopo(p) == p-> max - 1; //verifica se há elementos no tamanho máx
 }
 		
 void destroi(Pilha *p){
 	free((p)->item);
 	free(p);
 	p = NULL;
-	//free - programa ainda não terminou mas estou devolvendo a memória, porem não "limpa" o que estava atribuido
-}
-
-int getTopo(Pilha *p){
-	return p->topo; //a posição, não o valor
+	//free - programa ainda nï¿½o terminou mas estou devolvendo a memï¿½ria, porem nï¿½o "limpa" o que estava atribuido
 }
 		
+Pilha * mostraPilha(Pilha *p){
+	int i;
+    for (i = 0; i < p->max; i++) {
+        printf("%d", (p->item[i]));
+    }
+    return p;
+}
