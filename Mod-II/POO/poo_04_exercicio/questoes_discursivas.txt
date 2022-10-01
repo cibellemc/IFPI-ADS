@@ -76,3 +76,9 @@ R- Os três prints terão como resultado 90. c1 e c2 iniciam-se com r$100, é sa
 c1 aponta para c2, portanto recebe 90. c3 aponta para c1 e também recebe 90.
 
 b. O que acontece com o objeto para o qual a referência c1 apontava? 
+
+
+10) A abordagem da questão 5 é retornar códigos de erro ou acerto. Já a da questão 6.f. é desconsiderar a alteração.
+Quais das duas você acha mais correta? Compare com seus códigos escritos em outras disciplinas.
+
+R - Para mim, retornar o erro é a melhor opção. Na abordagem que o desconsidera, o usuário não sabe se obteve sucesso nas operações. 

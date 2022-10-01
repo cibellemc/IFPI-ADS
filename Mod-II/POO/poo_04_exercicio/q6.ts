@@ -12,30 +12,30 @@ import prompt from 'prompt-sync'
 const input = prompt()
 
 class Triangulo{
-    l1: number = 0
-    l2: number = 0
-    l3: number = 0
+    a: number 
+    b: number 
+    c: number 
 
-    /*constructor(){
-        this.l1 = 0
-        this.l2 = 0
-        this.l3 = 0
-    }*/
-
-    ehTriangulo(a: number, b:number, c: number): boolean{
-        return Math.abs(b-c) < a && a < b+c
+    constructor(a: number, b:number, c: number){
+        this.a = 0
+        this.b = 0
+        this.c = 0
     }
 
-    ehEquilatero(a: number, b:number, c: number): boolean{
-        return a === b && a === c
+    ehTriangulo(): boolean{
+        return Math.abs(this.b-this.c) < this.a && this.a < this.b+this.c
     }
 
-    ehEscaleno(a: number, b:number, c: number): boolean{
-        return a !== b && a !== c
+    ehEquilatero(): boolean{
+        return this.a === this.b && this.a === this.c
     }
 
-    ehIsoceles(a: number, b:number, c: number): boolean{
-        return (this.ehTriangulo(a, b, c) && !this.ehEquilatero(a, b, c) && !this.ehEscaleno(a, b, c))
+    ehEscaleno(): boolean{
+        return this.a !== this.b && this.a !== this.c
+    }
+
+    ehIsoceles(): boolean{
+        return (this.ehTriangulo() && !this.ehEquilatero() && !this.ehEscaleno())
     }
 }
 
@@ -43,12 +43,12 @@ function main(){
     console.log("Lados do triângulo separados por espaço (Ex: 7 4 9)");
     let lados = (input("> ")).split(" ").map(Number)
 
-    let novoTriangulo : Triangulo = new Triangulo()
+    let novoTriangulo : Triangulo = new Triangulo(lados[0], lados[1], lados[2])
     
     menu()
     let option = Number(input("> "))
 
-    operacoes(option,lados,novoTriangulo )
+    operacoes(option,novoTriangulo)
    
     /*let eq : Triangulo = new Triangulo()
     let es : Triangulo = new Triangulo()
@@ -59,12 +59,12 @@ function main(){
 
 }
 
-function operacoes(option: number, lados: number[], novoTriangulo: Triangulo){
-
+function operacoes(option: number, novoTriangulo: Triangulo){
+    let lados: number[]
     while (option !== 6){
 
         if (option == 0 ){
-            console.log(lados)
+            console.log(novoTriangulo.a)
             let wait = input("press <enter> to continue...\n")
             menu()
 
@@ -73,11 +73,11 @@ function operacoes(option: number, lados: number[], novoTriangulo: Triangulo){
             let espera = input("press <enter> to continue...\n")
             menu()
 
-        } else if (novoTriangulo.ehTriangulo(lados[0], lados[1], lados[2])){
+        } else if (novoTriangulo.ehTriangulo()){
 
             switch (option){
                 case 1:
-                    if(novoTriangulo.ehTriangulo(lados[0], lados[1], lados[2])){
+                    if(novoTriangulo.ehTriangulo()){
                         console.log("Os lados formam um triângulo!")
                     } else{
                         console.log("Os lados não atendem as condições de existência de um triângulo!")
@@ -87,7 +87,7 @@ function operacoes(option: number, lados: number[], novoTriangulo: Triangulo){
                     break
 
                 case 2:
-                    if(novoTriangulo.ehEquilatero(lados[0], lados[1], lados[2])){
+                    if(novoTriangulo.ehEquilatero()){
                         console.log("Triângulo equilátero!")
                     } else{
                         console.log("Não é equilátero!")
@@ -97,7 +97,7 @@ function operacoes(option: number, lados: number[], novoTriangulo: Triangulo){
                     break
 
                 case 3:
-                    if(novoTriangulo.ehIsoceles(lados[0], lados[1], lados[2])){
+                    if(novoTriangulo.ehIsoceles()){
                         console.log("Triângulo isósceles!")
                     } else{
                         console.log("Não é isósceles!") 
@@ -107,7 +107,7 @@ function operacoes(option: number, lados: number[], novoTriangulo: Triangulo){
                     break
 
                 case 4:
-                    if(novoTriangulo.ehEscaleno(lados[0], lados[1], lados[2])){
+                    if(novoTriangulo.ehEscaleno()){
                         console.log("Triângulo escaleno!")
                     } else{
                         console.log("Não é escaleno!")

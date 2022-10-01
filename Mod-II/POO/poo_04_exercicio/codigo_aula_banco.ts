@@ -47,6 +47,32 @@ class Conta {
     }
 }
 
+class Banco {
+    contas: ContaBancaria[] = [];
+
+    inserir(conta: ContaBancaria): void {
+
+    }
+    alterar(conta: ContaBancaria): void {
+
+    }
+    excluir(numero: string): void{
+
+    }
+    //consultar(numero: string): Conta {}
+
+    sacar(numero: string, valor: number): void {
+
+    }
+    depositar(numero: string, valor: number): void {
+
+    }
+    transfeir(numeroOrigem: string, numeroDestino: string, valor: number): void {
+
+    }
+}
+
+
 let c1: Conta = new Conta("1",100, new Person("C")); // conta nº 1, de titular C inicializa com  r$100
 let c2: Conta = new Conta("2",100, new Person("M")); // conta nº 2, de titular M inicializa com  r$100
 let c3: Conta; // defino o  tipo de c3
