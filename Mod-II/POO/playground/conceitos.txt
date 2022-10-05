@@ -1,0 +1,27 @@
+https://www.tutorialsteacher.com/typescript/data-modifiers
+
+1 - Classe:
+Uma estrutura que descreve o objeto. Assim com uma planta pode ser usada para criar diversas construções, uma única classe 
+pode ser usada para criar quantos objetos forem necessários. É composta de atributos e métodos. 
+
+2 - Métodos:
+São as ações que o objeto pode realizar. Através deles que o objeto interage com os outros objetos.
+
+3 - Atributos:
+Variável que pertence a um objeto. Os dados/características dele são armazenados nos atributos.
+
+4 - Objeto: 
+Instância de classe
+
+5 - Encapsulamento
+Esconder as propriedades, criando uma espécie de caixa preta. Sempre com os métodos privados ligadas a métodos especiais chamados 
+getters e setters, que irão retornar e setar o valor da propriedade, respectivamente. Evita o acesso direto a propriedade do objeto, 
+adicionando uma outra camada de segurança à aplicação.
+
+6 - Visibilidade:
+Privado: uma função local e um único bloco de código
+Público: Por padrão, todos os parâmetros de uma classe são públicos. Podem ser acessados ​​em qualquer lugar sem quaisquer restrições.
+Protegido: esse caso restringe o parâmetro fora da classe, mas ainda acessível as suas subclasses (herança)
+
+7 - Abstração
+Ocorre em você conseguir dar uma identidade única dentro do sistema 
