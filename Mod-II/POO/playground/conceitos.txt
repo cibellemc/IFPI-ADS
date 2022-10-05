@@ -25,3 +25,19 @@ Protegido: esse caso restringe o parâmetro fora da classe, mas ainda acessível
 
 7 - Abstração
 Ocorre em você conseguir dar uma identidade única dentro do sistema 
+
+8 - Rest Parameters:
+Allows you a function to accept zero or more arguments of the specified type.
+
+9 - Tipagem dinâmica e tipagem estática?
+
+Na tipagem estática, o tipo de uma variável é declarado explicitamente no código. Ela poderá assumir outros valores, mas não outro tipo.
+A verificação desses dados é feita em tempo de compilação, proporcionando um melhor desempenho e reduzindo chances de erros, já que as verificações
+ocorreram anteriormente à execução. De maneira contrária, no caso de linguagens com tipagem dinâmica, uma mesma variável pode receber dados com tipos 
+diferentes em momentos diferentes no programa, sendo a linguagem responsável por inferir o que mais se encaixa.
+
+Exemplos - Tipagem dinâmica: JavaScript, Python
+Exemplos - Tipagem estática: Java, C
+
+O principal problema do uso de tipagem dinâmica é que erros só são percebidos em tempo de execução.
+
