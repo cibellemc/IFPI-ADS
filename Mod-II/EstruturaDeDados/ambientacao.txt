@@ -1,0 +1,28 @@
+* Baixar e instalar gcc:
+https://sourceforge.net/projects/mingw/ -> link MinGW
+
+1 - Executa e marca as opções mingw32-base e mingw32-gcc-g++
+2 - Vai na pasta onde está o MinGW (provavelmente C:/MinGW), entra em bin e copia o endereço
+3 - Editar as variáveis de ambiente do sistema > Variáveis de Ambiente > Path (variáveis do sistema, aperta 2x) > Novo > Cola endereço > Ok
+Obs: pode demorar até reconhecer
+
+https://www.youtube.com/watch?v=1Uw9EV4Te8M -> link tutorial
+
+
+* Compilar em C++:
+g++ -o b.exe ex1.cpp [nome criado (executável), nome do arquivo]
+
+* Compilar em C:
+gcc q1.c -o q1 [nome do arquivo, nome do executável]
+
+* Executar (em ambos):
+./b.exe 
+./q1
+
+
+* Obter tamanho do array:
+https://www.youtube.com/watch?v=VeiLxN_9o5I
+
+
+* Erro: undefined reference to 'WinMain@16'
+Necessário criar main de chamada.
