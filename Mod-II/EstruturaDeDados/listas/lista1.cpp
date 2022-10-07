@@ -25,9 +25,9 @@ void inserir(){
     printf("Inserir novo aluno:\n");
     do {
         if (qa < 5){
-            cout<<"\nMatricula - Aluno %d", qa;
+            cout<<"\nMatricula - Aluno "<<qa << ": ";
             cin>>turma[qa].mat;
-            cout<<"Nome:";
+            cout<<"Nome: ";
             cin>>turma[qa].nome;
             qa++;
             cout<<"\nAluno inserido com sucesso.";
