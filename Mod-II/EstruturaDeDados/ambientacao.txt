@@ -16,7 +16,7 @@ g++ -o b.exe ex1.cpp [nome criado (executável), nome do arquivo]
 gcc q1.c -o q1 [nome do arquivo, nome do executável]
 
 * Executar (em ambos):
-./b.exe 
+.\b.exe 
 ./q1
 
 
