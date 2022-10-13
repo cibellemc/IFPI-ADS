@@ -44,11 +44,11 @@ int procura(int matprocurada){
 }
 
 void mostre(int pos){
-    cout<<"\n\nNome - Aluno "<<pos<<": "<<turma[pos].nome;
+    cout<<"\nNome - Aluno "<<pos<<": "<<turma[pos].nome;
     cout<<"\nMatrícula - Aluno "<<pos<<": "<<turma[pos].mat<<"\n";
 }
 
-void remover(int matprocurada){
+/*void remover(int matprocurada){
     int achou = procura(matprocurada);
     // mover todos os elementos que estão após o elemento que deve ser removido uma posição a frente.
     if(achou !=-1){
@@ -63,16 +63,22 @@ void remover(int matprocurada){
     } else{
         cout<<"\nO aluno não foi removido!";
     }
-}
+}*/
 
-/*void remover(int matprocurada){
-    int i, achou, resp;
+void remover(){
+    cout<<("Remover aluno:\n");
+
+    int i, achou, resp, matAremover;
     do{
-        achou = procura(matprocurada);
+        cout<<"\nMatricula"<< ": ";
+        cin>>matAremover;
+
+        achou = procura(matAremover);
         if(achou !=-1){
             mostre(achou);
             cout<<"\nDeseja remover o aluno? (1-Sim/2-Nao): ";
             cin>>resp;
+
             if(resp ==1){
                 // mover todos os elementos que estão após o elemento que deve ser removido uma posição a frente.
                 Aluno aux;
@@ -82,20 +88,23 @@ void remover(int matprocurada){
                     turma[j + 1] = aux;
                 }
                 cout<<"\nAluno removido com sucesso!";
+
             } else{
                 cout<<"\nO aluno não foi removido!";
             }
+
         } else{
             cout<<"\nNúmero de matrícula não enresprado.";
         }
+
         cout<<"\nRemover outro? (1-Sim/2-Nao): ";
         cin>>resp;
     } while (resp == 1);
-}*/
+}
 
 int main(){
     inserir();
-    remover(1);
+    remover();
     mostre(0);
     return 0;
 }
