@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
-#include <string>
 using namespace std;
 
 typedef struct aluno{
@@ -9,35 +8,14 @@ typedef struct aluno{
     string nome;
 } Aluno;
 
-/*Aluno * turma(){
-    int qtdAlunos;
-    cout<<("Quantidade de alunos a inserir: ")
-    cin>>("%d", qtdAlunos)
-    Aluno turma[qtdAlunos];
-    return turma;
-}*/
-
-/*Aluno fila[](int tamanho){
-	Aluno f[tamanho];
-	return f; 
-}*/
+Aluno turma[3];
+int i = 0;
+int tam = sizeof(turma) / sizeof(Aluno);
 
 void inserir(){
-//void inserir(qtdAlunos){
-    int i = 0;
-    int cont;
-
-    int qtdAlunos;
-    cout<<("Quantidade de alunos a inserir: ");
-    cin>>("%d", qtdAlunos);
-    Aluno turma[qtdAlunos];
-
-    int tam = sizeof(turma)/sizeof(Aluno);
-    //Aluno t[tamanho];
-    //Aluno turma[qtdAlunos];
-    //int tamanhoArray = sizeof(turma)/sizeof(Aluno); //o tamanho total de turma dividido por o valor de um aluno
-
+    int resp;
     cout<<("Inserir novo aluno:\n");
+
     do {
         if (i < tam){
             cout<<"\nMatricula - Aluno "<<i << ": ";
@@ -51,59 +29,80 @@ void inserir(){
             break;
         }
 
-        cout<<"\nInserir outro? (1-Sim/2-Nao)";
-        cin>>cont;
-    } while(cont == 1);
+        cout<<"\nInserir outro? (1-Sim/2-Nao): ";
+        cin>>resp;
+    } while(resp == 1);
 }
 
-/*void remover(Aluno  turma[]){
-    int matprocurada, i, cont, achou, resp;
+int procura(int matprocurada){
+    for (int j = 0; j < tam; j++){
+        if (turma[j].mat == matprocurada ){
+            return j;
+        } 
+    } return -1;
+}
+
+void mostre(int pos){
+    cout<<"\nNome - Aluno "<<pos<<": "<<turma[pos].nome;
+    cout<<"\nMatrícula - Aluno "<<pos<<": "<<turma[pos].mat<<"\n";
+}
+
+/*void remover(int matprocurada){
+    int achou = procura(matprocurada);
+    // mover todos os elementos que estão após o elemento que deve ser removido uma posição a frente.
+    if(achou !=-1){
+        Aluno aux;
+        for (int j = achou; j < tam; j++) {
+            aux = turma[j];
+            turma[j] = turma[j + 1];
+            turma[j + 1] = aux;
+        }
+        cout<<"\nAluno "<<matprocurada<<": "<<"removido com sucesso!";
+    } else{
+        cout<<"\nO aluno não foi removido!";
+    }
+}*/
+
+void remover(){
+    cout<<("Remover aluno:\n");
+
+    int i, achou, resp, matAremover;
     do{
-        cout<<"\nRemover aluno: ";
-        cont<<"\nMatrícula do aluno: ";
-        cin>>matprocurada;
-        achou = procura(matprocurada);
+        cout<<"\nMatricula"<< ": ";
+        cin>>matAremover;
+
+        achou = procura(matAremover);
         if(achou !=-1){
-            //mostre(achou);
-            cout<<procura()
-            cout<<"\nDeseja remover o aluno? (1-Sim/2-Nao)";
+            mostre(achou);
+            cout<<"\nDeseja remover o aluno? (1-Sim/2-Nao): ";
             cin>>resp;
+
             if(resp ==1){
+                // mover todos os elementos que estão após o elemento que deve ser removido uma posição a frente.
+                Aluno aux;
+                for (int j = achou; j < tam; j++) {
+                    aux = turma[j];
+                    turma[j] = turma[j + 1];
+                    turma[j + 1] = aux;
+                }
                 cout<<"\nAluno removido com sucesso!";
+
             } else{
                 cout<<"\nO aluno não foi removido!";
-                break;
             }
+
         } else{
-            cout<<"\nNúmero de matrícula não encontrado.";
+            cout<<"\nNúmero de matrícula não enresprado.";
         }
 
-        cout<<"\nRemover outro? (1-Sim/2-Nao)";
-        cin>>cont;
-    } while (cont == 1);
+        cout<<"\nRemover outro? (1-Sim/2-Nao): ";
+        cin>>resp;
+    } while (resp == 1);
 }
-
-int procura(Aluno  turma[], int matprocurada){
-    int i, matprocurada;
-    cout<<"\nConsultar aluno";
-    cout<<"\nMatrícula do aluno: ";
-    cin>>matprocurada;
-
-    int tamanhoArray = sizeof(turma)/sizeof(Aluno);
-    for (i = 0; i < tamanhoArray; i++){
-        if (turma[i].mat === matprocurada ){
-            return turma[i].mat;
-            break;
-        } 
-    }
-}
-
-void mostre(Aluno * a){
-    cout<<("%d", a );
-}*/
 
 int main(){
     inserir();
-    //cout<<("\n%d", procura(inserir()));
+    remover();
+    mostre(0);
     return 0;
 }
