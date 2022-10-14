@@ -23,7 +23,7 @@ void inserir(){
             cout<<"Nome: ";
             cin>>turma[i].nome;
             i++;
-            cout<<"\nAluno inserido com sucesso.";
+            cout<<"Aluno inserido com sucesso.\n";
         } else {
             cout<<"\nNao foi possivel inserir. Turma cheia.";
             break;
@@ -34,9 +34,9 @@ void inserir(){
     } while(resp == 1);
 }
 
-int procura(int matprocurada){
+int procura(int pos){
     for (int j = 0; j < tam; j++){
-        if (turma[j].mat == matprocurada ){
+        if (j == pos){
             return j;
         } 
     } return -1;
@@ -44,10 +44,10 @@ int procura(int matprocurada){
 
 void mostre(int pos){
     cout<<"\nNome - Aluno "<<pos<<": "<<turma[pos].nome;
-    cout<<"\nMatrícula - Aluno "<<pos<<": "<<turma[pos].mat<<"\n";
+    cout<<"\nMatricula - Aluno "<<pos<<": "<<turma[pos].mat<<"\n";
 }
 
-/*void remover(int matprocurada){
+void removerPorMatricula1(int matprocurada){
     int achou = procura(matprocurada);
     // mover todos os elementos que estão após o elemento que deve ser removido uma posição a frente.
     if(achou !=-1){
@@ -61,9 +61,9 @@ void mostre(int pos){
     } else{
         cout<<"\nO aluno não foi removido!";
     }
-}*/
+}
 
-void remover(){
+void removerPorMatricula2(){
     cout<<("Remover aluno:\n");
 
     int i, achou, resp, matAremover;
@@ -100,9 +100,47 @@ void remover(){
     } while (resp == 1);
 }
 
+
+void removerPorPosicao(){
+    cout<<("\nRemover aluno:\n");
+
+    int i, achou, resp, posAremover;
+    do{
+        cout<<"\nPosicao a remover: ";
+        cin>>posAremover;
+
+        achou = procura(posAremover);
+        if(achou !=-1 && turma[achou].nome != ""){
+            mostre(achou);
+            cout<<"\nDeseja remover o aluno? (1-Sim/2-Nao): ";
+            cin>>resp;
+
+            if(resp ==1){
+                // mover todos os elementos que estão após o elemento que deve ser removido uma posição a frente.
+                Aluno aux;
+                for (int j = achou; j < tam; j++) {
+                    aux = turma[j];
+                    turma[j] = turma[j + 1];
+                    turma[j + 1] = aux;
+                }
+                cout<<"\nAluno removido com sucesso!";
+
+            } else{
+                cout<<"\nO aluno nao foi removido!";
+            }
+
+        } else{
+            cout<<"\nNumero de matricula nao esperado.";
+        }
+
+        cout<<"\nRemover outro? (1-Sim/2-Nao): ";
+        cin>>resp;
+    } while (resp == 1);
+}
+
 int main(){
     inserir();
-    remover();
-    mostre(0);
+    removerPorPosicao();
+    removerPorMatricula1(0);
     return 0;
 }
