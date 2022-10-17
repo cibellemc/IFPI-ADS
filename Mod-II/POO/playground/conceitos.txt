@@ -29,6 +29,7 @@ Ocorre em você conseguir dar uma identidade única dentro do sistema
 8 - Rest Parameters:
 Allows you a function to accept zero or more arguments of the specified type.
 
+
 9 - Tipagem dinâmica e tipagem estática?
 
 Na tipagem estática, o tipo de uma variável é declarado explicitamente no código. Ela poderá assumir outros valores, mas não outro tipo.
