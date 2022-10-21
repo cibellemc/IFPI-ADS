@@ -9,8 +9,8 @@ class Postagem{
         this.quantidadeCurtidas = q
     }
 
-    curtir(qtdLikes: number): void{
-        this.quantidadeCurtidas += qtdLikes
+    curtir(): void{
+        this.quantidadeCurtidas ++
     }
 
     toString(): void{
@@ -47,25 +47,31 @@ class Microblog{
     }
 
     buscarPost(i: number): number{
+        let index = 0
         for (let postagem of this.postagens){ // para cada postagem no array de postagens
-            if (postagem.id == i){
-                return i
+            if (postagem.id == i){ 
+                return index //retornar a posição, pois fica melhor no curtir
+            } else {
+                index++
             }
         } return -1
     }
 
-    maisCurtida(): void {
+    maisCurtida(): Postagem[] {
         let liked: Postagem = this.postagens[0]
-        let i = 3
-        /*for (let i = 0; i < this.postagens.length; i++){
-            if (this.postagens[i+1].quantidadeCurtidas >liked.quantidadeCurtidas ){
+        for (let i = 0; i < this.postagens.length - 1; i++){ //tava dando erro pq esqueci o -1
+            if ((this.postagens[i+1]).quantidadeCurtidas > liked.quantidadeCurtidas){
                 liked = this.postagens[i+1]
             }
-        }*/
-        console.log(liked.quantidadeCurtidas)
-        console.log(this.postagens[i].quantidadeCurtidas)
-        console.log(this.postagens[i+1].quantidadeCurtidas)
-        //liked.toString()
+        }
+        return [liked] 
+    }
+
+    curtirPost(idPost: number): void{
+        let posicao = this.buscarPost(idPost) 
+        if (posicao != -1){
+            this.postagens[posicao].curtir() //idPost -1 porque 
+        }
     }
 
 }
@@ -86,16 +92,36 @@ function m(){
     blog.novaPostagem(postagem4)
     blog.novaPostagem(postagem5)
 
-    postagem1.curtir(5)
-    postagem2.curtir(3)
-    postagem3.curtir(0)
-    postagem4.curtir(1)
+    postagem1.curtir()
+    postagem1.curtir()
+    postagem1.curtir()
+    postagem1.curtir() //4
+    postagem2.curtir() //1
+    postagem3.curtir()
+    postagem3.curtir()
+    postagem3.curtir()
+    postagem3.curtir()
+    postagem3.curtir()
+    postagem3.curtir() //6
+    postagem4.curtir() 
+    postagem4.curtir() //2
 
     /*console.log(postagem1.quantidadeCurtidas)
     console.log(postagem2.quantidadeCurtidas)
     console.log(postagem3.quantidadeCurtidas)
     console.log(postagem4.quantidadeCurtidas)*/
 
-    blog.maisCurtida()
+    console.log(blog.maisCurtida())
+    blog.curtirPost(5)
+    blog.curtirPost(5)
+    blog.curtirPost(5)
+    blog.curtirPost(4)
+    blog.curtirPost(5)
+    blog.curtirPost(1)
+    blog.curtirPost(1) //7
+
+    console.log(blog.maisCurtida())
+
+
 }
 m()
