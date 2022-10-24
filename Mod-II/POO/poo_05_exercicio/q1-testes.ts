@@ -17,8 +17,8 @@ function main(){
     
     b.transfeir("5", "60", 150)
     
-    console.log("Saldo da conta c4: R$" +c4.consultarSaldo().toFixed(2))
-    console.log("Saldo da conta c5: R$" + c5.consultarSaldo().toFixed(2))
+    console.log("Saldo da conta c4: R$" +c4.Saldo.toFixed(2))
+    console.log("Saldo da conta c5: R$" + c5.Saldo.toFixed(2))
     console.log(`O valor total armazanado no banco é R$${b.dinheiroNoBanco().toFixed(2)}`)
     console.log(`A média de saldos no banco é R$${b.mediaDeSaldos().toFixed(2)}`)
     
