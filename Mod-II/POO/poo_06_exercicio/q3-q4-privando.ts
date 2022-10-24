@@ -51,6 +51,9 @@ class Conta {
 }
 
 class Banco {
+    // os métodos com retorno boolean facilitam a implementação no app 
+    // https://github.com/cibellemc/IFPI-ADS/blob/main/Mod-II/POO/poo_05_exercicio/q3-app.ts
+    
     private contas: Conta[] = [];
 
     inserir(c: Conta): void {
