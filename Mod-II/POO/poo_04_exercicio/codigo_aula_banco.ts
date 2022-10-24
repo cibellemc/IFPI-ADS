@@ -1,7 +1,11 @@
 export class Person {
-    nome: string;
+    private nome: string;
     constructor(nome: string) {
         this.nome = nome;
+    }
+
+    get name(){
+        return this.nome
     }
 }
 /*
@@ -10,9 +14,9 @@ console.log(p.nome);
 */
 
 export class Conta {
-    numero: string;
-    saldo: number;
-    cliente: Person;
+    private numero: string;
+    private saldo: number;
+    private cliente: Person;
 
     constructor(numero: string, saldo: number, cliente: Person) {
         this.numero = numero;
@@ -28,12 +32,20 @@ export class Conta {
         this.saldo = this.saldo + valor;
     }
 
-    consultarSaldo(): number {
+    private consultarSaldo(): number {
         return this.saldo;
     }
 
     get nomeCliente() {
-        return this.cliente.nome;
+        return this.cliente.name;
+    }
+
+    get numeroConta() {
+        return this.numero;
+    }
+
+    get Saldo(){
+        return this.consultarSaldo()
     }
 
     transferir(contaDestino: Conta, valor: number): void {
@@ -43,7 +55,7 @@ export class Conta {
 
     equals(conta: Conta): boolean {
         return (this.numero == conta.numero && 
-                this.cliente.nome == conta.cliente.nome);
+                this.cliente.name == conta.cliente.name);
     }
 }
 
@@ -84,8 +96,8 @@ function main(){
     c1.sacar(10); // é retirado 10 dos 100
     c1.transferir(c2,50); // tira 50 de c1 e poe em c2, porem c1"é c2"
     
-    console.log(c1.consultarSaldo());
-    console.log(c2.consultarSaldo()); 
-    console.log(c3.consultarSaldo()); 
+    console.log(c1.Saldo);
+    console.log(c2.Saldo); 
+    console.log(c3.Saldo); 
 
 }
