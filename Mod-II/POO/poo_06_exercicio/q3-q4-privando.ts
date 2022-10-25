@@ -1,4 +1,4 @@
-class Person {
+export class Person {
     private nome: string;
     constructor(nome: string) {
         this.nome = nome;
@@ -9,7 +9,7 @@ class Person {
     }
 }
 
-class Conta {
+export class Conta {
     private numero: string;
     private saldo: number;
     private cliente: Person;
@@ -50,7 +50,24 @@ class Conta {
     }
 }
 
-class Banco {
+export class Poupanca extends Conta{
+    private _taxaJuros: number
+
+    constructor(numero: string, saldo: number,cliente: Person, taxaJuros: number){
+        super(numero,saldo, cliente)
+        this._taxaJuros = taxaJuros
+    }
+
+    get taxaJuros(): number{
+        return this._taxaJuros
+    }
+
+    renderJuros(): void{
+        this.depositar(this.Saldo * this.taxaJuros / 100)
+    }
+}
+
+export class Banco {
     // os métodos com retorno boolean facilitam a implementação no app 
     // https://github.com/cibellemc/IFPI-ADS/blob/main/Mod-II/POO/poo_05_exercicio/q3-app.ts
     
@@ -118,6 +135,13 @@ class Banco {
             }
         }
         return indice;
+    }
+
+    renderJuros(numero: string): void{
+        let c = this.consultar(numero)
+        if(c != null && c instanceof Poupanca){
+            (<Poupanca> c).renderJuros()
+        } 
     }
 
     quantidadeDeContas(): number{
