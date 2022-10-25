@@ -1,8 +1,8 @@
 import prompt from "prompt-sync";
-import { Conta, Person } from "../poo_04_exercicio/codigo_aula_banco";
-import { Banco } from "./q1-banco";
+import {Person, Conta, Poupanca, Banco} from "../poo_06_exercicio/q3-q4-privando"
 
-let input = prompt();
+const input = prompt();
+
 let b: Banco = new Banco();
 let opcao: String = '';
 
@@ -15,6 +15,7 @@ console.log("4 - Depositar");
 console.log("5 - Excluir");
 console.log("6 - Transferir");
 console.log("7 - Totalizações");
+console.log("8 - Render juros");
 console.log("0 - Sair\n");
 
 
@@ -40,6 +41,9 @@ switch (opcao) {
         break
     case "7":
         totaliza();
+        break      
+    case "8":
+        renderJuros();
         break       
 }
 
@@ -53,11 +57,22 @@ function inserir(): void {
     console.log("Cadastrar conta:\n");
     let numero: string = input('Digite o número da conta: ');
     let cliente: string = input('Digite o nome do cliente: ');
-    let saldoInicial: number = Number(input('Digite o saldo inicial da conta: '));
 
-    let conta: Conta = new Conta(numero, saldoInicial, new Person(cliente));
+    let ehPoupanca: string = input("Conta poupança? (s ou n): ")
+    //let saldoInicial: number = Number(input('Digite o saldo inicial da conta: '));
 
-    b.inserir(conta);
+    let conta!: Conta
+    if (ehPoupanca == 's'){
+        let juros: number = Number(input('Valor da taxa de juros (em %): '))
+        conta = new Poupanca(numero, 0, new Person(cliente), juros);
+        b.inserir(conta);
+    } else if (ehPoupanca == 'n'){
+        conta = new Conta(numero, 0, new Person(cliente));
+        b.inserir(conta);
+    } else {
+        console.log("Valor inválido.");
+        inserir()
+    }
 }
 
 function consultar(): void{
@@ -66,7 +81,6 @@ function consultar(): void{
 
     let conta = b.consultar(numero)
     conta != null? console.log(conta) : console.log("Conta não cadastrada.\n")
-
 }
 
 function sacar(): void{
@@ -88,7 +102,6 @@ function depositar(): void{
         console.log("Conta não cadastrada.\n")
     }
 }
-
 
 function excluir(): void{
     console.log("Excluir\n")
@@ -112,4 +125,10 @@ function transferir(): void{
 function totaliza(){
     console.log("Totalizações:\n")
     console.log(`O valor atual depositado no banco é de R$${b.dinheiroNoBanco().toFixed(2)}\n`) 
+}
+
+function renderJuros(){
+    console.log("Render juros\n")
+    let numero: string = input("Número da conta: ")
+    b.renderJuros(numero)
 }
