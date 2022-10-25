@@ -1,0 +1,5 @@
+Link dos repositórios atualizados (4º questão - letra a):
+
+1 - Classe Poupança, atualização em Banco com método renderJuros: https://github.com/cibellemc/IFPI-ADS/blob/main/Mod-II/POO/poo_06_exercicio/q3-q4-privando.ts
+2 - app : https://github.com/cibellemc/IFPI-ADS/blob/main/Mod-II/POO/poo_05_exercicio/q3-app.ts
+
