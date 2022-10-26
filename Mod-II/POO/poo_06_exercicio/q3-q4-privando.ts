@@ -40,7 +40,7 @@ export class Conta {
         return this.numero;
     }
 
-    get Saldo(){
+    get valor(){
         return this.consultarSaldo()
     }
 
@@ -63,8 +63,22 @@ export class Poupanca extends Conta{
     }
 
     renderJuros(): void{
-        this.depositar(this.Saldo * this.taxaJuros / 100)
+        this.depositar(this.valor * this.taxaJuros / 100)
     }
+}
+
+export class ContaImposto extends Conta{
+    private _taxaImposto: number
+
+    constructor(numero: string, saldo: number,cliente: Person, taxaImposto: number){
+        super(numero,saldo, cliente)
+        this._taxaImposto = taxaImposto
+    }
+
+    sacar(valor: number): void{
+        this.sacar(this.valor + this.valor * this._taxaImposto / 100) 
+    }
+
 }
 
 export class Banco {
@@ -92,7 +106,7 @@ export class Banco {
 
     sacar(numero: string, valor: number): boolean {
         let conta: Conta = this.consultar(numero);
-        if (conta != null && conta.Saldo - valor >= 0) {
+        if (conta != null && conta.valor - valor >= 0) {
             conta.sacar(valor);
             return true
         } return false
@@ -151,7 +165,7 @@ export class Banco {
     dinheiroNoBanco(): number{
         let dinheiroTotal: number = 0
         for (let c of this.contas) {
-            dinheiroTotal += c.Saldo
+            dinheiroTotal += c.valor
         }
         return dinheiroTotal;
     }
