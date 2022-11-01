@@ -1,0 +1,9 @@
+1) Enumere os 3 tipos mais comuns de tratamento de erros e exemplifique com códigos seus ou pesquisados na internet.
+R - 1. Ignorar operação
+    2. Exibir mensagem de erro
+    3. Retornar um código de erros
+
+2) Explique por que cada um dos 3 métodos acima possui limitações de uso.
+R - 1. Usuário não obtém retorno e só sabe se deu certo testando
+    2. Ruim para aplicações web
+    3. Cria camadas de erros dificultando a localização de onde o erro ocorre.
