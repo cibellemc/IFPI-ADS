@@ -1,5 +1,5 @@
 import prompt from "prompt-sync";
-import {Person, Conta, Poupanca, Banco, ContaImposto} from "../poo_06_exercicio/q3-q4-privando"
+import {Person, Conta, Poupanca, Banco, ContaImposto} from "../poo_06_exercicio/banco"
 
 const input = prompt();
 
@@ -62,16 +62,22 @@ function inserir(): void {
 
     let conta!: Conta
     if (tipoConta == 'P'){
+        let saldo: number = Number(input('Valor inicial da conta: R$'))
         let juros: number = Number(input('Valor da taxa de juros (em %): '))
-        conta = new Poupanca(numero, 0, new Person(cliente), juros);
+        conta = new Poupanca(numero, saldo, new Person(cliente), juros);
         b.inserir(conta);
+
     } else if (tipoConta == 'C'){
-        conta = new Conta(numero, 0, new Person(cliente));
+        let saldo: number = Number(input('Valor inicial da conta: R$'))
+        conta = new Conta(numero, saldo, new Person(cliente));
         b.inserir(conta);
+
     } else if (tipoConta == 'I'){
+        let saldo: number = Number(input('Valor inicial da conta: R$'))
         let imposto: number = Number(input('Valor da taxa de juros (em %): '))
-        conta = new ContaImposto(numero, 0, new Person(cliente), imposto);
+        conta = new ContaImposto(numero, saldo, new Person(cliente), imposto);
         b.inserir(conta);
+
     } else {
         console.log("Valor inválido.");
         inserir()
@@ -91,10 +97,8 @@ function sacar(): void{
     let Contasaque = input("Número da conta: ")
     let valorSaque = Number(input("Valor do saque: "))
 
-    if(!(b.sacar(Contasaque, valorSaque))){
-        console.log("Saldo insuficiente.\n")
-    }
-    exibirConta() //implementar
+    b.sacar(Contasaque, valorSaque)
+    //exibirConta() //implementar
 }
 
 function depositar(): void{
@@ -105,7 +109,7 @@ function depositar(): void{
     if(!(b.depositar(contaDeposito, valorDeposito))){
         console.log("Conta não cadastrada.\n")
     }
-    exibirConta() //implementar
+    //exibirConta() //implementar
 }
 
 function excluir(): void{
@@ -122,11 +126,11 @@ function transferir(): void{
     let contaDeposito = input("Número da conta de destino: ")
     let valorDeposito = Number(input("Valor da transferência: "))
 
-    if(!(b.transfeir(Contasaque, contaDeposito, valorDeposito))){
-        console.log("Erro. Alguma das contas pode não estar cadastrada ou o saldo é insuficiente.\n")
-    }
-    exibirConta() //implementar
+    b.transfeir(Contasaque, contaDeposito, valorDeposito)
+        //console.log("Erro. Alguma das contas pode não estar cadastrada ou o saldo é insuficiente.\n")
 }
+    //exibirConta() //implementar
+
 
 function totaliza(){
     console.log("Totalizações:\n")
@@ -137,5 +141,5 @@ function renderJuros(){
     console.log("Render juros\n")
     let numero: string = input("Número da conta: ")
     b.renderJuros(numero)
-    exibirConta() //implementar
+    //exibirConta() //implementar
 }
