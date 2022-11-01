@@ -16,12 +16,20 @@ export class Conta {
 
     constructor(numero: string, saldo: number, cliente: Person) {
         this._numero = numero;
-        this._saldo = saldo;
         this._cliente = cliente;
+
+        if (saldo < 0){
+            throw new Error("Impossível saldo negativo");
+        }
+
+        this._saldo = saldo
     }
 
     sacar(valor: number): void {
-        this._saldo -= valor;
+       if (this._saldo < valor){
+            throw new Error("Saldo insuficiente");
+        } this._saldo -= valor
+        //this._saldo < valor? Error("Saldo insuficiente") : this._saldo -= valor
     }
 
     depositar(valor: number): void {
@@ -72,7 +80,7 @@ export class ContaImposto extends Conta{
     }
 
     sacar(valor: number): void{
-        this.sacar(this.saldo + this.saldo * this._taxaImposto / 100) 
+        this.sacar(valor + valor * this._taxaImposto / 100) 
     }
 
 }
@@ -100,12 +108,11 @@ export class Banco {
         } return false
     }
 
-    sacar(numero: string, valor: number): boolean {
+    sacar(numero: string, valor: number): void {
         let conta: Conta = this.consultar(numero);
-        if (conta != null && conta.saldo - valor >= 0) {
+        if (conta != null) {
             conta.sacar(valor);
-            return true
-        } return false
+        } 
     }
 
     depositar(numero: string, valor: number): boolean {
@@ -116,14 +123,14 @@ export class Banco {
         } return false
     }
 
-    transfeir(numeroCredito: string, numeroDebito: string, valor: number): boolean {
-        if (this.consultar(numeroCredito)!= null && this.consultar(numeroDebito)!= null ){ //se ambas forem válidas
-            if(this.sacar(numeroCredito, valor)) {
-                this.depositar(numeroDebito, valor) 
-                return true
-            }
-        }  return false
-}
+    transfeir(numeroCredito: string, numeroDebito: string, valor: number): void {
+        let contaOrigem = this.consultar(numeroCredito)
+        let contDestino = this.consultar(numeroDebito)
+
+        if (contaOrigem!= null && contDestino!= null ){ //se ambas forem válidas
+            contaOrigem.transferir(contDestino, valor)
+        }
+    }
 
     consultar(numero: String): Conta {
         let contaProcurada!: Conta;
