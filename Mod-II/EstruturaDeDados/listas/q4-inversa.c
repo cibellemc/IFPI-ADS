@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "listaencadeada.h"
-#define fmt "%d"
 
 void inversa(Lista L) {
 	if( L == NULL ) return;
