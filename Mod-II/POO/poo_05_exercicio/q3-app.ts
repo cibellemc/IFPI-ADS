@@ -1,6 +1,5 @@
 import prompt from "prompt-sync";
-import {Person, Conta, Poupanca, Banco, ContaImposto} from "./banco"
-import { AplicacaoErro } from "./excecoes";
+import {Person, Conta, Poupanca, Banco, ContaImposto} from "../poo_06_exercicio/banco"
 
 const input = prompt();
 
@@ -8,7 +7,6 @@ let b: Banco = new Banco();
 let opcao: String = '';
 
 do {
-    try{
 console.log('\nBem vindo! Digite uma opção:');
 console.log("1 - Cadastrar ");
 console.log("2 - Consultar ");
@@ -46,17 +44,10 @@ switch (opcao) {
         break      
     case "8":
         renderJuros();  
-        break
 }
 
-} catch (e:any){
-    if (e instanceof AplicacaoErro){
-        console.log(e.message);
-    } else {
-        console.log("Erro no sistema. Contate o administrador.")
-    }
-}
 input("Operação finalizada. Digite <enter>");
+
 } while (opcao != "0");
 
 console.log("Aplicação encerrada");

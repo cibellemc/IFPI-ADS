@@ -1,5 +1,3 @@
-import { ContaNaoEncontrada, PoupancaInvalidaError, SaldoInsuficiente, ValorInvalidoError } from "./excecoes";
-
 export class Person {
     private _nome: string;
     constructor(nome: string) {
@@ -19,25 +17,23 @@ export class Conta {
     constructor(numero: string, saldo: number, cliente: Person) {
         this._numero = numero;
         this._cliente = cliente;
-        this.validarValor(saldo)
+
+        if (saldo < 0){
+            throw new Error("Impossível saldo negativo");
+        }
+
         this._saldo = saldo
     }
 
     sacar(valor: number): void {
-        this.validarValor(valor)
-        this._saldo -= valor
+       if (this._saldo < valor){
+            throw new Error("Saldo insuficiente");
+        } this._saldo -= valor
         //this._saldo < valor? Error("Saldo insuficiente") : this._saldo -= valor
     }
 
     depositar(valor: number): void {
-        this.validarValor(valor)
         this._saldo += valor;
-    }
-
-    validarValor(valor: number) {
-        if (valor <= 0) {
-            throw new ValorInvalidoError("Valor inválido.")
-        }
     }
 
     get nomeCliente() {
@@ -96,7 +92,9 @@ export class Banco {
     private contas: Conta[] = [];
 
     inserir(c: Conta): void {
+        if (this.consultarIndice(c.numeroConta) == -1){ //se não houver índice no array
             this.contas.push(c);
+        }
     }
 
     excluir(numero: string): boolean{
@@ -112,20 +110,26 @@ export class Banco {
 
     sacar(numero: string, valor: number): void {
         let conta: Conta = this.consultar(numero);
-        conta.sacar(valor);
+        if (conta != null) {
+            conta.sacar(valor);
+        } 
     }
 
     depositar(numero: string, valor: number): boolean {
         let conta: Conta = this.consultar(numero);
-        conta.depositar(valor);
-        return true
+        if (conta != null) {
+            conta.depositar(valor);
+            return true
+        } return false
     }
 
     transfeir(numeroCredito: string, numeroDebito: string, valor: number): void {
         let contaOrigem = this.consultar(numeroCredito)
         let contDestino = this.consultar(numeroDebito)
 
-        contaOrigem.transferir(contDestino, valor)
+        if (contaOrigem!= null && contDestino!= null ){ //se ambas forem válidas
+            contaOrigem.transferir(contDestino, valor)
+        }
     }
 
     consultar(numero: String): Conta {
@@ -135,9 +139,6 @@ export class Banco {
             contaProcurada = c;
             break;
             }
-        }
-        if (contaProcurada == null) {
-            throw new ContaNaoEncontrada("Conta não encontrada.")
         }
         return contaProcurada;
     }
@@ -150,18 +151,14 @@ export class Banco {
                 break;
             }
         }
-        if (indice == -1) {
-            throw new ContaNaoEncontrada("Conta não encontrada.")
-        }
         return indice;
     }
 
     renderJuros(numero: string): void{
         let conta = this.consultar(numero)
-        if(!(conta instanceof Poupanca)){
-            throw new PoupancaInvalidaError("A conta não é poupança.")
+        if(conta != null && conta instanceof Poupanca){
+            conta.renderJuros()
         } 
-        conta.renderJuros()
     }
 
     quantidadeDeContas(): number{
