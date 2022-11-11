@@ -19,8 +19,8 @@ void rem(Item x, Lista *L){ // remove o valor
 }
 
 int em(Item x, Lista L){ 
-	while(L != NULL && (L)->item < x){
+	while(L != NULL && L->item < x){
 		L = L->prox;
 	}
-	return (L != NULL || L->item == x);
+	return (L != NULL && L->item == x);
 }
