@@ -7,8 +7,9 @@ int main(void){
 	ins(1, &L);
 	ins(4, &L);
 	ins(3, &L);
-	printf("Sequencia em ordem crescente:");
+	printf("Sequencia em ordem crescente: ");
 	exibe(L);
 	puts("");
+
 	return 0;
 }
