@@ -1,0 +1,8 @@
+1) Podemos instanciar classes abstratas? Justifique.
+R - Não. Se tentarmos instanciar a classe, ocorrerá um erro de compilação
+
+2) Explique o que é necessário para que a compilação da ClasseConcreta ocorra sem erros:
+R - Precisa haver a implementação do método imprimaAlgo() na subclasse.
+
+3) Se uma classe que herda de uma abstrata e não implementa os seus métodos, o que ocorre?
+R - Erro de compilação. Torna-se imperativo a implementação do que foi definido na classe abstrata
