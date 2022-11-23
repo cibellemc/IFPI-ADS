@@ -1,0 +1,64 @@
+interface Defensivel{
+    estaEliminado(): boolean
+    defenderAtaque(valorAtaque : number):number
+}
+
+class JaEliminadoException extends Error{
+    constructor(message: string){
+        super(message)
+    }
+}
+
+class Guerreiro implements Defensivel{
+    id: string 
+    descricao: string
+    forcaAtaque: number = 10
+    life: number = 10
+
+    constructor(i: string, d: string){
+        this.id = i
+        this.descricao = d
+    }
+
+    estaEliminado(): boolean{ // Em guerreiro: deve retornar true caso o seu life esteja zerado.
+        return this.life == 0
+    }
+
+    defenderAtaque(valorAtaque : number):number{ // Em um guerreiro deve subtrair o valor do ataque diretamente do seu atributo life;
+        return this.life - valorAtaque
+    }
+
+    atacar(defensivel){ // Um guerreiro possui um método chamado atacar que recebe um “Defensivel” e chama o método defensivel.defenderAtaque(this.forcaAtaque).
+
+        if(defensivel.estaEliminado()){ // Lance uma exceção do tipo JaEliminadoException caso o método atacar seja aplicado a um Defensivel já eliminado.
+            throw new JaEliminadoException("Guerreiro já eliminado.")
+        }
+        defensivel.defenderAtaque(this.forcaAtaque)
+    }
+}
+
+class BaseMilitar implements Defensivel{
+    id: string
+    localizacaoX: string
+    localizacaoY: string
+    percentualDano: number = 0
+
+    constructor(i: string, x: string, y: string){
+        this.id = i
+        this.localizacaoX = x
+        this.localizacaoY = y  
+    }
+
+    estaEliminado(): boolean{ // Em base militar: deve retornar true caso o % de dano esteja maior ou igual a 90%.
+        return this.percentualDano >= 0.9
+    }
+
+    defenderAtaque(valorAtaque : number):number{ // Em uma base militar aumenta do seu percentual de danos com o valor do ataque passado como parâmetro.
+        return this.percentualDano + valorAtaque
+    }
+
+}
+
+class CenarioDeBatalha{
+    avaliar(defensivel1[], defensivel2[]){}   
+}
