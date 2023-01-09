@@ -1,6 +1,11 @@
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Spy vs Family</title>
+        <script>
+        </script>
     </head>
 
     <!--
@@ -10,6 +15,8 @@
         * img, h1 é block
         * o display flex organiza em linhas ou colunas e podemos dar regras de disposição
         * justify-content e align center
+        * tem como colocar vários seletores separados por vírgula
+        * ao selecionar id, usa # 
     -->
 
     <style>
@@ -25,13 +32,23 @@
             border-radius: 50%;
         }
 
-        h1 {
+        h1, h2 {
             color: #f08080;
-            font-size: 2rem;
         }
 
         p {
             font-size: 1.4rem;
+        }
+
+        input {
+            font-size: 1.3rem;
+            color: #f08080;
+            margin-bottom: 0.5rem;
+        }
+
+        button {
+            font-size: 1.2rem;
+            border-radius: 2px;
         }
     </style>
 
@@ -39,5 +56,28 @@
         <img src="https://i.pinimg.com/280x280_RS/22/eb/70/22eb70373789d42c431534e315e48069.jpg" alt="Anya hehehe">
         <h1>Anya vai salvar o dia!</h1>
         <p>Um plano mirabolante está sendo arquitetado...</p>
+
+        <h2>Cúmplices</h2>
+        <!--li: list item
+        ul: unorded list-->
+        <ul>
+            <li>Yor Forger</li>
+            <li>Loid Forger</li>
+            <li>Bond</li>
+            <li>Franky Franklin</li>
+        </ul>
+
+        <h2>Cadastre-se para receber novidades sobre as próximas aventuras:</h2>
+        <!--placeholder é o texto explicativo na caixa de texto-->
+        <input 
+        id="caixa_nome"
+        type="text" 
+        placeholder="Digite seu nome">
+
+        <input 
+        id="caixa_email"
+        type="text" 
+        placeholder="Digite seu e-mail">
+        <button>Cadastrar</button>
     </body>
 </html>
