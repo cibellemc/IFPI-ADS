@@ -4,8 +4,6 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Spy vs Family</title>
-        <script>
-        </script>
     </head>
 
     <!--
@@ -68,16 +66,35 @@
         </ul>
 
         <h2>Cadastre-se para receber novidades sobre as próximas aventuras:</h2>
-        <!--placeholder é o texto explicativo na caixa de texto-->
+        <!--placeholder é o texto explicativo na caixa de texto
+        se tivesse uma propriedade value="sakura", a caixa de nome exibiria sakura-->
         <input 
         id="caixa_nome"
         type="text" 
+        value="sakura"
         placeholder="Digite seu nome">
 
         <input 
         id="caixa_email"
         type="text" 
         placeholder="Digite seu e-mail">
-        <button>Cadastrar</button>
+
+        <button id="botao_cadastrar">Cadastrar</button>
+
+        <!--se colocasse o script antes do body, ele estaria nulo e nem carregaria
+        se pegasse o valor das caixas antes de clicado, ficaria vazio, valor ao carregar-->
+        <script>
+            const comp_botao_cadastrar =  document.getElementById("botao_cadastrar")
+            const comp_caixa_nome = document.getElementById("caixa_nome")
+            const comp_caixa_email = document.getElementById("caixa_email")
+            
+            comp_botao_cadastrar.onclick = () => {
+                const nome = comp_caixa_nome.value
+                const email = comp_caixa_email.value
+                // console.log(nome, email)
+                alert(`Olá, ${nome}. Obrigada por se cadastrar. A próxima missão será enviada para o endereço: ${email}`)
+            }
+
+        </script>
     </body>
 </html>
