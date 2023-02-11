@@ -1,5 +1,8 @@
 <h1 align="center"> Landing Page - Apresentação da equipe </h1>
 
+## 🔘 <a href="https://rkatchau.wixsite.com/integra-team" align=center>Clique para conhecer o site</a>
+
+https://user-images.githubusercontent.com/108502128/218281593-df849eb5-7193-4bd7-9c80-cfdbe923c901.mp4
 
 ## 📌 Sobre
 
