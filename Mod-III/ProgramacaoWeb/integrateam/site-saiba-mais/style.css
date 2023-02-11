@@ -1,0 +1,205 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --text-color: white;
+    --bg-image: url(assets/bg-mobile.jpg) ;
+    --border-color: rgba(255, 255, 255, 0.5);
+    --background-color: rgba(255, 255, 255, 0.05);
+    --background-hover: rgba(255, 255, 255, 0.02);
+    --social-link-hover: rgba(255, 255, 255, 0.2);
+    /*quando tá tema preto fica botão branco e lua preta*/
+    --buttom: var(--text-color) url(assets/moon-stars.svg) no-repeat center;
+}
+
+.light {
+    --text-color: black;
+    --bg-image: url(assets/bg-mobile-light.jpg) ;
+    --border-color: rgba(0, 0, 0, 0.5);
+    --background-color: rgba(0, 0, 0, 0.05);
+    --background-color: rgba(0, 0, 0, 0.02);
+    --social-link-hover:  rgba(0, 0, 0, 0.1);
+    /*quando tá tema preto fica botão preto e sol branco*/
+    --buttom: var(--text-color) url(assets/sun-white.svg) no-repeat center;
+}
+
+body {
+    /*background-image: url(./assets/bg-mobile.jpg);
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+
+    short - background: color image repeat position/size
+    */
+
+    background: var(--bg-image) no-repeat top center/cover;
+    height: 100vh; /*altura se adapta a disponivel*/
+}
+
+body * {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+}
+
+#container {
+    width: 100%;
+    max-width: 588px;
+    margin: 56px auto 0;
+    padding: 0 24px;
+}
+
+#profile {
+    text-align: center;
+    padding: 24px;
+}
+
+#profile img {
+    width: 112px;
+}
+
+#profile p{
+    font-weight: 500; /*negrito*/
+    /*font-size: 16px; - já é padrão*/
+    line-height: 24px;
+    margin-top: 8px;
+}
+
+#switch {
+    position: relative;
+    width: 64px;
+    margin: 4px auto;
+}
+
+#switch button{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--buttom);
+    border: 0;
+
+    position: absolute;
+    top: 50%;
+    left: 0;
+    z-index: 1;
+    transform: translateY(-50%);
+
+    animation: deslizar-volta 0.2s;
+}
+
+#switch button:hover{
+    outline: 8px solid var(--social-link-hover);
+}
+
+.light #switch button{
+    /*nome da animação, tempo de execução e se mentém a posição adquirida pelo to*/
+    animation: deslizar .2s forwards;
+}
+
+#switch span{
+    display: block;
+    width: 64px;
+    height: 24px;
+    background: var(--background-color);
+
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(4px);
+
+    border-radius: 9999px;
+}
+ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 0;
+}
+
+ul li a {
+    display: flex;
+    align-items: center; /*alinhar no meio (entre espaço superior e inferior*/
+    justify-content: center; /*centralizado na página*/
+
+    padding: 16px 24px;
+
+    background: var(--background-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+
+    text-decoration: none; /*tirar sublinhado*/
+
+    backdrop-filter: blur(4px); /*embaçado*/
+    font-weight: 500px; /*acima de 400 é bold*/
+
+    /*quando carrega transiciona*/
+    transition: background 0.2s;
+}
+
+/*pseudo-selector: quando passar o mouse em cima*/
+ul li a:hover{
+    background: var(--background-hover);
+    border: 1.5px solid var(--text-color);
+}
+
+#social-links{
+    display: flex;
+    justify-content: center;
+
+    padding: 24px 0;
+
+    font-size: 24px; /*tamanho dos icones*/
+}
+
+#social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+
+    transition: background 0.2s;
+    border-radius: 50%;
+}
+
+#social-links a:hover{
+    background: var(--social-link-hover);    
+}
+
+footer {
+    font-size: 14px;
+    text-align: center;
+    padding: 24px 0;
+}
+
+/*media queres, p/ dispositivos maiores que 700px*/
+@media(min-width: 700px) {
+    :root{
+        --bg-url: url(assets/bg-desktop-dark.jpg);
+    }
+
+    .light{
+        --bg-url: url(assets/bg-desktop-light.jpg);
+    }
+}
+
+/*animações*/
+@keyframes deslizar{
+    from{
+        left: 0;
+    }
+
+    to{
+        left: 50%; /*quando chega no fim volta pro inicial*/
+    }
+}
+
+@keyframes deslizar-volta{
+    from{
+        left: 50%;
+    }
+
+    to{
+        left: 0; /*quando chega no fim volta pro inicial*/
+    }
+}
