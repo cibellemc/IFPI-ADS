@@ -3,7 +3,7 @@
 
 from selenium import webdriver
 
-busca = input("Pesquisar: ")
+busca = input("Conteúdo a ser pesquisado: ")
 
 def buscador(q):
     navegador = webdriver.Chrome()
