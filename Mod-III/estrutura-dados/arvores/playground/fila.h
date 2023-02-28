@@ -56,4 +56,3 @@ void destroif(Fila *G){
 	*G = NULL;
 }
 
-
