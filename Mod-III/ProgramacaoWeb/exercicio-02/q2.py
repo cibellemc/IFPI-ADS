@@ -11,18 +11,17 @@ def main():
     print("--- Buscador Online ---\n")
 
     site = input("Site de busca: ")
-    chave = input("Palavra-chave: ")
+    chave = input("Palavra-chave: ").strip()
+    palavrachave = " "+chave+" "
     profundidade = int(input("Profundidade da busca: "))
 
-    search(chave, site, profundidade)
+    search(palavrachave, site, profundidade)
 
 def search(keyword, url, depth):
     page = requests.get(f"{url}", verify=False)
     soup = BeautifulSoup(page.content, 'html.parser').text
-
-    myre = re.compile(r'direi+\w+') #procurando palavras que iniciam com direi
-    result = myre.findall(str(soup))
-    print(result)
+    result = re.findall(keyword, str(soup))
+    print(result) #print de array
 
 main()
 
