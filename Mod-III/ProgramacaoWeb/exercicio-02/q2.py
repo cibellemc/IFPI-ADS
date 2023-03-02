@@ -2,11 +2,10 @@ import re
 import requests
 import requests_cache
 from bs4 import BeautifulSoup
+requests_cache.install_cache('cache')
 
 # https://sites.pitt.edu/~naraehan/python3/re.html
 # https://python-forum.io/thread-16722.html
-
-requests_cache.install_cache('cache')
 
 def main():
     print("--- Buscador Online ---\n")
@@ -21,9 +20,12 @@ def main():
 def search(keyword, url, depth):
     page = requests.get(f"{url}", verify=False)
     soup = BeautifulSoup(page.content, 'html.parser').text
-    result = re.findall(fr'.*{keyword}.*', str(soup))
-    print(result) #print de array
 
+    # ignora palavras que não têm os 20 antes/depois
+    result = re.findall(f'.{{20}}{keyword}.{{20}}', str(soup), re.IGNORECASE)
+
+    for r in result:
+        print(r)
 
 """def contains_word(text):
     return text and the_word in text
