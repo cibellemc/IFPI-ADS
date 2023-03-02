@@ -39,13 +39,11 @@ def search(keyword, url, depth):
     if depth == 0:
         getchar(keyword, soup.text) # palavra chave no "texto"
     else:
+        getchar(keyword, soup.text)
         tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
-        search(keyword, tagsA[0].get('href'), depth-1)
-        
-        """for i in range(depth + 1): # pega os que estão na profundidade
-            page = requests.get(f"{tagsA[i].get('href')}", verify=False) # entra na página
-            soup = BeautifulSoup(page.content, 'html.parser') # pega html
-            getchar(keyword, tagsA[i])"""
+        print(f"Página {depth} - {tagsA[0].get('href')}")
+        search(keyword, tagsA[0].get('href'), depth - 1)
+
             
 
 def getchar(keyword, soup):
