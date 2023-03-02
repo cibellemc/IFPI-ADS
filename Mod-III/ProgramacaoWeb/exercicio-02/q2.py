@@ -11,32 +11,35 @@ def main():
     print("--- Buscador Online ---\n")
 
     site = input("Site de busca: ")
-    chave = input("Palavra-chave: ").strip()
-    palavrachave = " "+chave+" "
+    key = input("Palavra-chave: ").strip()
+    keyword = " "+key+" "
+    profundidade = ask_depth()
+
+    print("\n")
+
+    search(keyword, site, profundidade)
+
+
+def ask_depth():
     profundidade = int(input("Profundidade da busca: "))
 
-    search(palavrachave, site, profundidade)
+    while profundidade < 0:
+        profundidade = int(input("Profundidade da busca: "))
+
+    return profundidade
+
 
 def search(keyword, url, depth):
     page = requests.get(f"{url}", verify=False)
     soup = BeautifulSoup(page.content, 'html.parser').text
 
     # ignora palavras que não têm os 20 antes/depois
-    result = re.findall(f'.{{20}}{keyword}.{{20}}', str(soup), re.IGNORECASE)
+    # 19 porque adicionei os espaços antes de passar o parâmetro
+    result = re.findall(f'.{{19}}{keyword}.{{19}}', str(soup), re.IGNORECASE)
 
     for r in result:
         print(r)
 
-"""def contains_word(text):
-    return text and the_word in text
- 
-soup = BeautifulSoup(html, 'lxml')
-the_word = 'python'
-tags_found = soup.find_all(re.compile(".*"), text=contains_word)
-print(tags_found)
-print('-' * 15)
-print([s.text for s in tags_found])
-"""
 main()
 
 
