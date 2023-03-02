@@ -3,6 +3,7 @@ import requests
 import requests_cache
 from bs4 import BeautifulSoup
 requests_cache.install_cache('cache')
+from requests.exceptions import MissingSchema, InvalidURL
 
 # https://sites.pitt.edu/~naraehan/python3/re.html
 # https://python-forum.io/thread-16722.html
@@ -36,11 +37,13 @@ def search(keyword, url, depth):
     if depth == 0:
         getchar(keyword, soup.text) # palavra chave no "texto"
     else:
-        tagsA = soup.findAll('a') # procura todos os links
+        tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
+        print(tagsA)
 
-        for i in range(depth + 1): # pega os que estão na profundidade
-            getchar(keyword, tagsA[i])
-            print("- ", tagsA[i].get("href"))
+        """for i in range(depth + 1): # pega os que estão na profundidade
+            page = requests.get(f"{tagsA[i].get('href')}", verify=False) # entra na página
+            soup = BeautifulSoup(page.content, 'html.parser') # pega html
+            getchar(keyword, tagsA[i])"""
             
 
 def getchar(keyword, soup):
