@@ -7,6 +7,8 @@ from requests.exceptions import MissingSchema, InvalidURL
 
 # https://sites.pitt.edu/~naraehan/python3/re.html
 # https://python-forum.io/thread-16722.html
+# https://www.handtalk.me/br/blog/leis-de-acessibilidade/ -> site teste
+# se encontra do lado direito da sua tela e conhe
 
 def main():
     print("--- Buscador Online ---\n")
@@ -38,8 +40,8 @@ def search(keyword, url, depth):
         getchar(keyword, soup.text) # palavra chave no "texto"
     else:
         tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
-        print(tagsA)
-
+        search(keyword, tagsA[0].get('href'), depth-1)
+        
         """for i in range(depth + 1): # pega os que estão na profundidade
             page = requests.get(f"{tagsA[i].get('href')}", verify=False) # entra na página
             soup = BeautifulSoup(page.content, 'html.parser') # pega html
