@@ -24,35 +24,40 @@ def ask_depth():
 
 
 def search(keyword, url, depth):  
-    sites_visitados.append(url) # cada site visitado (recebido como argumento)
-    dicionario_links[url] = 0 # cada site visitado
+    dicionario_links[url] = 0 # cada site visitado adiciona ao rank
+
+    page = requests.get(url, allow_redirects=True, verify=False) 
+    soup = BeautifulSoup(page.content, 'html.parser') 
 
     print(f"\nPágina {depth} - {url}") 
-    try:
+
+    if depth > 0:
         page = requests.get(url, allow_redirects=True, verify=False) 
         soup = BeautifulSoup(page.content, 'html.parser') 
 
         getchar(keyword, soup.text) # palavra chave no "texto"
+        print(busca_termo(url, keyword))
 
-        if depth > 1:
+        try:
             tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
 
             for tag in tagsA:
-                l = tag.get('href') # extrai todos os sites para um array externo
-                links.append(l)
-            # pra cada link na página atual
-
-            for link in links: 
-                if link in dicionario_links: # se o link ainda não foi buscado
+                l = tag.get('href') 
+                if l in dicionario_links: # se o link ja foi buscado
+                    # rankeamento(url, keyword)
                     continue
-                search(keyword, link, depth - 1)
+                search(keyword, l, depth - 1)
 
-    except:
-        pass
+        except:
+            pass
 
-def rankeamento(url):
-    if url in sites_visitados:
-        dicionario_links[url] += 1 # se faz referência
+def rankeamento(url, word):
+    dicionario_links[url] += 1 # se faz referência
+    print(dicionario_links)
+    """if busca_termo(url,word) > 10:
+        dicionario_links[url] += 5 
+        print(dicionario_links)"""
+
 
 # prioridade positiva: quantidade de ocorrências
 def busca_termo(url, termo):
