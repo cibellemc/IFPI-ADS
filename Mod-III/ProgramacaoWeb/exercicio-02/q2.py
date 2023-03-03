@@ -25,36 +25,34 @@ def ask_depth():
 
 def search(keyword, url, depth):  
     sites_visitados.append(url) # cada site visitado (recebido como argumento)
-    dicionario_links[url] = 0
-    links.clear() # importante ser array vazio na chamada recursiva
+    dicionario_links[url] = 0 # cada site visitado
 
     print(f"\nPágina {depth} - {url}") 
     try:
-        page = requests.get(f"{url}", verify=False) 
+        page = requests.get(url, allow_redirects=True, verify=False) 
         soup = BeautifulSoup(page.content, 'html.parser') 
-
-        novo_link = '' 
 
         getchar(keyword, soup.text) # palavra chave no "texto"
 
-        tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
-        for tag in tagsA:
-            l = tag.get('href') # extrai todos os sites para um array externo
-            links.append(l)
-
         if depth > 1:
+            tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
+
+            for tag in tagsA:
+                l = tag.get('href') # extrai todos os sites para um array externo
+                links.append(l)
             # pra cada link na página atual
+
             for link in links: 
-                if link in sites_visitados:
-                    dicionario_links[link] += 1 # se faz referência
-                if link not in sites_visitados: # se o link ainda não foi buscado
-                    novo_link = link
-                    break
-            search(keyword, novo_link, depth - 1)
+                if link in dicionario_links: # se o link ainda não foi buscado
+                    continue
+                search(keyword, link, depth - 1)
 
-    except MissingSchema:
-        print("Não é possível avançar") # casos de imagem
+    except:
+        pass
 
+def rankeamento(url):
+    if url in sites_visitados:
+        dicionario_links[url] += 1 # se faz referência
 
 # prioridade positiva: quantidade de ocorrências
 def busca_termo(url, termo):
