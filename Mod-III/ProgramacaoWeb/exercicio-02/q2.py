@@ -7,7 +7,7 @@ requests_cache.install_cache('cache')
 from requests.exceptions import MissingSchema
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 # https://sites.pitt.edu/~naraehan/python3/re.html
 # https://python-forum.io/thread-16722.html
@@ -36,7 +36,7 @@ def search(keyword, url, depth):
         soup = BeautifulSoup(page.content, 'html.parser') 
 
         getchar(keyword, soup.text) # palavra chave no "texto"
-        print(busca_termo(url, keyword))
+        rankeamento(url, keyword)
 
         try:
             tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
@@ -44,7 +44,6 @@ def search(keyword, url, depth):
             for tag in tagsA:
                 l = tag.get('href') 
                 if l in dicionario_links: # se o link ja foi buscado
-                    # rankeamento(url, keyword)
                     continue
                 search(keyword, l, depth - 1)
 
@@ -53,16 +52,29 @@ def search(keyword, url, depth):
 
 def rankeamento(url, word):
     dicionario_links[url] += 1 # se faz referência
-    print(dicionario_links)
-    """if busca_termo(url,word) > 10:
-        dicionario_links[url] += 5 
-        print(dicionario_links)"""
+
+    if busca_termo(url,word) > 10:
+        dicionario_links[url] += 5 # rank positivo
+
+    if dicionario_links[url] > 0 :
+        if busca_termo(url, negativa) >= 1:
+            dicionario_links -= 1
+
+
+def mostrar_rank(dicionario):
+    print('\n--- Rank de páginas ---')
+
+    index = 1
+    for chave, valor in sorted(dicionario.items(), key=lambda item: item[1], reverse=True):
+        print(f"{index}º: '{chave}' - {valor:.0f}")
+        
+        index += 1
 
 
 # prioridade positiva: quantidade de ocorrências
 def busca_termo(url, termo):
-    navegador = urlopen(url)
-    pagina = navegador.read().decode("UTF-8")
+    req = Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    pagina = urlopen(req).read().decode("UTF-8")
     quantidade = pagina.lower().count(termo.lower())
     return quantidade
 
@@ -87,10 +99,10 @@ dicionario_links = {site:0} # dicionário de referências
 key = input("Palavra-chave: ").strip()
 keyword = " "+key+" "
 profundidade = ask_depth()
+negativa = input("Palavra que não deseja encontrar nas buscas: ")
 
 search(keyword, site, profundidade)
-
-print(dicionario_links)
+mostrar_rank(dicionario_links)
 
 
 
