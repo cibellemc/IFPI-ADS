@@ -1,5 +1,4 @@
 import re
-import urllib3
 import requests
 import requests_cache
 from bs4 import BeautifulSoup
@@ -57,7 +56,7 @@ def search(keyword, url, depth):
 def rankeamento(url, word):
     dicionario_links[url] += 1 # se faz referência
 
-    if busca_termo(url,word) > 10:
+    if busca_termo(url,word) >= 5:
         dicionario_links[url] += 5 # rank positivo: achar mais de 5 da palavra chave
 
     if busca_termo(url, negativa) >= 1: 
@@ -91,17 +90,16 @@ def getchar(keyword, soup):
             print(r)
 
 
-links = [] # auxiliar p/ permitir recursividade
-sites_visitados = [] # array de links que o buscador entra
-
-
 print("--- Buscador Online ---\n")
 
 site = input("Site de busca: ")
 dicionario_links = {site:0} # dicionário de referências
+
 key = input("Palavra-chave: ").strip()
 keyword = " "+key+" "
+
 profundidade = ask_depth()
+
 negativa = input("Palavra que não deseja encontrar nas buscas: ")
 
 search(keyword, site, profundidade)
