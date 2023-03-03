@@ -4,8 +4,8 @@ import requests
 import requests_cache
 from bs4 import BeautifulSoup
 requests_cache.install_cache('cache')
-from requests.exceptions import MissingSchema
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+import warnings
+warnings.filterwarnings('ignore')
 
 from urllib.request import Request, urlopen
 
@@ -29,17 +29,21 @@ def search(keyword, url, depth):
     page = requests.get(url, allow_redirects=True, verify=False) 
     soup = BeautifulSoup(page.content, 'html.parser') 
 
-    print(f"\nPágina {depth} - {url}") 
+    print(f"\nURL - {url}") 
+    getchar(keyword, soup.text) # palavra chave no "texto"
+    rankeamento(url, keyword) # insere no dicionário
 
     if depth > 0:
         page = requests.get(url, allow_redirects=True, verify=False) 
         soup = BeautifulSoup(page.content, 'html.parser') 
 
-        getchar(keyword, soup.text) # palavra chave no "texto"
-        rankeamento(url, keyword)
-
         try:
             tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
+            
+            for tag in tagsA: # pra cada tag da pagina
+                l = tag.get('href') 
+                if l in dicionario_links: # se o link ja foi buscado
+                    rankeamento(l, keyword) # ranqueia positivo e negativo
 
             for tag in tagsA:
                 l = tag.get('href') 
@@ -54,11 +58,10 @@ def rankeamento(url, word):
     dicionario_links[url] += 1 # se faz referência
 
     if busca_termo(url,word) > 10:
-        dicionario_links[url] += 5 # rank positivo
+        dicionario_links[url] += 5 # rank positivo: achar mais de 5 da palavra chave
 
-    if dicionario_links[url] > 0 :
-        if busca_termo(url, negativa) >= 1:
-            dicionario_links -= 1
+    if busca_termo(url, negativa) >= 1: 
+        dicionario_links[url] -= 1 # rank negativo: achar pelo menos uma vez a palavra negativa
 
 
 def mostrar_rank(dicionario):
