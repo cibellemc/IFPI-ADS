@@ -23,20 +23,20 @@ def ask_depth():
 
 
 def search(keyword, url, depth):  
-    dicionario_links[url] = 0 # cada site visitado adiciona ao rank
+    try:
+        dicionario_links[url] = 0 # cada site visitado adiciona ao rank
 
-    page = requests.get(url, allow_redirects=True, verify=False) 
-    soup = BeautifulSoup(page.content, 'html.parser') 
-
-    print(f"\nURL - {url}") 
-    getchar(keyword, soup.text) # palavra chave no "texto"
-    rankeamento(url, keyword) # insere no dicionário
-
-    if depth > 0:
         page = requests.get(url, allow_redirects=True, verify=False) 
         soup = BeautifulSoup(page.content, 'html.parser') 
 
-        try:
+        print(f"URL - {url}") 
+        getchar(keyword, soup.text) # palavra chave no "texto"
+        rankeamento(url, keyword) # insere no dicionário
+
+        if depth > 0:
+            page = requests.get(url, allow_redirects=True, verify=False) 
+            soup = BeautifulSoup(page.content, 'html.parser') 
+
             tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
             
             for tag in tagsA: # pra cada tag da pagina
@@ -50,7 +50,7 @@ def search(keyword, url, depth):
                     continue
                 search(keyword, l, depth - 1)
 
-        except:
+    except:
             pass
 
 def rankeamento(url, word):
@@ -102,6 +102,7 @@ profundidade = ask_depth()
 
 negativa = input("Palavra que não deseja encontrar nas buscas: ")
 
+print("\n")
 search(keyword, site, profundidade)
 mostrar_rank(dicionario_links)
 
