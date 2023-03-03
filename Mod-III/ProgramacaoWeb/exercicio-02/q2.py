@@ -23,7 +23,8 @@ def ask_depth():
 
 
 def search(keyword, url, depth):  
-    print(f"Página {depth} - {url}")
+    sites_visitados.append(url)
+    print(f"\nPágina {depth} - {url}")
     page = requests.get(f"{url}", verify=False) # entra na página
     soup = BeautifulSoup(page.content, 'html.parser') # pega html
 
@@ -32,19 +33,17 @@ def search(keyword, url, depth):
     getchar(keyword, soup.text) # palavra chave no "texto"
 
     tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
-    novo_link = ''
     for tag in tagsA:
         l = tag.get('href')
         links.append(l)
 
+    print(links)
     if depth > 1:
         # pra cada link na página atual
         for link in links: 
             if link not in sites_visitados:
-                novo_link = link # erro, pegando último
+                search(keyword, link, depth - 1)
 
-        search(keyword, novo_link, depth - 1)
-    
 
 # prioridade positiva: quantidade de ocorrências
 def busca_termo(url, termo):
