@@ -1,11 +1,10 @@
 import re
+import warnings
 import requests
 import requests_cache
 from bs4 import BeautifulSoup
-requests_cache.install_cache('cache')
-import warnings
 warnings.filterwarnings('ignore')
-
+requests_cache.install_cache('cache')
 from urllib.request import Request, urlopen
 
 # https://sites.pitt.edu/~naraehan/python3/re.html
@@ -23,44 +22,43 @@ def ask_depth():
 
 
 def search(keyword, url, depth):  
-    try:
-        dicionario_links[url] = 0 # cada site visitado adiciona ao rank
+    dicionario_links[url] = 0 # cada site visitado adiciona ao rank
 
-        page = requests.get(url, allow_redirects=True, verify=False) 
-        soup = BeautifulSoup(page.content, 'html.parser') 
+    page = requests.get(url, allow_redirects=True, verify=False) 
+    soup = BeautifulSoup(page.content, 'html.parser') 
 
-        print(f"URL - {url}") 
-        getchar(keyword, soup.text) # palavra chave no "texto"
-        rankeamento(url, keyword) # insere no dicionário
+    print(f"\n> URL - {url}") 
+    getchar(keyword, soup.text) # palavra chave no "texto"
+    rankeamento(url, keyword) # insere no dicionário
 
-        if depth > 0:
-            page = requests.get(url, allow_redirects=True, verify=False) 
-            soup = BeautifulSoup(page.content, 'html.parser') 
-
+    if depth > 0:
+        try:
             tagsA = soup.find_all('a', attrs={'href': re.compile("^http.*")}) # procura todos os links clicáveis
-            
-            for tag in tagsA: # pra cada tag da pagina
-                l = tag.get('href') 
-                if l in dicionario_links: # se o link ja foi buscado
-                    rankeamento(l, keyword) # ranqueia positivo e negativo
+            links_pagina_atual = getlinks(tagsA)
 
-            for tag in tagsA:
-                l = tag.get('href') 
-                if l in dicionario_links: # se o link ja foi buscado
+            # para cada link salvo no dicionário, verifica se ele foi mencionado na página atual
+            for link in dicionario_links:
+                if link in links_pagina_atual:
+                    rankeamento(link, keyword)
+
+            # paga cada link da página atual, se ele já foi visitado, continua buscando
+            for tag in links_pagina_atual:
+                if tag in dicionario_links:
                     continue
-                search(keyword, l, depth - 1)
+                search(keyword, tag, depth - 1)
 
-    except:
+        except:
             pass
 
 def rankeamento(url, word):
     dicionario_links[url] += 1 # se faz referência
 
-    if busca_termo(url,word) >= 5:
+    if busca_termo(url,word) > 9:
         dicionario_links[url] += 5 # rank positivo: achar mais de 5 da palavra chave
 
-    if busca_termo(url, negativa) >= 1: 
-        dicionario_links[url] -= 1 # rank negativo: achar pelo menos uma vez a palavra negativa
+    subtracao = busca_termo(url, negativa) 
+    if subtracao >= 1: 
+        dicionario_links[url] -= subtracao # rank negativo: achar pelo menos uma vez a palavra negativa
 
 
 def mostrar_rank(dicionario):
@@ -71,6 +69,13 @@ def mostrar_rank(dicionario):
         print(f"{index}º: '{chave}' - {valor:.0f}")
         
         index += 1
+
+def getlinks(html):
+    links_pagina_atual = []
+    for tag in html:
+        l = tag.get('href') 
+        links_pagina_atual.append(l)
+    return links_pagina_atual
 
 
 # prioridade positiva: quantidade de ocorrências
@@ -101,12 +106,6 @@ keyword = " "+key+" "
 profundidade = ask_depth()
 
 negativa = input("Palavra que não deseja encontrar nas buscas: ")
-
-print("\n")
 search(keyword, site, profundidade)
+
 mostrar_rank(dicionario_links)
-
-
-
-
-
