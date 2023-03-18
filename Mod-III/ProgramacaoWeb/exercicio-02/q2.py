@@ -1,4 +1,5 @@
 import re
+import time
 import warnings
 import requests
 import requests_cache
@@ -11,7 +12,7 @@ from urllib.request import Request, urlopen
 # https://python-forum.io/thread-16722.html
 # https://www.handtalk.me/br/blog/leis-de-acessibilidade/ -> site teste
 
-# enquantto a busca for menor que 0, pede novamente profundidade
+# enquanto a busca for menor que 0, pede novamente profundidade
 def ask_depth():
     profundidade = int(input("Profundidade da busca: "))
 
@@ -40,15 +41,16 @@ def search(keyword, url, depth):
             for link in dicionario_links:
                 if link in links_pagina_atual:
                     rankeamento(link, keyword)
-
+            
             # paga cada link da página atual, se ele já foi visitado, continua buscando
-            for tag in links_pagina_atual:
-                if tag in dicionario_links:
+            for link in links_pagina_atual:
+                if link in dicionario_links.values():
                     continue
-                search(keyword, tag, depth - 1)
+                search(keyword, link, depth - 1)
 
         except:
             pass
+
 
 def rankeamento(url, word):
     dicionario_links[url] += 1 # se faz referência
@@ -69,6 +71,7 @@ def mostrar_rank(dicionario):
         print(f"{index}º: '{chave}' - {valor:.0f}")
         
         index += 1
+
 
 def getlinks(html):
     links_pagina_atual = []
@@ -106,6 +109,11 @@ keyword = " "+key+" "
 profundidade = ask_depth()
 
 negativa = input("Palavra que não deseja encontrar nas buscas: ")
+
+tempo_inicial = time.time() # em segundos
 search(keyword, site, profundidade)
+tempo_final = time.time() # em segundos
 
 mostrar_rank(dicionario_links)
+
+print(f"\n--- Tempo de busca ---\nAproximadamente {round(tempo_final - tempo_inicial,1)} segundos")
