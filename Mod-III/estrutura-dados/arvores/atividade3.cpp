@@ -1,5 +1,5 @@
 #include "atividade2.cpp"
-#include <cmath> 
+#include <cmath>
 
 // Atividade 3 -Questão 13.6 (extritamente binária)
 void extritamemente_binaria(NoArv *raiz){
@@ -11,6 +11,7 @@ void extritamemente_binaria(NoArv *raiz){
         cout<<"Não é extritamente binária.\n";
         // para ser eb precisaria ter "<<h<<" nos. Tem "<<nos;
     }
+}
 
 int main(){
     NoArv *c = arv_criavazia();

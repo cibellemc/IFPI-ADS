@@ -67,7 +67,7 @@ void inserir_ordenado(NoArv **raiz, int num){
     *raiz = aux;
 }
 
-int main(){
+/*int main(){
 
     NoArv *busca, *raiz = NULL;
     int opcao, info;
@@ -113,4 +113,4 @@ int main(){
     }while(opcao != 0);
 
     return 0;
-}
+}*/

@@ -19,6 +19,7 @@ int arv_vazia(NoArv* a){
 NoArv* arv_cria(int c, NoArv* e, NoArv* d){
     NoArv* p = (NoArv*)malloc(sizeof(NoArv));
     if(p==NULL) exit(1);
+    // NoArv* node = new NoArv;
     p->info = c;
     p->esq = e;
     p->dir = d;
