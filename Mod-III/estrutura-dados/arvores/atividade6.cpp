@@ -58,7 +58,12 @@ NoArv* exibe_dec(NoArv* raiz) {
 
 
 int main(){
-    NoArv *b = arv_cria(1,arv_cria(2,arv_cria(4,arv_criavazia(),arv_criavazia()),arv_cria(5,arv_criavazia(),arv_criavazia())),arv_cria(3,arv_criavazia(),arv_cria(6,NULL,NULL)));
-    exibe_dec(b);
+    NoArv* NoArv2 = arv_cria(2, nullptr, nullptr);
+    NoArv* NoArv4 = arv_cria(4, nullptr, nullptr);
+    NoArv* NoArv9 = arv_cria(9, nullptr, nullptr);
+    NoArv* NoArv3 = arv_cria(3, NoArv2, NoArv4);
+    NoArv* NoArv8 = arv_cria(8, nullptr, NoArv9);
+    NoArv* root = arv_cria(5, NoArv3, NoArv8);
+    exibe_dec(root);
 }
 
