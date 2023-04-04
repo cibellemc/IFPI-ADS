@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="blog">
-        <h1>Exercício de HTML e CSS 01 – Cibelle Maciel</h1>
+        <h1 class="title">Exercício de HTML e CSS 01 – Cibelle Maciel</h1>
 
         <div class="blog-post">
             <div class="blog-post-info">
@@ -30,12 +30,12 @@
     
                     <div class="code">
                         <code>
-                        &lt;h1&gt;Header 1&lt;/h1&gt;
-                        &lt;h2&gt;Header 2&lt;/h2&gt;
-                        &lt;h3&gt;Header 3&lt;/h3&gt;
-                        &lt;h4&gt;Header 4&lt;/h4&gt;
-                        &lt;h5&gt;Header 5&lt;/h5&gt;
-                        &lt;h6&gt;Header 6&lt;/h6&gt;
+                            &lt;h1&gt;Header 1&lt;/h1&gt;<br>
+                            &lt;h2&gt;Header 2&lt;/h2&gt;<br>
+                            &lt;h3&gt;Header 3&lt;/h3&gt;<br>
+                            &lt;h4&gt;Header 4&lt;/h4&gt;<br>
+                            &lt;h5&gt;Header 5&lt;/h5&gt;<br>
+                            &lt;h6&gt;Header 6&lt;/h6&gt;<br>
                         </code>
                     </div>
                 </div>
@@ -49,13 +49,26 @@
                 <p>03 de março de 2023</p>
                 <p>Exiba parágrafos com negrito, itálico, sublinhado, sobescrito e subescrito.</p>
             </div>
-            <div class="blog-post-resposta">
-                <b>Texto em negrito</b>
-                <br>
-                <i>Este parágrafo está em itálico</i>
-                <br>
-                <u>Parágrafo sublinhado...</u>
-                <p>Usando texto x<sup>2</sup> e x<sub>2</sub></p>   
+            <div class="container">
+                <div class="blog-post-resposta">
+                    <div class="frente">
+                        <b>Texto em negrito</b>
+                        <br>
+                        <i>Este parágrafo está em itálico</i>
+                        <br>
+                        <u>Parágrafo sublinhado...</u>
+                        <p>Usando texto x<sup>2</sup> e x<sub>2</sub></p>   
+                    </div>
+                    <div class="code">
+                        <code>
+                            &lt;b&gt;Texto em negrito&lt;b&gt;<br>
+                            &lt;i&gt;Este parágrafo está em itálico&lt;i&gt;<br>
+                            &lt;u&gt;Parágrafo sublinhado...&lt;u&gt;<br>
+                            &lt;p&gt;Usando texto x&lt;sup&gt;2&lt;/sup&gt; e x&lt;sub>2&lt;/sub&gt;&lt;p&gt;
+                        </code>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -65,8 +78,16 @@
                 <p>03 de março de 2023</p>
                 <p>Crie uma postagem com o menu do restaurante Bebidas do Café Starbuzz</p>
             </div>
-            <div class="blog-post-resposta">
-                <a href="bebidas-cafe-starbuzz/index.html">Confira o cardápio</a>
+            <div class="container">
+                <div class="blog-post-resposta">
+                    <div class="frente">
+                        <a href="bebidas-cafe-starbuzz/index.html">Confira o cardápio</a>
+                    </div>
+                    <div class="code">
+                        <a href="bebidas-cafe-starbuzz/index.html">Confira o cardápio</a>
+                    </div>
+                </div>
+        
             </div>
         </div>
   
@@ -77,13 +98,26 @@
                 <p>03 de março de 2023</p>
                 <p>Crie uma nova seção com seus emojis preferidos.</p>
             </div>
-            <div class="blog-post-resposta">
-                <section>
-                    &#x1F928;
-                    &#x1F62D;
-                    &#x2764;&#xfe0f;
-                    &#x1F3F3;&#xFE0F;&#x200D;&#x1F308;
-                </section>
+            <div class="container">
+                <div class="blog-post-resposta">
+                    <div class="frente">
+                        <section>
+                            &#x1F928;
+                            &#x1F62D;
+                            &#x2764;&#xfe0f;
+                            &#x1F3F3;&#xFE0F;&#x200D;&#x1F308;
+                        </section>
+                    </div>
+                    <div class="code">
+                        <code>
+                            &amp;#x1F928;<br>
+                            &amp;#x1F62D;<br>
+                            &amp;#x2764;&amp;#xfe0f; <br>
+                            &amp;#x1F3F3&amp;#xFE0F&amp;#x200D;&amp;#x1F308;
+                        </code>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

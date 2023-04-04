@@ -5,12 +5,16 @@
 }
 
 body {
-    width: 100%;
+    width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #eee;
     padding: 0 1.5rem;
+}
+
+.title {
+    padding: 2rem;
 }
 
 .blog {
@@ -19,13 +23,19 @@ body {
 
 .blog-post {
     width: 100%;
-    padding: 4rem;
+    padding: 5rem;
     background-color: #dbf4ff21;
     box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
     display: flex;
     justify-content: space-between;
     border-radius: .8rem;
     margin: 10px;
+    gap: 1rem;
+}
+
+.blog-post-info {
+    max-width: 50%;
+    height: 150px;
 }
 
 .container, .blog-post-resposta {
@@ -33,12 +43,13 @@ body {
 }
 
 .container {
+    display: flex;
     perspective: 900px;
-    margin-right: 4rem;
+    justify-content: center;
 }
 
 .blog-post-resposta {
-    text-align: center;
+    justify-content: center;
     transition: all 1.5s cubic-bezier(0.7, -.5, .3, 1.8);
     transform-style: preserve-3d;
 }
@@ -63,6 +74,7 @@ body {
 }
 
 .code {
+    max-width: 50%;
     transform: rotateY(180deg);
     position: absolute;
     border-radius: 5px;
