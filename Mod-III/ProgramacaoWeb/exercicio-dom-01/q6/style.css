@@ -1,0 +1,23 @@
+:root {
+    --text-color: black;
+    --background-color: white;
+    --buttom: var(--text-color) url(assets/sun-white.svg) no-repeat center;
+}
+
+.black {
+    --text-color: white;
+    --background-color: black;
+    --buttom: var(--text-color) url(assets/moon-star.svg) no-repeat center ;
+}
+
+body {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+button{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--buttom);
+}

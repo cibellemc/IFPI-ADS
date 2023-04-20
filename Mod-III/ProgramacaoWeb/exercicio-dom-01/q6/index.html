@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black&White</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button onclick="toggleMode()"></button>
+    <p>Tecnicamente era pra ser dois botões</p>
+    <p>No HTML há uma classe com valor vazio, quando a função toggle é disparada, muda para "black" e passa a considerar o css novo, desconsiderando o root (texto branco e fundo preto)</p>
+
+    <script>
+        function toggleMode(){
+        const html = document.documentElement
+        html.classList.toggle('black')
+    }
+    </script>
+</body>
+</html>

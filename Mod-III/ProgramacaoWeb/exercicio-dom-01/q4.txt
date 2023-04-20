@@ -1,0 +1,32 @@
+A diferença entre textContent e innerHTML é basicamente o retorno de cada um:
+- innerHTML retorna todo o texto e o html que existe no elemento.
+- textContent retorna todo o conteúdo de texto, incluindo o texto oculto pelo css, bem como as quebras de linha (\n).
+
+
+Exemplo 1:
+
+<div id="exemplo">
+    <p>Este é um exemplo <strong>de texto</strong>.</p>
+</div>
+
+var div = document.getElementById("exemplo");
+console.log(div.innerHTML); // <p>Este é um exemplo <strong>de texto</strong>.</p>
+console.log(div.textContent); // Este é um exemplo de texto.
+
+
+Uso:
+- innerHTML é utilizado para injetar HTML em um elemento, adicionando novas tags ou mudando as existentes.
+
+Exemplo 2:
+var div = document.getElementById("exemplo");
+div.innerHTML = "<p>Este parágrafo <strong>foi alterado</strong>.</p>"; 
+
+- textContent é mais útil quando se deseja alterar um texto sem modificar a estrutura HTML. Pode ser considerado também para tomadas de decisão.
+
+Exemplo 3:
+
+var div = document.getElementById("exemplo");
+if (div.textContent === "Este é um exemplo de texto.") {
+    // Faça alguma coisa
+}
+
