@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clonar elementos</title>
+</head>
+<body>
+    <ul id="lista-original">
+        <li id="1">a</li>
+        <li id="2">b</li>
+        <li id="3">c</li>
+        <li id="4">d</li>
+    </ul>
+    
+    <button id="btn-mover-elemento">mover</button>
+
+    <ul id="lista-clonada"></ul>
+
+    <script>
+        let btnMoverPrimeiroElemento = document.getElementById("btn-mover-elemento")
+
+        btnMoverPrimeiroElemento.addEventListener("click", function(){
+            let lista = document.getElementById("lista-original").children
+
+            const primeiroNo = document.getElementById("lista-original").children[0]
+            const novoLi = document.createElement('li')
+            
+            novoLi.setAttribute('id',primeiroNo.getAttribute('id'))
+            novoLi.innerHTML = primeiroNo.innerHTML
+
+            document.getElementById("lista-clonada").appendChild(novoLi)
+            document.getElementById("lista-original").removeChild(primeiroNo)
+        })
+    </script>
+</body>
+</html>
