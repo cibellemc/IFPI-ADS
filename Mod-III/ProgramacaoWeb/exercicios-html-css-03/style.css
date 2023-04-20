@@ -1,0 +1,47 @@
+body {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: linear-gradient(to left, #b3cce2, #d9ccc1);
+}
+
+h1, h2 {
+    font-size: 3rem;
+    background: #005eb0;
+    color: #d9ccc1;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+p {
+    font-size: 1rem;
+    color: #024059;
+    text-align: justify;
+    line-height: 1.5;
+}
+
+.autor {
+    text-align: right;
+    color: darkslategray;
+    font-size: .8rem;
+    font-style: italic;
+}
+
+.autor-motivacional {
+    font-weight: 700;
+    font-style: italic;
+}
+
+.motivacional {
+    font-family: 'Tilt Neon';
+    margin: 0 50px;
+}
+
+.riscado {
+    background: linear-gradient(to left top, transparent 47.75%, currentColor 49.5%, currentColor 50.5%, transparent 52.25%);
+}
