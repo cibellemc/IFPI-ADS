@@ -24,14 +24,18 @@
         btnMoverPrimeiroElemento.addEventListener("click", function(){
             let lista = document.getElementById("lista-original").children
 
-            const primeiroNo = document.getElementById("lista-original").children[0]
-            const novoLi = document.createElement('li')
-            
-            novoLi.setAttribute('id',primeiroNo.getAttribute('id'))
-            novoLi.innerHTML = primeiroNo.innerHTML
-
-            document.getElementById("lista-clonada").appendChild(novoLi)
-            document.getElementById("lista-original").removeChild(primeiroNo)
+            if (lista.length > 0) {
+                const primeiroNo = document.getElementById("lista-original").children[0]
+                const novoLi = document.createElement('li')
+                
+                novoLi.setAttribute('id',primeiroNo.getAttribute('id'))
+                novoLi.innerHTML = primeiroNo.innerHTML
+    
+                document.getElementById("lista-clonada").appendChild(novoLi)
+                document.getElementById("lista-original").removeChild(primeiroNo)
+            } else {
+                alert("Fim da lista!")
+            }
         })
     </script>
 </body>
