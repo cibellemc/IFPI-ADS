@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Exemplo de getElementsbyTagName</title>
+</head>
+<body>
+	<h1 id="frase-motivacional">Algumas coisas nunca mudam</h1>
+
+	<p>Por acomodação</p>
+	<p>Por insegurança</p>
+	<p>Por medo</p>
+
+    <button id="mudanca" onclick="mudar()">Mudar</button>
+	<script>
+        function mudar() {
+            
+            let paragrafos = document.getElementsByTagName('p');
+            let frase = document.getElementById("frase-motivacional")
+            let button = document.getElementById('mudanca')
+
+            for (let i = 0; i < paragrafos.length; i++) {
+                paragrafos[i].textContent = `Vontade de ser melhor`;
+            }
+
+            frase.textContent = "A mudança precisa de um ponto de partida"
+            button.style.color = 'red'
+            
+        }
+	</script>
+</body>
+</html>
