@@ -1,0 +1,19 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.placa {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+}
+
+.placa img {
+    width: 10rem;
+    padding: 2rem;
+}
+
+.lista {
+    padding-bottom: 2rem;
+}
