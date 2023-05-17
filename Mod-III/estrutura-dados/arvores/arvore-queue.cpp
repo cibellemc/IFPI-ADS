@@ -130,6 +130,67 @@ class Arvore {
 				visit(p);
 			}
 		}
+
+	// Implementação Morris pré-order
+	
+		void MorrisPreorder() {
+			ArvoreNo<T> *p = root, *tmp;
+			while (p != nullptr) {
+				if (p->left == nullptr) {
+					visit(p);
+					p = p->right;
+				} else {
+					tmp = p->left;
+					while (tmp->right != nullptr && tmp->right != p) {
+						tmp = tmp->right;
+					}
+					if (tmp->right == nullptr) {
+						visit(p);
+						tmp->right = p;
+						p = p->left;
+					} else {
+						tmp->right = nullptr;
+						p = p->right;
+					}
+				}
+			}
+		}
+
+		/*Implementação Morris in-order
+
+		Características: 
+		1. Não usa pilha ou recursão, utilizando espaço adicional constante;
+		2. Não altera a estrutura da árvore original (usa ponteiros adicionais);
+		3. Complexidade O(n) */ 
+
+		void MorrisInorder() {
+			ArvoreNo<T> *current = root;
+			
+			while (current != nullptr) {
+				if (current->left == nullptr) {
+					// se não tem filho à esquerda visita nó atual
+					visit(current);
+					current = current->right;
+				} else {
+					// encontra o predecessor do nó atual
+					ArvoreNo<T> *predecessor = current->left;
+					
+					while (predecessor->right != nullptr && predecessor->right != current) {
+						predecessor = predecessor->right;
+					}
+					
+					if (predecessor->right == nullptr) {
+						predecessor->right = current;
+						current = current->left;
+					} else {
+						predecessor->right = nullptr;
+						visit(current);
+						current = current->right;
+					}
+				}
+			}
+		}
+
 	
 };
 
@@ -149,6 +210,9 @@ main(){
 	//a->preorder(a->getRoot());
 	//a->postorder(a->getRoot());
 	//a->inorder(a->getRoot());
+
+	a->MorrisPreorder();
+	a->MorrisInorder();
 
 	int procurado = a->search(20);
 	if (procurado == 0)
