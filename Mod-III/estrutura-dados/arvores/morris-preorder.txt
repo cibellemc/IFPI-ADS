@@ -1,0 +1,26 @@
+1. Verifique se esse algoritmo está correto:
+
+void MorrisPreorder(){
+    ArvoreNo<T> *p=root, *tmp;
+    while (p!=0){
+        if (p->left==0){
+            visit(p);
+            p=p->right;
+        }
+        else{
+            tmp = p->left;
+            while (tmp->right!=0 && tmp->right!=p)
+                tmp=tmp->right;
+                if (tmp->right==0){
+                    visit(p);                    
+                    tmp->right=p;
+                    p=p->left;
+                }
+                else{                    
+                    tmp->right=0;
+                    p=p->right;    
+                } /*fim else*/  }
+        } /*fim while*/    }
+
+
+R - Sim, pois faz uso de ponteiros adicionais para rastrear o predecessor e realizar o percurso pré-ordem sem o uso de pilha ou recursão.
