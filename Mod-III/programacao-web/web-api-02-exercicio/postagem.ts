@@ -1,4 +1,4 @@
-class Post {
+export class Post {
     id: number
     text: string
     likes: number
@@ -10,7 +10,7 @@ class Post {
     }
 }
 
-class Microblog {
+export class Microblog {
     posts: Post[] = []
 
     create(post: Post){
@@ -43,25 +43,10 @@ class Microblog {
         }
     }
 
-    retrieveAll(): string {
-        let postsJSON = "[";
-      
-        this.posts.forEach((post, index) => {
-          postsJSON += `{
-            "id": "${post.id}",
-            "text": "${post.text}",
-            "likes": "${post.likes}"
-          }`
-      
-          if (index !== this.posts.length - 1) {
-            postsJSON += ","
-          }
-        });
-      
-        postsJSON += "]";
-      
-        return postsJSON;
-      }
+    // como eu tava fazendo manual, quando res.json() do get era chamado, incluia caracteres de escape p/ deixar o JSON válido, o que criava vários \n aleatórios
+    retrieveAll(): Post[] {
+        return this.posts;
+    }
 }
 
 /* testes

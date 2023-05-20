@@ -1,4 +1,6 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Microblog = exports.Post = void 0;
 class Post {
     constructor(id, text, likes) {
         this.id = id;
@@ -6,6 +8,7 @@ class Post {
         this.likes = likes;
     }
 }
+exports.Post = Post;
 class Microblog {
     constructor() {
         this.posts = [];
@@ -37,35 +40,32 @@ class Microblog {
         }
     }
     retrieveAll() {
-        let postsJSON = "[";
-        this.posts.forEach((post, index) => {
-            postsJSON += `{
-            "id": "${post.id}",
-            "text": "${post.text}",
-            "likes": "${post.likes}"
-          }`;
-            if (index !== this.posts.length - 1) {
-                postsJSON += ",";
-            }
-        });
-        postsJSON += "]";
-        return postsJSON;
+        return this.posts;
     }
 }
+exports.Microblog = Microblog;
+/* testes
+
 const microblog = new Microblog();
+
 const post1 = new Post(1, "Primeiro post", 10);
 const post2 = new Post(2, "Segundo post", 5);
 const post3 = new Post(3, "Terceiro post", 2);
 const post4 = new Post(1, "Quarto post", 2);
+
 microblog.create(post1);
 microblog.create(post2);
 microblog.create(post3);
-console.log(microblog.retrieveAll());
-microblog.delete(2);
+console.log(microblog.retrieveAll())
+
+microblog.delete(2)
 console.log("\nDepois da suposta exclusão");
-console.log(microblog.retrieveAll());
-microblog.update(post4);
+console.log(microblog.retrieveAll())
+
+microblog.update(post4)
 console.log("\nDepois da suposta substituição");
-console.log(microblog.retrieveAll());
-microblog.delete(3);
-console.log(microblog.retrieveAll());
+console.log(microblog.retrieveAll())
+
+microblog.delete(3)
+console.log(microblog.retrieveAll())
+*/ 
