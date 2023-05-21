@@ -39,6 +39,7 @@ class Microblog {
             }
         }
     }
+    // como eu tava fazendo manual, quando res.json() do get era chamado, incluia caracteres de escape p/ deixar o JSON válido, o que criava vários \n aleatórios
     retrieveAll() {
         return this.posts;
     }
