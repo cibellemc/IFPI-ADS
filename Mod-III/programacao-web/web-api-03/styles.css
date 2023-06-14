@@ -2,3 +2,8 @@ input, textarea, button {
     display: block;
     margin-bottom: 1rem;
 }
+
+.actions {
+    display: flex;
+    gap: .5rem;
+}

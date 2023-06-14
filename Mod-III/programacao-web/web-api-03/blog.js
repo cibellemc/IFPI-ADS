@@ -86,6 +86,12 @@ async function updateLike(postId) {
   
 
 async function deletePost(postId) {
+    const confirmed = confirm('Deseja realmente excluir este post?');
+  
+    if (!confirmed) {
+      return;
+    }
+  
     const response = await fetch(`http://localhost:3000/posts/${postId}`, {
       method: 'DELETE'
     });
@@ -96,5 +102,6 @@ async function deletePost(postId) {
     } else {
       console.error('Failed to delete post.');
     }
-}
+  }
+  
   
