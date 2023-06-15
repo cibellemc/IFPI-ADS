@@ -1,79 +1,153 @@
-import express, { Request, Response } from 'express';
-import { posts, Post } from './posts';
-import cors from 'cors';
+import express, { Request, Response } from 'express'
+import cors from 'cors'
+import { Pool } from 'pg'
 
-const app = express();
-const port = 3000;
-app.use(cors());
+const pool = new Pool({
+  user: 'postgres',
+  password: '01111971',
+  host: 'localhost',
+  database: 'social_media',
+  port: 5432, 
+})
 
-app.use(express.json());
+const app = express()
+const port = 3000
+app.use(cors())
 
-app.get('/posts', (req: Request, res: Response) => {
-  res.json(posts);
-});
+app.use(express.json())
 
-app.get('/posts/:id', (req: Request, res: Response) => {
-  const postId: number = parseInt(req.params.id);
-  const post: Post | undefined = posts.find((p) => p.id == postId);
+app.get('/posts', async (req: Request, res: Response) => {
+  try {
+    const client = await pool.connect()
+    const result = await client.query('SELECT * FROM posts')
+    const posts = result.rows
 
-  if (!post) {
-    return res.status(404).json({ error: 'Post not found' });
+    client.release()
+
+    res.json(posts)
+
+  } catch (error) {
+    console.error('Error executing SQL query', error)
+    res.status(500).json({ error: 'Internal server error' })
   }
+})
 
-  res.json(post);
-});
+// Rota para obter um post específico pelo ID
+app.get('/posts/:id', async (req: Request, res: Response) => {
+  const postId: number = parseInt(req.params.id)
 
-app.post('/posts', (req: Request, res: Response) => {
-  const { title, text, date, likes }: Post = req.body;
-  const newPost: Post = { id: posts.length + 1, title, text, date, likes };
+  try {
+    const client = await pool.connect()
+    const result = await client.query('SELECT * FROM posts WHERE id = $1', [postId])
+    const post = result.rows[0]
 
-  posts.push(newPost);
+    client.release()
 
-  res.status(201).json(newPost);
-});
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' })
+    }
 
-app.put('/posts/:id', (req: Request, res: Response) => {
-  const postId: number = parseInt(req.params.id);
-  const { title, text, date, likes }: Post = req.body;
-  const postIndex: number = posts.findIndex((p) => p.id == postId);
+    res.json(post)
 
-  if (postIndex == -1) {
-    return res.status(404).json({ error: 'Post not found' });
+  } catch (error) {
+    console.error('Erro ao buscar o post no banco de dados', error)
+    res.status(500).json({ error: 'Erro ao buscar o post no banco de dados' })
   }
+})
 
-  const updatedPost: Post = { id: postId, title, text, date, likes };
-  posts[postIndex] = updatedPost;
 
-  res.json(updatedPost);
-});
+app.post('/posts', async (req, res) => {
+  try {
+    const { title, text, likes } = req.body
 
-app.patch('/posts/:id/like', (req, res) => {
-  const postId = parseInt(req.params.id);
-  const postIndex = posts.findIndex((p) => p.id === postId);
+    const query = 'INSERT INTO posts (title, text, likes, date) VALUES ($1, $2, $3, NOW()) RETURNING *'
+    const values = [title, text, likes]
 
-  if (postIndex === -1) {
-    return res.status(404).json({ error: 'Post not found' });
+    const result = await pool.query(query, values)
+    const newPost = result.rows[0]
+
+    res.status(201).json(newPost)
+
+  } catch (error) {
+    console.error('Erro ao criar nova postagem:', error)
+    res.status(500).json({ message: 'Erro ao criar nova postagem' })
   }
-
-  posts[postIndex].likes += 1;
-
-  res.json(posts[postIndex]);
-});
+})
 
 
-app.delete('/posts/:id', (req: Request, res: Response) => {
-  const postId: number = parseInt(req.params.id);
-  const postIndex: number = posts.findIndex((p) => p.id == postId);
+// Rota para atualizar um post pelo ID
+app.put('/posts/:id', async (req: Request, res: Response) => {
+  const postId: number = parseInt(req.params.id)
+  const { title, text, date, likes } = req.body
 
-  if (postIndex == -1) {
-    return res.status(404).json({ error: 'Post not found' });
+  try {
+    const client = await pool.connect()
+    const result = await client.query(
+      'UPDATE posts SET title = $1, text = $2, date = $3, likes = $4 WHERE id = $5 RETURNING *',
+      [title, text, date, likes, postId]
+    )
+
+    const updatedPost = result.rows[0]
+    client.release()
+
+    if (!updatedPost) {
+      return res.status(404).json({ error: 'Post not found' })
+    }
+
+    res.json(updatedPost)
+
+  } catch (error) {
+    console.error('Erro ao atualizar o post no banco de dados', error)
+    res.status(500).json({ error: 'Erro ao atualizar o post no banco de dados' })
   }
+})
 
-  const deletedPost: Post = posts.splice(postIndex, 1)[0];
+// Rota para incrementar os likes de um post pelo ID
+app.patch('/posts/:id/like', async (req, res) => {
+  const postId = parseInt(req.params.id)
 
-  res.json(deletedPost);
-});
+  try {
+    const client = await pool.connect()
+    const result = await client.query('UPDATE posts SET likes = likes + 1 WHERE id = $1 RETURNING *', [postId])
+    const updatedPost = result.rows[0]
+
+    client.release()
+
+    if (!updatedPost) {
+      return res.status(404).json({ error: 'Post not found' })
+    }
+
+    res.json(updatedPost)
+
+  } catch (error) {
+    console.error('Erro ao incrementar os likes do post no banco de dados', error)
+    res.status(500).json({ error: 'Erro ao incrementar os likes do post no banco de dados' })
+  }
+})
+
+// Rota para excluir um post pelo ID
+app.delete('/posts/:id', async (req: Request, res: Response) => {
+  const postId: number = parseInt(req.params.id)
+
+  try {
+    const client = await pool.connect()
+    const result = await client.query('DELETE FROM posts WHERE id = $1 RETURNING *', [postId])
+    const deletedPost = result.rows[0]
+
+    client.release()
+
+    if (!deletedPost) {
+      return res.status(404).json({ error: 'Post not found' })
+    }
+
+    res.json(deletedPost)
+    
+  } catch (error) {
+    console.error('Erro ao excluir o post no banco de dados', error)
+    res.status(500).json({ error: 'Erro ao excluir o post no banco de dados' })
+  }
+})
 
 app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+  console.log(`Server listening on port ${port}`)
+})
