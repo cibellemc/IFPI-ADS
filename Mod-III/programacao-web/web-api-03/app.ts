@@ -102,8 +102,8 @@ app.put('/posts/:id', async (req: Request, res: Response) => {
   }
 })
 
-/*app.get('/posts/:postId/comments', async (req, res) => {
-  const postId = parseInt(req.params.postId);
+app.get('/posts/:id/comments', async (req, res) => {
+  const postId: number = parseInt(req.params.id)
 
   try {
     const client = await pool.connect();
@@ -118,12 +118,12 @@ app.put('/posts/:id', async (req: Request, res: Response) => {
   }
 });
 
-app.post('/posts/:postId/comments', async (req, res) => {
+app.post('/posts/:id/comments', async (req, res) => {
   try {
-    const { postId } = req.params;
+    const postId: number = parseInt(req.params.id)
     const { author, content } = req.body;
 
-    const query = 'INSERT INTO comments (post_id, author, content, date) VALUES ($1, $2, $3, NOW()) RETURNING *';
+    const query = 'INSERT INTO comments (post_id, author, content, created_at) VALUES ($1, $2, $3, NOW()) RETURNING *';
     const values = [postId, author, content];
 
     const result = await pool.query(query, values);
@@ -135,8 +135,7 @@ app.post('/posts/:postId/comments', async (req, res) => {
     console.error('Erro ao criar novo comentário:', error);
     res.status(500).json({ message: 'Erro ao criar novo comentário' });
   }
-});*/
-
+})
 
 // Rota para incrementar os likes de um post pelo ID
 app.patch('/posts/:id/like', async (req, res) => {

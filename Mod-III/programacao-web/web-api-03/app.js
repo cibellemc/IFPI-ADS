@@ -57,13 +57,11 @@ app.get('/posts/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({ error: 'Erro ao buscar o post no banco de dados' });
     }
 }));
-const moment_1 = __importDefault(require("moment")); // Importe o Moment.js
 app.post('/posts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title, text, likes } = req.body;
-        const currentDate = (0, moment_1.default)().format('YYYY-MM-DD HH:mm:ss'); // Obtenha a data e hora corrente
-        const query = 'INSERT INTO posts (title, text, likes, date) VALUES ($1, $2, $3, $4) RETURNING *';
-        const values = [title, text, likes, currentDate];
+        const query = 'INSERT INTO posts (title, text, likes, date) VALUES ($1, $2, $3, NOW()) RETURNING *';
+        const values = [title, text, likes];
         const result = yield pool.query(query, values);
         const newPost = result.rows[0];
         res.status(201).json(newPost);
@@ -92,6 +90,39 @@ app.put('/posts/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({ error: 'Erro ao atualizar o post no banco de dados' });
     }
 }));
+app.get('/posts/:id/comments', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const postId = parseInt(req.params.id);
+    try {
+        const client = yield pool.connect();
+        const result = yield client.query('SELECT * FROM comments WHERE post_id = $1', [postId]);
+        const comments = result.rows;
+        client.release();
+        res.json(comments);
+    }
+    catch (error) {
+        console.error('Error retrieving comments from the database', error);
+        res.status(500).json({ error: 'Error retrieving comments from the database' });
+    }
+}));
+/*app.post('/posts/:id/comments', async (req, res) => {
+  try {
+    const postId: number = parseInt(req.params.id)
+    const { author, content } = req.body;
+
+    const query = 'INSERT INTO comments (post_id, author, content, date) VALUES ($1, $2, $3, NOW()) RETURNING *';
+    const values = [postId, author, content];
+
+    const result = await pool.query(query, values);
+    const newComment = result.rows[0];
+
+    res.status(201).json(newComment);
+
+  } catch (error) {
+    console.error('Erro ao criar novo comentário:', error);
+    res.status(500).json({ message: 'Erro ao criar novo comentário' });
+  }
+})
+*/
 // Rota para incrementar os likes de um post pelo ID
 app.patch('/posts/:id/like', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const postId = parseInt(req.params.id);

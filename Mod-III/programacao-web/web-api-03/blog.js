@@ -58,9 +58,20 @@ appendPost = (post) => { // add postagem ao html
     postItens[0].innerText = post.text
     postItens[1].innerText = post.likes + " like(s)"
 
-    /*const commentsList = postElement.querySelector('.comments-list')
-    console.log(commentsList);*/
+    const commentsList = postElement.querySelector('.comments-list');
 
+    const loadComments = async () => {
+        const response = await fetch(`http://localhost:3000/posts/${post.id}/comments`);
+        const comments = await response.json();
+
+        comments.forEach((comment) => {
+            const commentItem = document.createElement('li');
+            commentItem.innerText = comment.content;
+            commentsList.appendChild(commentItem);
+        });
+    };
+    
+    loadComments()
 
     document.getElementById('timeline').append(postElement)
 }
@@ -68,13 +79,13 @@ appendPost = (post) => { // add postagem ao html
 
 /** Pega do "banco" e carrega as postagens de novo */
 const loadPosts = async () => {
-    const response = await fetch('http://localhost:3000/posts')
-    const posts = await response.json()
+  const response = await fetch('http://localhost:3000/posts');
+  const posts = await response.json();
 
-    posts.forEach(post => {
-        appendPost(post)
-    })
-}
+  posts.forEach(async (post) => {
+    appendPost(post)
+  });
+};
 
 
 async function updateLike(postId) {
