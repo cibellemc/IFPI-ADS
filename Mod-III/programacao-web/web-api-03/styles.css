@@ -7,3 +7,8 @@ input, textarea, button {
     display: flex;
     gap: .5rem;
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}

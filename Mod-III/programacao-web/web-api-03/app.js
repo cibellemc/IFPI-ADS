@@ -57,11 +57,13 @@ app.get('/posts/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         res.status(500).json({ error: 'Erro ao buscar o post no banco de dados' });
     }
 }));
+const moment_1 = __importDefault(require("moment")); // Importe o Moment.js
 app.post('/posts', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { title, text, likes } = req.body;
-        const query = 'INSERT INTO posts (title, text, likes, date) VALUES ($1, $2, $3, NOW()) RETURNING *';
-        const values = [title, text, likes];
+        const currentDate = (0, moment_1.default)().format('YYYY-MM-DD HH:mm:ss'); // Obtenha a data e hora corrente
+        const query = 'INSERT INTO posts (title, text, likes, date) VALUES ($1, $2, $3, $4) RETURNING *';
+        const values = [title, text, likes, currentDate];
         const result = yield pool.query(query, values);
         const newPost = result.rows[0];
         res.status(201).json(newPost);

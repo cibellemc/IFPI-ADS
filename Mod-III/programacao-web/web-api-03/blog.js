@@ -46,6 +46,10 @@ appendPost = (post) => { // add postagem ao html
 
     const postTitle = postElement.querySelectorAll('h3')[0]
     postTitle.innerText = post.title
+
+    const postDate = postElement.querySelectorAll('span')[0];
+    const formattedDate = moment(post.date).format("DD [de] MMMM [de] YYYY");
+    postDate.innerText = formattedDate;
     
     const postArticle = postElement.querySelectorAll('article')[0]
     postArticle.setAttribute('id', post.id)
@@ -53,6 +57,10 @@ appendPost = (post) => { // add postagem ao html
     const postItens = postElement.querySelectorAll('p')
     postItens[0].innerText = post.text
     postItens[1].innerText = post.likes + " like(s)"
+
+    /*const commentsList = postElement.querySelector('.comments-list')
+    console.log(commentsList);*/
+
 
     document.getElementById('timeline').append(postElement)
 }
@@ -103,5 +111,3 @@ async function deletePost(postId) {
       console.error('Failed to delete post.');
     }
   }
-  
-  

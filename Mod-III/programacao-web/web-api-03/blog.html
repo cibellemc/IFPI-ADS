@@ -36,7 +36,10 @@
 
 				<template id="post-template">
 					<article class="post" id="fjofaisd99">
-						<h3>Post title</h3>
+						<div class="header">
+							<h3>Post title</h3>
+							<span class="post-date">14-06-2023</span>
+						</div>
 						<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore aliquam optio perferendis
 							deleniti, inventore fugit iste sapiente. Aliquid labore aut ipsam enim incidunt harum,
 							minima porro deleniti unde possimus rem!</p>
@@ -44,7 +47,10 @@
 							<div class="actions">
 								<button class="btn-like">Like</button>
 								<button class="btn-trash">Delete</button>
+								<button class="btn-comment">Comment</button>
 							</div>
+							<h4>Comments:</h4>
+							<ul class="comments-list"></ul>
 						<hr>
 					</article>
 				</template>
@@ -53,6 +59,24 @@
 				<br>
 			</section>
 
+			<template id="post-comments">
+				<article class="comment" id="fjofaisd99">
+					<div class="header">
+						<h3>User</h3>
+						<span class="post-date">14-06-2023</span>
+					</div>
+					<p>Post de milhões!</p>
+						<p><a href="#">Likes: <span class="comment-likes">0</span></a></p>
+						<div class="actions">
+							<button class="btn-like">Like</button>
+							<button class="btn-trash">Delete</button>
+						</div>
+					<hr>
+				</article>
+			</template>
+			<br>
+		</section>
+
 		</main>
 		<footer class="row">
 			<h3>Social Network</h3>
@@ -60,6 +84,7 @@
 			<p>&reg; All rights reserved | <a href="#">Contact us</a></p>
 		</footer>
 	</div>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </body>
 
 </html>

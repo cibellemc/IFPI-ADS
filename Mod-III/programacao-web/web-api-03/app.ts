@@ -102,6 +102,42 @@ app.put('/posts/:id', async (req: Request, res: Response) => {
   }
 })
 
+/*app.get('/posts/:postId/comments', async (req, res) => {
+  const postId = parseInt(req.params.postId);
+
+  try {
+    const client = await pool.connect();
+    const result = await client.query('SELECT * FROM comments WHERE post_id = $1', [postId]);
+    const comments = result.rows;
+    client.release();
+
+    res.json(comments);
+  } catch (error) {
+    console.error('Error retrieving comments from the database', error);
+    res.status(500).json({ error: 'Error retrieving comments from the database' });
+  }
+});
+
+app.post('/posts/:postId/comments', async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { author, content } = req.body;
+
+    const query = 'INSERT INTO comments (post_id, author, content, date) VALUES ($1, $2, $3, NOW()) RETURNING *';
+    const values = [postId, author, content];
+
+    const result = await pool.query(query, values);
+    const newComment = result.rows[0];
+
+    res.status(201).json(newComment);
+
+  } catch (error) {
+    console.error('Erro ao criar novo comentário:', error);
+    res.status(500).json({ message: 'Erro ao criar novo comentário' });
+  }
+});*/
+
+
 // Rota para incrementar os likes de um post pelo ID
 app.patch('/posts/:id/like', async (req, res) => {
   const postId = parseInt(req.params.id)
