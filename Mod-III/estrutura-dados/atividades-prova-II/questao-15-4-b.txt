@@ -1,0 +1,3 @@
+Há alguma garantia de que o primeiro caminho encontrado pela busca em profundidade tenha comprimento mínimo?
+
+R- Não. A DFS não utiliza informações sobre os custos das arestas ou a distância entre os vértices para orientar sua busca. Ela simplesmente explora o grafo em profundidade até que não haja mais vértices não visitados para explorar, o que pode levar a caminhos mais longos antes de encontrar o caminho mais curto.
