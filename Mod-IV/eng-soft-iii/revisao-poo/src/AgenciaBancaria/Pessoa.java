@@ -39,9 +39,8 @@ public class Pessoa {
     }
 
     public String toString(){
-        return "\nID: " + Pessoa.getcontadorDeClientes() +
-                 "\nCPF: " + this.getNome() +
-                 "\nE-mail: " + this.getEmail() +
-                 "\nNome: " + this.getCpf();
+        return "\nNome: " + this.getNome() +
+                 "\nCPF: " + this.getCpf() +
+                 "\nE-mail: " + this.getEmail();
     }
 }

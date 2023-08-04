@@ -41,7 +41,7 @@ public class Conta {
     }
 
     public String toString(){
-        return "\nCliente ID: " + Pessoa.getcontadorDeClientes() +
+        return "\nCliente: " + this.pessoa.getNome() +
                  "\nConta ID: " + this.getNumeroConta() +
                  "\nSaldo: " + Utils.doubleToString(this.getSaldo());
     }
