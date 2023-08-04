@@ -56,7 +56,7 @@ public class Conta {
     }
     
     public void sacar(Double valor) {
-        if (valor > 0 && getSaldo() >= 0) {
+        if (valor > 0 && getSaldo() >= valor) {
             setSaldo(getSaldo() - valor);
             System.out.println("Saque realizado com sucesso!");
         } else {
@@ -65,12 +65,12 @@ public class Conta {
     }
 
     public void transferir(Conta contaParaDeposito, Double valor){
-        if (valor > 0 && getSaldo() >= 0) {
+        if (valor > 0 && getSaldo() >= valor) {
             setSaldo(getSaldo() - valor);
             contaParaDeposito.saldo = contaParaDeposito.getSaldo() + valor;
             System.out.println("Transferência realizado com sucesso!");
         } else {
-            System.out.println("Não foi possível realizar a transferência");
+            System.out.println("Não foi possível realizar a transferência.");
         }
     }
     
