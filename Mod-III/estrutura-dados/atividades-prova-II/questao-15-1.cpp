@@ -1,3 +1,9 @@
+/*
+Cibelle Maciel
+Gabriel Oliver
+Marcos Vinícius
+*/
+
 #include "lista.hpp"
 
 Lista Adj [] = { no(1, no(2, no(3, NULL))),
