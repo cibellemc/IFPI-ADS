@@ -9,10 +9,12 @@ public class Conta {
     private int numeroConta;
     private Pessoa pessoa;
     private Double saldo = 0.0;
+    private String tipoConta;
 
-    public Conta(Pessoa pessoa) {
+    public Conta(Pessoa pessoa, String tipo) {
         this.numeroConta = contadorDeContas;
         this.pessoa = pessoa;
+        this.tipoConta = tipo;
         contadorDeContas += 1;
     }
 
@@ -39,10 +41,15 @@ public class Conta {
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
     }
+    
+    public String getTipoConta() {
+        return tipoConta;
+    }
 
     public String toString(){
         return "\nCliente: " + this.pessoa.getNome() +
                  "\nConta ID: " + this.getNumeroConta() +
+                 "\nTipo de conta: " + this.getTipoConta() +
                  "\nSaldo: " + Utils.doubleToString(this.getSaldo());
     }
 

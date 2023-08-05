@@ -69,9 +69,30 @@ public class Banco {
         String email = input.next();
 
         Pessoa pessoa = new Pessoa(nome, cpf, email);
-        Conta conta = new Conta(pessoa);
-        contas.add(conta);
 
+        System.out.println("\nEscolha seu tipo de conta ideal:\n1 - Comum\n2 - Corrente\n3 - Poupança");
+        int tipoConta = input.nextInt();
+        
+
+        switch (tipoConta) {
+            case 1:
+                Conta conta = new Conta(pessoa, "comum");
+                contas.add(conta);
+                break;
+            case 2:
+                Conta contaCorrente = new Conta(pessoa, "corrente");
+                contas.add(contaCorrente);
+                break;
+            case 3:
+                Conta contaPoupanca = new Conta(pessoa, "poupança");
+                contas.add(contaPoupanca);
+                break;
+            default:
+                System.out.println("Opção inválida!");
+                operacoes();
+                break;            
+            }
+            
         System.out.println("Conta criada com sucesso!");
 
         operacoes();
