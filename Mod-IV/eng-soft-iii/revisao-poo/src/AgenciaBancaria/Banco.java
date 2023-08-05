@@ -41,13 +41,20 @@ public class Banco {
             case 3:
                 sacar();
                 break;
+
             case 4:
                 transferir();
                 break;
+
             case 5:
                 listarContas();
                 break;
+
             case 6:
+                consultarRendimento();
+                break;
+
+            case 7:
                 System.out.println("Saindo...");
                 System.exit(0); // para o sistema
 
@@ -80,11 +87,15 @@ public class Banco {
                 contas.add(conta);
                 break;
             case 2:
-                Conta contaCorrente = new Conta(pessoa, "corrente");
+                System.out.println("Informe o valor do limite do cheque especial:");
+                Double limiteChequeEspecial = input.nextDouble();
+                ContaCorrente contaCorrente = new ContaCorrente(pessoa, "corrente",limiteChequeEspecial);
                 contas.add(contaCorrente);
                 break;
             case 3:
-                Conta contaPoupanca = new Conta(pessoa, "poupança");
+                System.out.println("Informe a taxa de rendimento (em decimal):");
+                Double taxaRendimento = input.nextDouble();
+                ContaPoupanca contaPoupanca = new ContaPoupanca(pessoa, "poupança",taxaRendimento);
                 contas.add(contaPoupanca);
                 break;
             default:
@@ -168,6 +179,31 @@ public class Banco {
         }
 
         operacoes();
+    }
+
+    private static void consultarRendimento() {
+        System.out.println("Número da conta para consulta: ");
+        int numeroConta = input.nextInt();
+
+        Conta conta = encontrarConta(numeroConta);
+                
+        if (conta != null)  {
+
+            if (conta instanceof ContaPoupanca) {
+                ContaPoupanca contaPoupanca = (ContaPoupanca) conta; // cast
+
+                System.out.println("\nInforme quantos meses o dinheiro ficou parado:");
+                int meses = input.nextInt();
+        
+                contaPoupanca.calcularRendimento(meses);
+            } else {
+                System.out.println("Conta não é do tipo poupança.");
+            }
+        } else {
+            System.out.println("Conta não encontrada.");
+        }
+
+        operacoes();    
     }
 
     private static void listarContas() {
