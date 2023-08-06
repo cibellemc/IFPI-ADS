@@ -1,4 +1,4 @@
-package AgenciaBancaria;
+package AgenciaBancaria.models;
 
 public class ContaCorrente extends Conta {
     

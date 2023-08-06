@@ -1,6 +1,8 @@
-package AgenciaBancaria;
+package AgenciaBancaria.models;
 
-public class Pessoa {
+import AgenciaBancaria.interfaces.Cliente;
+
+public class Pessoa implements Cliente {
 
     private static int contadorDeClientes = 0;
 

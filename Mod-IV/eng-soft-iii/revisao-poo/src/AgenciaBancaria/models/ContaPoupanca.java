@@ -1,4 +1,4 @@
-package AgenciaBancaria;
+package AgenciaBancaria.models;
 
 public class ContaPoupanca extends Conta{
 
@@ -12,9 +12,10 @@ public class ContaPoupanca extends Conta{
     // ver rendimento
     public void calcularRendimento(int mesesAplicacao){
         if (mesesAplicacao > 0 && getSaldo() > 0) {
-            Double rendimento = getSaldo() * taxaRendimento * mesesAplicacao;
-            setSaldo(getSaldo() + rendimento);
-            System.out.println("\nNo período de " + mesesAplicacao + "seu dinheiro rendeu " + rendimento + "\nSaldo atual: " + getSaldo() );
+            // juros compostos
+            Double rendimento = getSaldo() * Math.pow(1 + taxaRendimento, mesesAplicacao);
+            setSaldo(rendimento);
+            System.out.println("\nNo período de " + mesesAplicacao + " meses seu dinheiro rendeu " + rendimento + "\nSaldo atual: " + getSaldo() );
         } else {
             System.out.println("Seu dinheiro não rendeu no período informado."); 
         }

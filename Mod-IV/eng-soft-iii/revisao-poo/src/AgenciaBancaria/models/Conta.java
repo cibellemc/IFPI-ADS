@@ -1,4 +1,4 @@
-package AgenciaBancaria;
+package AgenciaBancaria.models;
 
 import utilitarios.Utils;
 

@@ -1,7 +1,12 @@
-package AgenciaBancaria;
+package AgenciaBancaria.main;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import AgenciaBancaria.models.Conta;
+import AgenciaBancaria.models.ContaCorrente;
+import AgenciaBancaria.models.ContaPoupanca;
+import AgenciaBancaria.models.Pessoa;
 
 public class Banco {
 
@@ -15,7 +20,7 @@ public class Banco {
 
     public static void operacoes() {
 
-        System.out.println("------------------------------------------------------");
+        System.out.println("\n------------------------------------------------------");
         System.out.println("-------------Bem vindos a nossa Agência---------------");
         System.out.println("------------------------------------------------------");
         System.out.println("***** Selecione uma operação que deseja realizar *****");
