@@ -1,0 +1,28 @@
+MVC 
+MODEL-VIEW-CONTROLLER
+Padrão de arquitetura de software  
+Dividir a aplicação em 3, separando as regras de negócio da interface de usuário
+Model: acesso e manipulação de dados (função de consulta ao bd, acesso a api)
+View: interface, html, template
+Controller: meio de campo - recebe a requisição, usa o model para obter os dados e a view para renderizar a saída das informações
+Router: cria as rotas que ligam os endereços aos métodos de um controller
+Usuário > controller (trata req e solicita info) > model (devolve o que encontrou) > controller ("mistura" o que recebeu com as views)
+
+------------
+Aula 02 - https://www.youtube.com/watch?v=mMDt9g7bMjk
+Model - coração da aplicação, onde tem as regras de negócio, entidades, camada de acesso a dados; se liga ao bd
+View - renderizar resposta com js, html, css, template engine; telas
+Controller - coordenando o fluxo de dados do model pro view, mandando request pra base de dados, trabalha info e manda pra view
+
+Analogia MVC vs Prédio 
+* alta segurança
+* você não sabe o andar, sala, só o nome
+* a recepcionista diz que você não pode subir, mas que os funcionários podem te ajudar
+* FRONT MVC, FRAMEWORK MVC lê arquivo de metadados, XML/JSON e sabe distribuir requests
+* quem vai até a sala levando a carta é o controller
+* mapeamento das rotas - que url aponta pra que método
+
+Browser > Web Server > Aplicação > Controller
+
+* Sem dados, o browser solicita, controller encaminha para a view que responde
+* Com dados,  o browser solicita, controller instancia o model, que acessa o bd e retorna os dados pro controller, controller encaminha para a view que responde
