@@ -21,53 +21,55 @@ public class Banco {
     public static void operacoes() {
 
         System.out.println("\n------------------------------------------------------");
-        System.out.println("-------------Bem vindos a nossa Agência---------------");
+        System.out.println("-------------Bem vind@ à nossa agência---------------");
         System.out.println("------------------------------------------------------");
         System.out.println("***** Selecione uma operação que deseja realizar *****");
         System.out.println("------------------------------------------------------");
-        System.out.println("|   Opção 1 - Criar conta   |");
-        System.out.println("|   Opção 2 - Depositar     |");
-        System.out.println("|   Opção 3 - Sacar         |");
-        System.out.println("|   Opção 4 - Transferir    |");
-        System.out.println("|   Opção 5 - Listar        |");
-        System.out.println("|   Opção 6 - Sair          |");
+        System.out.println("|   Opção 1 - Criar conta    |");
+        System.out.println("|   Opção 2 - Depositar      |");
+        System.out.println("|   Opção 3 - Sacar          |");
+        System.out.println("|   Opção 4 - Transferir     |");
+        System.out.println("|   Opção 5 - Listar         |");
+        System.out.println("|   Opção 6 - Ver rendimento |");
+        System.out.println("|   Opção 7 - Deletar conta  |");
+        System.out.println("|   Opção 8 - Sair           |");
 
         int operacao = input.nextInt();
 
         switch (operacao) {
-            case 1:
-                criarConta();
-                break;
-
-            case 2:
-                depositar();
-                break;
-        
-            case 3:
-                sacar();
-                break;
-
-            case 4:
-                transferir();
-                break;
-
-            case 5:
-                listarContas();
-                break;
-
-            case 6:
-                consultarRendimento();
-                break;
-
-            case 7:
+            case 1 -> criarConta();
+            case 2 -> depositar();
+            case 3 -> sacar();
+            case 4 -> transferir();
+            case 5 -> listarContas();
+            case 6 -> consultarRendimento();
+            case 7 -> deletarConta();
+            case 8 -> {
                 System.out.println("Saindo...");
                 System.exit(0); // para o sistema
-
-            default:
+            }
+            default -> {
                 System.out.println("Opção inválida!");
                 operacoes();
-                break;
+            }
         }
+    }
+
+    private static void deletarConta() {
+        System.out.println("Número da conta para exclusão: ");
+        int numeroConta = input.nextInt();
+
+        Conta conta = encontrarConta(numeroConta);
+
+        if (conta != null) {
+            contas.remove(conta);
+
+            System.out.println("Conta excluída com sucesso.");
+        } else {
+            System.out.println("Conta não encontrada.");
+        }
+
+        operacoes();
     }
 
     private static void criarConta() {
@@ -84,30 +86,30 @@ public class Banco {
 
         System.out.println("\nEscolha seu tipo de conta ideal:\n1 - Comum\n2 - Corrente\n3 - Poupança");
         int tipoConta = input.nextInt();
-        
+
 
         switch (tipoConta) {
-            case 1:
+            case 1 -> {
                 Conta conta = new Conta(pessoa, "comum");
                 contas.add(conta);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 System.out.println("Informe o valor do limite do cheque especial:");
                 Double limiteChequeEspecial = input.nextDouble();
-                ContaCorrente contaCorrente = new ContaCorrente(pessoa, "corrente",limiteChequeEspecial);
+                ContaCorrente contaCorrente = new ContaCorrente(pessoa, "corrente", limiteChequeEspecial);
                 contas.add(contaCorrente);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 System.out.println("Informe a taxa de rendimento (em decimal):");
                 Double taxaRendimento = input.nextDouble();
-                ContaPoupanca contaPoupanca = new ContaPoupanca(pessoa, "poupança",taxaRendimento);
+                ContaPoupanca contaPoupanca = new ContaPoupanca(pessoa, "poupança", taxaRendimento);
                 contas.add(contaPoupanca);
-                break;
-            default:
+            }
+            default -> {
                 System.out.println("Opção inválida!");
                 operacoes();
-                break;            
             }
+        }
             
         System.out.println("Conta criada com sucesso!");
 
@@ -117,7 +119,7 @@ public class Banco {
     private static Conta encontrarConta(int numeroConta){
         Conta conta = null;
 
-        if (contas.size() > 0) {
+        if (!contas.isEmpty()) {
             for (Conta c: contas) {
                 if (c.getNumeroConta() == numeroConta) {
                     conta = c;
@@ -194,8 +196,7 @@ public class Banco {
                 
         if (conta != null)  {
 
-            if (conta instanceof ContaPoupanca) {
-                ContaPoupanca contaPoupanca = (ContaPoupanca) conta; // cast
+            if (conta instanceof ContaPoupanca contaPoupanca) {
 
                 System.out.println("\nInforme quantos meses o dinheiro ficou parado:");
                 int meses = input.nextInt();
@@ -208,11 +209,11 @@ public class Banco {
             System.out.println("Conta não encontrada.");
         }
 
-        operacoes();    
+        operacoes();
     }
 
     private static void listarContas() {
-        if (contas.size() > 0) {
+        if (!contas.isEmpty()) {
             for (Conta conta: contas) {
                 System.out.println(conta);
             }
