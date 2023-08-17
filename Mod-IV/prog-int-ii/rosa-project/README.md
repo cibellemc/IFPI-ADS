@@ -25,3 +25,7 @@
 * Aula - [Padrão MVC (Model - View - Controller)](https://www.youtube.com/watch?v=mMDt9g7bMjk)
 
 * Compartilhando descobertas - [Docker + Render: colocando seu site online](https://www.youtube.com/watch?v=W7Y7ThMGdXc&t=121s)
+
+* Setup - [HowTo Install nvm, node, npm and yarn on Windows 11](https://www.youtube.com/watch?v=NWUfaXFPv50&feature=youtu.be)
+
+* Aula - [Qual a diferença entre SPA, SSG e SSR? (React vs GatsbyJS vs NextJS)](https://youtu.be/VM_ncQcQdmY)

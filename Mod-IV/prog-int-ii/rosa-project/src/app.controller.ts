@@ -1,17 +1,22 @@
-import { Controller, Get, Query, Render } from '@nestjs/common';
+import { Body, Controller, Get, Post, Render } from '@nestjs/common';
 import { AppService } from './app.service';
+
+interface Produto {
+  nome: string
+  status: string
+  destinacao: string
+  taxa_rentabilidade: number
+  prazo: number
+  taxa_administracao: number
+}
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get('/')
-  @Render('index')
-  hello(@Query('nome') nome = 'Usuário'){
-    const dados_usuario = { 
-      nome,
-      qtd_letras: nome.length,
-    }
-    return dados_usuario
+  @Render('form')
+  inicio(){
+    return
   }
 }

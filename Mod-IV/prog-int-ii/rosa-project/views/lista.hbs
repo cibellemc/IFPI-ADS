@@ -1,0 +1,11 @@
+<!-- produtos.hbs -->
+
+<h1>Lista de Produtos</h1>
+<ul>
+  {{#each produtos}}
+  <li>
+    {{this.nome}} - {{this.status}} - {{this.destinacao}}
+    <!-- Outros campos do produto aqui -->
+  </li>
+  {{/each}}
+</ul>
