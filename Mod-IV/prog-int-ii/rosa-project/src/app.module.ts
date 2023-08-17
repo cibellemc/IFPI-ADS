@@ -15,7 +15,7 @@ import { Produto } from './produto/produto.entity';
       password: '01111971',
       database: 'test',
       entities: [Produto],
-      synchronize: true,
+      //synchronize: true,
     }),
   ],
   controllers: [AppController],
