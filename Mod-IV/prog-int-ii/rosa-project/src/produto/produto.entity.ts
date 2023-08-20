@@ -1,20 +1,29 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+enum Status {
+  DISPONIVEL = 'Disponível',
+  INDISPONIVEL = 'Indisponível',
+}
+
 @Entity()
 export class Produto {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({length: 32})
   nome: string;
 
-  @Column()
-  status: string;
+  @Column({
+    type: 'enum',
+    enum: Status,
+    default: Status.DISPONIVEL, 
+  })
+  status: Status;
 
-  @Column()
+  @Column({length: 180})
   destinacao: string;
 
-  @Column('decimal', { precision: 10, scale: 2 })
+  @Column('int')
   taxa_rentabilidade: number;
 
   @Column('int')

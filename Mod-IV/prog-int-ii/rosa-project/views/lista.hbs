@@ -1,11 +1,17 @@
-<!-- produtos.hbs -->
-
 <h1>Lista de Produtos</h1>
 <ul>
   {{#each produtos}}
-  <li>
-    {{this.nome}} - {{this.status}} - {{this.destinacao}}
-    <!-- Outros campos do produto aqui -->
-  </li>
+  <div>
+    <p>Nome: {{this.nome}}</p>
+    <p>Status: {{this.status}}</p>
+    <p>Destinação: {{this.destinacao}}</p>
+    
+    <form action="/produtos/editar/{{this.id}}" method="get">
+      <button type="submit">Editar</button>
+    </form>
+
+    <hr>
+
+  </div>
   {{/each}}
 </ul>
