@@ -1,7 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Status } from './produto.entity'; 
 import { Produto } from './produto.entity'; 
+import { InjectRepository } from '@nestjs/typeorm';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DestinacaoInvalidaException, NomeInvalidoException, PrazoInvalidoException, TaxaRentabilidadeInvalidaException } from 'src/exceptions';
 
 @Injectable()
@@ -22,28 +23,35 @@ export class ProdutoService {
       throw new DestinacaoInvalidaException();
     }
   }
-
+  
   validarTaxaRentabilidade(taxaRentabilidade: number): void {
-    if (!Number.isInteger(taxaRentabilidade) || taxaRentabilidade < 1 || taxaRentabilidade > 20) {
+    if ( /*!(Number.isInteger(taxaRentabilidade)) || */ taxaRentabilidade < 1 || taxaRentabilidade > 20) {
       throw new TaxaRentabilidadeInvalidaException();
     }
   }
 
   validarPrazo(prazo: number): void {
-    if (!Number.isInteger(prazo) || prazo < 0 || prazo > 48) {
+    if (/*!(Number.isInteger(prazo)) || */ prazo < 0 || prazo > 48) {
       throw new PrazoInvalidoException();
     }
   }
   
+  validarProduto(produto: Produto): void {
+    this.validarNome(produto.nome);
+    this.validarDestinacao(produto.destinacao);
+    this.validarTaxaRentabilidade(produto.taxa_rentabilidade);
+    this.validarPrazo(produto.prazo);
+  }
+
+  async create(produto: Produto): Promise<Produto> {
+      this.validarProduto(produto);
+      return this.produtoRepository.save(produto);
+  }
+
   async findAll(): Promise<Produto[]> {
     return this.produtoRepository.find({
       order: { id: 'ASC' },
     })
-  }
-
-  async create(produto: Produto): Promise<Produto> {
-    this.validarPrazo(produto.prazo);
-    return this.produtoRepository.save(produto);
   }
   
   async findOne(id: number): Promise<Produto> {
@@ -52,5 +60,27 @@ export class ProdutoService {
       throw new NotFoundException('Produto não encontrado');
     }
     return produto;
+  }
+
+  async remove(id: number): Promise<void> {
+    const produto = await this.produtoRepository.findOneBy({id: id})
+    
+    if (!produto) {
+      throw new NotFoundException('Produto não encontrado');
+    }  
+    
+    await this.produtoRepository.remove(produto);
+  }
+
+  async mudarStatusProduto(id: number): Promise<Produto> {
+    const produto = await this.produtoRepository.findOneBy({id: id})
+  
+    if (!produto) {
+      throw new NotFoundException('Produto não encontrado');
+    }
+  
+    produto.status = produto.status === Status.DISPONIVEL ? Status.INDISPONIVEL : Status.DISPONIVEL;
+  
+    return this.produtoRepository.save(produto);
   }
 }

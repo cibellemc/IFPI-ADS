@@ -6,10 +6,13 @@
     <p>Status: {{this.status}}</p>
     <p>Destinação: {{this.destinacao}}</p>
     
-    <form action="/produtos/editar/{{this.id}}" method="get">
-      <button type="submit">Editar</button>
+    <form action="/produtos/delete/{{this.id}}" method="post">
+      <button type="submit">Deletar</button>
     </form>
 
+    <form action="/produtos/mudar-status/{{this.id}}" method="post">
+      <button type="submit">Mudar status</button>
+    </form>
     <hr>
 
   </div>

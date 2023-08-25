@@ -1,12 +1,12 @@
 import { Controller, Get, Post, Body, Render, Redirect, Query, Param, NotFoundException, Put } from '@nestjs/common';
 import { ProdutoService } from './produto.service'; 
-import { Produto } from './produto.entity'; 
+import { Produto, Status } from './produto.entity'; 
 
 @Controller("produtos")
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
   
-  @Get('/lista')
+  @Get('/')
   @Render('lista')
   async listarProdutos(): Promise<{ produtos: Produto[] }> {
     const produtos = await this.produtoService.findAll();
@@ -21,14 +21,13 @@ export class ProdutoController {
   }
 
   @Post('/add') // rota - adicionar produtos
-  @Redirect('/produtos/lista')
+  @Redirect('/produtos')
   async adicionarProduto(@Body() produto: Produto): Promise<Produto> {
     return this.produtoService.create(produto);
   }
 
   @Post('/editar/:id')
-  @Redirect('/produtos/lista')
-  
+  @Redirect('/produtos')
   async editarProduto(@Param('id') id: number, @Body() produto: Produto): Promise<Produto> {
     // Primeiro, você precisa buscar o produto atual no banco de dados
     const produtoAtual = await this.produtoService.findOne(id);
@@ -49,4 +48,29 @@ export class ProdutoController {
     return this.produtoService.create(produtoAtual);
   }
   
+  @Post('/delete/:id')
+  @Redirect('/produtos')
+    async removerProduto(@Param('id') id: number): Promise<void> {
+      const produtoExclusao = await this.produtoService.findOne(id);
+      
+      if (!produtoExclusao) {
+        throw new NotFoundException('Produto não encontrado');
+      }
+
+      await this.produtoService.remove(id);
+    }
+
+  
+  @Post('/mudar-status/:id')
+  @Redirect('/produtos')
+  async mudarStatusProduto(@Param('id') id: number): Promise<void> {
+    const produtoStatus = await this.produtoService.findOne(id);
+
+    if (!produtoStatus) {
+      throw new NotFoundException('Produto não encontrado');
+    }
+    
+    await this.produtoService.mudarStatusProduto(id);
+  }
+
 }

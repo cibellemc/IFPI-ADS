@@ -17,13 +17,16 @@
     <input type="text" id="destinacao" name="destinacao" value="{{this.destinacao}}" required><br><br>
 
     <label for="taxa_rentabilidade">Taxa de Rentabilidade:</label>
-    <input type="number" step="0.01" id="taxa_rentabilidade" name="taxa_rentabilidade" value="{{this.taxa_rentabilidade}}" required><br><br>
+    <input type="number" id="taxa_rentabilidade" name="taxa_rentabilidade" value="{{this.taxa_rentabilidade}}" required><br><br>
 
     <label for="prazo">Prazo em meses:</label>
     <input type="number" id="prazo" name="prazo" value="{{this.prazo}}" required><br><br>
 
     <label for="taxa_administracao">Taxa de Administração:</label>
     <input type="number" step="0.01" id="taxa_administracao" name="taxa_administracao" value="{{this.taxa_administracao}}" required><br><br>
+
+    <label for="vencimento">Data de Vencimento:</label>
+    <input type="date" id="vencimento" name="vencimento" value="{{this.vencimento}}" required><br><br>
 
     <button type="submit">Salvar Edições</button>
     </form>

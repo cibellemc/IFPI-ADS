@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-enum Status {
+export enum Status {
   DISPONIVEL = 'Disponível',
   INDISPONIVEL = 'Indisponível',
 }
