@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Render, Redirect, Query, Param, NotFoundException, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Render, Redirect, Param, NotFoundException } from '@nestjs/common';
 import { ProdutoService } from './produto.service'; 
-import { Produto, Status } from './produto.entity'; 
+import { Produto } from './produto.entity'; 
 
 @Controller("produtos")
 export class ProdutoController {
@@ -13,12 +13,12 @@ export class ProdutoController {
     return { produtos };
   }
     
-  @Get('editar/:id')
+  /*@Get('editar/:id')
   @Render('edicao')
   async editar(@Param('id') id: number): Promise<Produto> {
     const produto = await this.produtoService.findOne(id)    
     return produto 
-  }
+  }*/
 
   @Post('/add') // rota - adicionar produtos
   @Redirect('/produtos')
@@ -26,7 +26,7 @@ export class ProdutoController {
     return this.produtoService.create(produto);
   }
 
-  @Post('/editar/:id')
+  /*@Post('/editar/:id')
   @Redirect('/produtos')
   async editarProduto(@Param('id') id: number, @Body() produto: Produto): Promise<Produto> {
     // Primeiro, você precisa buscar o produto atual no banco de dados
@@ -46,7 +46,7 @@ export class ProdutoController {
   
     // Salve o produto atualizado no banco de dados
     return this.produtoService.create(produtoAtual);
-  }
+  }*/
   
   @Post('/delete/:id')
   @Redirect('/produtos')
