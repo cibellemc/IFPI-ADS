@@ -24,4 +24,10 @@ export class DestinacaoInvalidaException extends BadRequestException {
       super('Prazo deve ser um inteiro entre 0 e 48.');
     }
   }
+    
+  export class DataInvalidaException extends BadRequestException {
+    constructor() {
+      super('Data deve ser maior que o dia de hoje.');
+    }
+  }
   

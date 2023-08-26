@@ -32,6 +32,6 @@ export class Produto {
   @Column('decimal', { precision: 10, scale: 2 })
   taxa_administracao: number;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: 'date'})
   vencimento: Date;
 }

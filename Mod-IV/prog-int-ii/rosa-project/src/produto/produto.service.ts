@@ -3,7 +3,7 @@ import { Status } from './produto.entity';
 import { Produto } from './produto.entity'; 
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { DestinacaoInvalidaException, NomeInvalidoException, PrazoInvalidoException, TaxaRentabilidadeInvalidaException } from 'src/exceptions';
+import { DestinacaoInvalidaException, DataInvalidaException, NomeInvalidoException, PrazoInvalidoException, TaxaRentabilidadeInvalidaException } from 'src/exceptions';
 
 @Injectable()
 export class ProdutoService {
@@ -35,12 +35,22 @@ export class ProdutoService {
       throw new PrazoInvalidoException();
     }
   }
+
+  validarData(data: Date) : void {
+    const dataAtual = new Date(); // Obtém a data atual
+    const dataFormatada = new Date(data)
+    
+    if (dataFormatada < dataAtual ) {
+      throw new DataInvalidaException();
+    }
+  }
   
   validarProduto(produto: Produto): void {
     this.validarNome(produto.nome);
     this.validarDestinacao(produto.destinacao);
     this.validarTaxaRentabilidade(produto.taxa_rentabilidade);
     this.validarPrazo(produto.prazo);
+    this.validarData(produto.vencimento)
   }
 
   async create(produto: Produto): Promise<Produto> {
