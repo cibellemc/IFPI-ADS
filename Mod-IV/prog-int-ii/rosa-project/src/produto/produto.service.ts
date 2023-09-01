@@ -35,22 +35,28 @@ export class ProdutoService {
       throw new PrazoInvalidoException();
     }
   }
+  
+   validarData(dataInformada: Date, prazoEmMeses: number) {
+    const hoje = new Date(); // hoje
+    const prazoEmDias = prazoEmMeses * 30; // assumindo 30 dias por mês 
 
-  validarData(data: Date) : void {
-    const dataAtual = new Date(); // Obtém a data atual
-    const dataFormatada = new Date(data)
+    const dataExpiracao = new Date(hoje);
+    dataExpiracao.setDate(dataExpiracao.getDate() + prazoEmDias);
+    dataExpiracao.setHours(0, 0, 0, 0);
+    //console.log(dataExpiracao);
+    //console.log(new Date(dataInformada));
     
-    if (dataFormatada < dataAtual ) {
-      throw new DataInvalidaException();
+    if (new Date(dataInformada) <= dataExpiracao){
+      throw new DataInvalidaException
     }
-  }
+}
   
   validarProduto(produto: Produto): void {
     this.validarNome(produto.nome);
     this.validarDestinacao(produto.destinacao);
     this.validarTaxaRentabilidade(produto.taxa_rentabilidade);
     this.validarPrazo(produto.prazo);
-    this.validarData(produto.vencimento)
+    this.validarData(produto.vencimento, produto.prazo)
   }
 
   async create(produto: Produto): Promise<Produto> {

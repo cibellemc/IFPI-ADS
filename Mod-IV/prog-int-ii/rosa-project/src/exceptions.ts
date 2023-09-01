@@ -27,7 +27,7 @@ export class DestinacaoInvalidaException extends BadRequestException {
     
   export class DataInvalidaException extends BadRequestException {
     constructor() {
-      super('Data deve ser maior que o dia de hoje.');
+      super('Data deve ser maior que o prazo estabelecido.');
     }
   }
   
