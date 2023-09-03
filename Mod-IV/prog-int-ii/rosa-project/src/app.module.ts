@@ -10,6 +10,7 @@ import { Produto } from './produto/produto.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       url: process.env.DATABASE_URL,
+      ssl: true,
       entities: [Produto],
       synchronize: false,
     }),
