@@ -1,4 +1,3 @@
-// src/exceptions/nome-invalido.exception.ts
 import { BadRequestException } from '@nestjs/common';
 
 export class NomeInvalidoException extends BadRequestException {

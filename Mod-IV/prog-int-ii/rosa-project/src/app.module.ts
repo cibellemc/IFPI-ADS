@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+//import { AppController } from './app.controller';
+//import { AppService } from './app.service';
 import { ProdutoModule } from './produto/produto.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Produto } from './produto/produto.entity';
@@ -9,13 +9,16 @@ import { Produto } from './produto/produto.entity';
   imports: [ProdutoModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: process.env.DATABASE_URL,
-      ssl: true,
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '01111971',
+      database: 'test',
       entities: [Produto],
-      synchronize: false,
+      synchronize: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
