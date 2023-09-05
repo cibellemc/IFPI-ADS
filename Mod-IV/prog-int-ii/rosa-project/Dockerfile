@@ -1,9 +1,9 @@
 FROM node:16
 
-WORKDIR /src
+WORKDIR /app
 
 COPY package*.json ./
-RUN npm install --only=production
+RUN npm install
 
 COPY . .
 
