@@ -4,13 +4,15 @@ import { Module } from '@nestjs/common';
 import { ProdutoModule } from './produto/produto.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Produto } from './produto/produto.entity';
+import dotenv from 'dotenv';
+dotenv.config(); 
 
 @Module({
   imports: [ProdutoModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       port: 5432,
-      //host: process.env.HOSTNAME,
+      host: process.env.HOSTNAME,
       username: process.env.USERNAME, 
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
