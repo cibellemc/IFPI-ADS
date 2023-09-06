@@ -4,8 +4,6 @@ import { Module } from '@nestjs/common';
 import { ProdutoModule } from './produto/produto.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Produto } from './produto/produto.entity';
-import dotenv from 'dotenv';
-dotenv.config(); 
 
 @Module({
   imports: [ProdutoModule,
