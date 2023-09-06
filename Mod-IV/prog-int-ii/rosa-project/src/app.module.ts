@@ -10,7 +10,7 @@ import { Produto } from './produto/produto.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       port: 5432,
-      host: process.env.HOSTNAME,
+      //host: process.env.HOSTNAME,
       username: process.env.USERNAME, 
       password: process.env.PASSWORD,
       database: process.env.DATABASE,
