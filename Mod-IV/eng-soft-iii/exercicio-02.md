@@ -15,15 +15,15 @@
 <br>
 [ ] 7. Crie e exemplifique uma classe com alto acoplamento e refatore-a para ter o acoplamento reduzido.
 <br>
-[ ] 8. Por que dizemos que o princípio "Tell, don't ask" mitiga problema de acoplamento.
+[x] 8. Por que dizemos que o princípio "Tell, don't ask" mitiga problema de acoplamento.
 <br>
 [ ] 9. É possível zerar o acoplamento em um software simples ou complexo? Justifique.
 <br>
 [ ] 10. O encapsulamento também mitiga o acoplamento alto? Discuta o exemplo da página 7 do artigo Coesão e Acoplamento em Sistemas Orientados a Objetos.
 <br>
-[ ] 11. Refatore a classe Usuario para reduzir o acoplamento em relação a Posts e Comentários.
+[x] 11. Refatore a classe Usuario para reduzir o acoplamento em relação a Posts e Comentários.
 <br>
-[ ] 12. Refatore a classe Usuario para reduzir o acoplamento em relação a amigos.
+[x] 12. Refatore a classe Usuario para reduzir o acoplamento em relação a amigos.
 <br>
 [ ] 13. Verifique seus repositórios e identifique problemas de coesão e classifique-os.
 <br>
@@ -234,6 +234,17 @@ Demonstre.
 </summary>
 
 **Resposta:**
+Porque promove a encapsulação e reduz a exposição de informações internas.
+Ex:
+```
+// ask - pagamento precisa saber do estado de pedido
+if (pedido.isProntoParaPagamento()) {
+    pagamento.processar();
+}
+
+// tell - pedido sabe do seu estado e age com base nele
+pedido.processarPagamento(pagamento);
+```
 </details>
 <br>
 
@@ -284,6 +295,38 @@ específicas.
 </summary>
 
 **Resposta:**
+```
+public interface Conteudo {}
+
+public class Post implements Conteudo {
+    private String conteudo;
+
+    public Post(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    // métodos específicos de Post
+}
+
+public class Comentario implements Conteudo {
+    private String conteudo;
+
+    public Comentario(String conteudo) {
+        this.conteudo = conteudo;
+    }
+
+    // métodos específicos de Comentario
+}
+
+public class Usuario {
+    private List<Conteudo> conteudos;
+
+    public void criarConteudo(Conteudo novoConteudo) {
+        conteudos.add(novoConteudo);
+    }
+}
+```
+
 </details>
 <br>
 
@@ -307,6 +350,36 @@ public class Usuario {
 </summary>
 
 **Resposta:**
+```
+public enum TipoRelacionamento {
+    AMIGO,
+    SEGUIDOR
+}
+
+public class Relacionamento {
+    private Usuario usuarioSolicitante;
+    private Usuario usuarioAprovador;
+    private TipoRelacionamento tipo;
+
+    public Relacionamento(Usuario iniciador, Usuario receptor, TipoRelacionamento tipo) {
+        this.usuarioSolicitante = iniciador;
+        this.usuarioAprovador = receptor;
+        this.tipo = tipo;
+    }
+}
+
+public class Usuario {
+    private List<Relacionamento> relacoes;
+
+    public Usuario() {
+        relacionamentos = new ArrayList<>();
+    }
+
+    public void adicionarRelacionamento(Relacionamento novoRelacionamento) {
+        relacionamentos.add(novoRelacionamento);
+    }
+}
+```
 </details>
 <br>
 
