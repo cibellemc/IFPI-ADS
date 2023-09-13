@@ -9,17 +9,17 @@
 <br>
 [x] 4. Refatore a classe Utilitarios criando classes coesas para funcionalidades específicas.
 <br>
-[ ] 5. Demonstre com Classes os principais tipos de coesão presentes no artigo Acoplamento e Coesão.
+[x] 5. Demonstre com Classes os principais tipos de coesão presentes no artigo Acoplamento e Coesão.
 <br>
 [x] 6. Explique com suas palavras o que é o acoplamento entre classes.
 <br>
-[ ] 7. Crie e exemplifique uma classe com alto acoplamento e refatore-a para ter o acoplamento reduzido.
+[x] 7. Crie e exemplifique uma classe com alto acoplamento e refatore-a para ter o acoplamento reduzido.
 <br>
 [x] 8. Por que dizemos que o princípio "Tell, don't ask" mitiga problema de acoplamento.
 <br>
-[ ] 9. É possível zerar o acoplamento em um software simples ou complexo? Justifique.
+[x] 9. É possível zerar o acoplamento em um software simples ou complexo? Justifique.
 <br>
-[ ] 10. O encapsulamento também mitiga o acoplamento alto? Discuta o exemplo da página 7 do artigo Coesão e Acoplamento em Sistemas Orientados a Objetos.
+[x] 10. O encapsulamento também mitiga o acoplamento alto? Discuta o exemplo da página 7 do artigo Coesão e Acoplamento em Sistemas Orientados a Objetos.
 <br>
 [x] 11. Refatore a classe Usuario para reduzir o acoplamento em relação a Posts e Comentários.
 <br>
@@ -204,6 +204,110 @@ Acoplamento e Coesão, disponível em https://www.facom.ufu.br/~ronaldooliveira/
 </summary>
 
 **Resposta:**
+1. Coesão coincidental:  não têm uma relação lógica entre si e são agrupadas de maneira arbitrária ou aleatória
+```
+public class Utilitarios {
+    public void calcularImposto() { // Cálculo de impostos }
+
+    public void reproduzirMusica(String musica) { // Reprodução de música }
+}
+```
+2. Coesão lógica: papel semelhante ou complementar dentro do contexto
+```
+public class Calculadora {
+    public int somar(int a, int b) {
+        return a + b;
+    }
+
+    public int subtrair(int a, int b) {
+        return a - b;
+    }
+}
+```
+3. Coesão funcional: funcionalidades têm objetivo comum e compartilham um propósito claro
+```
+public class GerenciadorDeProdutos {
+    public void adicionarProduto(Produto produto) {
+        // Adicionar um novo produto ao catálogo
+    }
+
+    public void removerProduto(Produto produto) {
+        // Remover um produto do catálogo
+    }
+
+    public Produto buscarProdutoPorID(int id) {
+        // Buscar um produto por ID
+    }
+}
+```
+4. Coesão de Comunicação: compartilham informações ou dados em comum
+```
+public class MensagensChat {
+    public void enviarMensagem(Mensagem mensagem) {
+        // Enviar uma mensagem para o chat
+    }
+
+    public void receberMensagem(Mensagem mensagem) {
+        // Receber uma mensagem do chat e exibi-la
+    }
+
+    public void excluirMensagem(Mensagem mensagem) {
+        // Excluir uma mensagem do chat
+    }
+}
+```
+5. Coesão Temporal: executadas no mesmo período de tempo ou ciclo de execução
+```
+public class Agenda {
+    public void adicionarEvento(Evento evento) {
+        // Adicionar um evento à agenda
+    }
+
+    public void removerEvento(Evento evento) {
+        // Remover um evento da agenda
+    }
+
+    public void notificarEventos() {
+        // Notificar eventos que estão agendados para hoje
+    }
+}
+```
+6. Coesão Procedural: processo/tarefa específicos
+```
+public class ProcessamentoDePedidos {
+    public void receberPedido(Pedido pedido) {
+        // Receber um novo pedido
+    }
+
+    public void validarPedido(Pedido pedido) {
+        // Validar o pedido (verificar estoque, pagamento, etc.)
+    }
+
+    public void processarPedido(Pedido pedido) {
+        // Processar o pedido (gerar fatura, enviar confirmação, etc.)
+    }
+}
+```
+7. Coesão Sequencial: executadas em sequência específica
+```
+public class FluxoDeTrabalho {
+    public void iniciar() {
+        // Iniciar o fluxo de trabalho
+    }
+
+    public void passo1() {
+        // Executar o passo 1 do fluxo de trabalho
+    }
+
+    public void passo2() {
+        // Executar o passo 2 do fluxo de trabalho
+    }
+
+    public void finalizar() {
+        // Finalizar o fluxo de trabalho
+    }
+}
+```
 </details>
 <br>
 
@@ -224,6 +328,56 @@ acoplamento reduzido.
 </summary>
 
 **Resposta:**
+1. Classe com Alto Acomplamento
+```
+public class Pedido {
+    private String descricao;
+    private Cozinha cozinha;
+
+    public Pedido(String descricao, Cozinha cozinha) {
+        this.descricao = descricao;
+        this.cozinha = cozinha;
+    }
+
+    public void preparar() { // depende diretamente de Cozinha
+        cozinha.prepararPedido(this);
+    }
+}
+
+public class Cozinha { 
+    public void prepararPedido(Pedido pedido) {
+        /**/
+        System.out.println("Preparando pedido: " + pedido.getDescricao());
+    }
+}
+```
+2. Classe Refatorada
+```
+public interface Cozinha { // introdução da interface, que será nova dependência de Pedido
+    void prepararPedido(Pedido pedido);
+}
+
+public class Pedido {
+    private String descricao;
+    private Cozinha cozinha;
+
+    public Pedido(String descricao, Cozinha cozinha) {
+        this.descricao = descricao;
+        this.cozinha = cozinha;
+    }
+
+    public void preparar() {
+        cozinha.prepararPedido(this); // não é afetada se outras implementações de Cozinha forem criadas
+    }
+}
+
+public class CozinhaDoRestaurante implements Cozinha {
+    public void prepararPedido(Pedido pedido) {
+        /**/
+        System.out.println("Preparando pedido: " + pedido.getDescricao());
+    }
+}
+```
 </details>
 <br>
 
@@ -254,6 +408,7 @@ pedido.processarPagamento(pagamento);
 </summary>
 
 **Resposta:**
+Não, além de que isso não é desejável. Especialmente em softwares complexos, com muitas partes se comunicando e cooperando, o acoplamento é inevitável. Reduzir acoplamento e aumentar coezão é a prioridade, em detrimento do acoplamento zero.
 </details>
 <br>
 
@@ -264,6 +419,7 @@ página 7 do artigo Coesão e Acoplamento em Sistemas Orientados a Objetos.
 </summary>
 
 **Resposta:**
+Sim, porque não precisamos acessar diretamente estados fora da classe, isso é feito por métodos e interfaces. No segundo exemplo, ao invés de setar "on", 1 ou 2 para mudar a condição da lâmpada, usamos métodos que escondem a complexidade, melhoram a legibilidade e coesão. 
 </details>
 <br>
 
