@@ -2,24 +2,22 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PessoaModule } from './pessoa/pessoa.module';
-import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { Pessoa } from './pessoa/entities/pessoa.entity';
 
 @Module({
- imports: [
-   ConfigModule.forRoot(),
-   TypeOrmModule.forRoot({
-     type: 'postgres',
-     host: process.env.DB_HOST,
-     port: parseInt(process.env.DB_PORT),
-     username: process.env.DB_USERNAME,
-     password: process.env.DB_PASSWORD,
-     database: process.env.DB_DATABASE,
-     entities: [__dirname + '/**/*.entity{.ts,.js}'],
-     synchronize: (process.env.DB_SYNCHRONIZE === 'true'),
-   }),
-   PessoaModule,
- ],
+ imports: [PessoaModule,
+  TypeOrmModule.forRoot({
+    type: 'postgres',
+    port: 5432,
+    host: process.env.HOSTNAME,
+    username: process.env.USERNAME, 
+    password: process.env.PASSWORD,
+    database: process.env.DATABASE,
+    entities: [Pessoa],
+    synchronize: true,
+  })
+],
  controllers: [AppController],
  providers: [AppService],
 })
