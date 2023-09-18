@@ -7,6 +7,11 @@ export class PessoaController {
   constructor(private readonly pessoaService: PessoaService) {}
   
   @Get()
+  findAll() {
+    return this.pessoaService.findAll();
+  }
+
+  @Get()
   find(@Query('t') termo: string) {
     return this.pessoaService.findTerm(termo);
   }

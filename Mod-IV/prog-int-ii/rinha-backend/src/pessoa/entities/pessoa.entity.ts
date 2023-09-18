@@ -5,8 +5,8 @@ export class Pessoa {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column({ name: 'name', type: 'varchar', length: 100, nullable: false  })
-    name: string;
+    @Column({ name: 'nome', type: 'varchar', length: 100, nullable: false  })
+    nome: string;
 
     @Column({ name: 'apelido', type: 'varchar', length: 32, nullable: false, unique: true })
     apelido: string;
