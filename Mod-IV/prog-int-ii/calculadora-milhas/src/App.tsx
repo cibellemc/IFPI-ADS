@@ -10,7 +10,7 @@ function App() {
       <h1>Calcular milhas com bônus</h1>
       <MostradorBotoesMilhas />
       <div className={stylesMostrador.Mostrador}>
-        <InputDados label='Preço milheiro'/>
+        <InputDados label='Preço milheiro' valor={70}/>
       </div>
       <MostradorBotoesBonus />
     </div>

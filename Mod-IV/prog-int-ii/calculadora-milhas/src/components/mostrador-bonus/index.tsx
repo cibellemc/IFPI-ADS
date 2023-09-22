@@ -8,7 +8,7 @@ export function MostradorBotoesBonus() {
   return (
     <div className={stylesMostrador.Mostrador}>
 
-        <InputDados label='Bônus'/>
+        <InputDados label='Bônus' valor={100}/>
 
         <div className={stylesBotao.Botoes}>
             <BotaoBonus valorBonus={80}/>
@@ -18,7 +18,7 @@ export function MostradorBotoesBonus() {
             <BotaoBonus valorBonus={250}/>
             <BotaoBonus valorBonus={300}/>
         </div>
-        
+
     </div>
     
   )

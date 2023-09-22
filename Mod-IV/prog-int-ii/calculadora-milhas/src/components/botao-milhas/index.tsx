@@ -2,11 +2,11 @@ import styles from '../../styles/button.module.css'
 
 interface BotaoMilhasProps {
     valorMilhas?: number
-    icon?: string
+    onClick?: () => void
 }
 
 export function BotaoMilhas(props: BotaoMilhasProps) {
     return (
-        <button className={styles.Button}>{props.icon}{props.valorMilhas}k</button>
+        <button className={styles.Button}>{props.valorMilhas}k</button>
     )
 }
