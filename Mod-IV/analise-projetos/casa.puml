@@ -1,0 +1,74 @@
+@startuml Casa
+
+title Mapeando classe para o código
+
+enum Acabamento {
+    Liso
+    Texturizado
+    Pintado
+    Outro
+}
+
+enum TipoTelha {
+    Cerâmica
+    Metálica
+    Ardósia
+    Outro
+}
+
+enum TipoVidro {
+    Comum
+    Temperado
+    Reflectivo
+    Outro
+}
+
+class Endereco {
+    + logradouro
+    + numero
+    + cep
+}
+
+interface Moradia {
+    + area: Double
+    + endereco: Endereco
+}
+
+interface Parede {
+    + altura: Double
+    + largura: Double
+    + acabamento: Acabamento
+}
+
+interface Telhado {
+    + tipoTelha: TipoTelha
+    + area: Double
+}
+
+interface Espelho {
+    + tipoVidro: TipoVidro
+    + altura: Double
+    + largura: Double
+}
+
+class Casa implements Moradia {
+    + telhadoAreaExterna: Telhado
+    + telhadoAreaInterna: Telhado
+    + paredeBanheiro: Parede
+    + paredeCozinha: Parede
+    + espelhoCorredor: Espelho
+}
+
+Parede --* Casa: ParedeQuarto
+Parede --* Casa: ParedeBanheiro
+Parede --* Casa: ParedeCozinha
+Espelho --o Casa: EspelhoCorredor
+Telhado --* Casa: TelhadoAreaExterna
+Telhado --* Casa: TelhadoAreaInterna
+
+Endereco -- Moradia
+Parede -- Acabamento
+Telhado -- TipoTelha
+Espelho -- TipoVidro
+
+@enduml
