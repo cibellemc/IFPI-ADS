@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.barra-opcoes, .conteudo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+}
+
+.barra-opcoes img {
+    width: 40px;
+    height: 40px;
+}
+
+.barra-opcoes {
+    height: 70px;
+    background-color: rgb(182, 244, 224);
+    gap: 10px;
+}
