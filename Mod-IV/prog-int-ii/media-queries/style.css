@@ -16,11 +16,6 @@
 
 
 @media (max-width: 720px) {
-    main {
-        display: flex;
-        padding: 20px;    
-    }
-
     .barra-opcoes, .outras-opcoes {
         display: flex;
         flex-direction: column;
@@ -45,6 +40,7 @@
     .user img {
         display: block;
     }
+
     .user {
         display: flex;
         flex-direction: column;
