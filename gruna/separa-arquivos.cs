@@ -8,7 +8,7 @@
 
 constexpr int MAX_RECURSION_LEVEL = 1; // Define o número máximo de níveis de recursão permitidos
 
-// Função para processar um arquivo DICOM
+// Função para processar um arquivo DICOM e movê-lo
 void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diretorioPai) {
     try {
         // Crie um leitor DICOM da ITK
@@ -55,19 +55,20 @@ void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diret
             std::filesystem::create_directory(patientFolder);
         }
 
-        // Mova o arquivo DICOM para a pasta do paciente com um novo nome
+        // Construa o caminho de destino
         std::filesystem::path newFilePath = patientFolder / std::filesystem::path(filePath).filename();
 
         // Verifique se o arquivo já existe na pasta do paciente
         if (!std::filesystem::exists(newFilePath)) {
-            std::filesystem::copy(filePath, newFilePath);
+            // Mova o arquivo DICOM para a pasta do paciente
+            std::filesystem::rename(filePath, newFilePath);
         }
         else {
             std::cerr << "Arquivo ja existe na pasta do paciente: " << newFilePath << std::endl;
         }
     }
     catch (const std::filesystem::filesystem_error& ex) {
-        std::cerr << "Erro ao acessar o diretorio: " << ex.what() << std::endl;
+        std::cerr << "Erro ao acessar o diretório: " << ex.what() << std::endl;
     }
 }
 
