@@ -6,6 +6,8 @@
 #include "itkGDCMSeriesFileNames.h"
 #include <gdcmTrace.h>
 
+constexpr int MAX_RECURSION_LEVEL = 1; // Define o número máximo de níveis de recursão permitidos
+
 // Função para processar um arquivo DICOM
 void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diretorioPai) {
     try {
@@ -61,31 +63,37 @@ void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diret
             std::filesystem::copy(filePath, newFilePath);
         }
         else {
-            std::cerr << "Arquivo já existe na pasta do paciente: " << newFilePath << std::endl;
+            std::cerr << "Arquivo ja existe na pasta do paciente: " << newFilePath << std::endl;
         }
     }
     catch (const std::filesystem::filesystem_error& ex) {
-        std::cerr << "Erro ao acessar o diretório: " << ex.what() << std::endl;
+        std::cerr << "Erro ao acessar o diretorio: " << ex.what() << std::endl;
     }
 }
 
 // Função recursiva para processar um diretório e seus subdiretórios
-void ProcessarDiretorioRecursivamente(const std::string& diretorio) {
+void ProcessarDiretorioRecursivamente(const std::string& diretorio, int nivelRecursao) {
     try {
         gdcm::Trace trace;
         trace.DebugOff();
         trace.WarningOff();
         trace.ErrorOff();
 
+        // Verifique se o nível de recursão está dentro do limite
+        if (nivelRecursao > MAX_RECURSION_LEVEL) {
+            std::cout << "Limite de recursao atingido. Saindo do diretorio: " << diretorio << std::endl;
+            return;
+        }
+
         // Verifique se o diretório existe
         if (std::filesystem::is_directory(diretorio)) {
             for (const auto& entry : std::filesystem::directory_iterator(diretorio)) {
                 if (entry.is_directory()) {
                     std::string subDiretorio = entry.path().string();
-                    std::cout << "Processando subdiretório: " << subDiretorio << std::endl;
+                    std::cout << "Processando subdiretorio: " << subDiretorio << std::endl;
 
-                    // Chamada recursiva para processar subdiretório
-                    ProcessarDiretorioRecursivamente(subDiretorio);
+                    // Chamada recursiva para processar subdiretório com nível de recursão incrementado
+                    ProcessarDiretorioRecursivamente(subDiretorio, nivelRecursao + 1);
                 }
                 else if (entry.is_regular_file()) {
                     // Processar apenas arquivos DICOM
@@ -98,19 +106,19 @@ void ProcessarDiretorioRecursivamente(const std::string& diretorio) {
             }
         }
         else {
-            std::cerr << "O diretório não existe." << std::endl;
+            std::cerr << "O diretorio nao existe." << std::endl;
         }
     }
     catch (const std::filesystem::filesystem_error& ex) {
-        std::cerr << "Erro ao acessar o diretório: " << ex.what() << std::endl;
+        std::cerr << "Erro ao acessar o diretorio: " << ex.what() << std::endl;
     }
 }
 
 int main() {
-    std::string diretorioPrincipal = "C:\\OP\\Images\\20230714\\20230714";
+    std::string diretorioPrincipal = "C:\\OP\\Images\\20230714";
 
-    // Chame a função para processar o diretório principal e suas subpastas recursivamente
-    ProcessarDiretorioRecursivamente(diretorioPrincipal);
+    // Chame a funcao para processar o diretorio principal com nivel de recursao inicial 0
+    ProcessarDiretorioRecursivamente(diretorioPrincipal, 0);
 
     return 0;
 }
