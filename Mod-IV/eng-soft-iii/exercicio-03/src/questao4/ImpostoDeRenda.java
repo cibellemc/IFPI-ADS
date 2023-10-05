@@ -1,38 +1,28 @@
 package questao4;
 
 import java.util.List;
+import questao4.validacoes.Validacao;
 
 public class ImpostoDeRenda {
     private String cpfContribuinte;
     private List<Double> rendimentos;
     private List<Double> despesas;
+    private List<Validacao> validacoes;
 
-    public ImpostoDeRenda(String cpfContribuinte, List<Double> rendimentos, List<Double> despesas) {
+    public ImpostoDeRenda(String cpfContribuinte, List<Double> rendimentos, List<Double> despesas, List<Validacao> validacoes) {
+
         this.cpfContribuinte = cpfContribuinte;
         this.rendimentos = rendimentos;
         this.despesas = despesas;
+        this.validacoes = validacoes;
     }
 
     public void processar() {
-        // validações
-        if (!ValidacaoImpostoDeRenda.cpfValido(cpfContribuinte)) {
-            System.out.println("CPF inválido.");
-            return;
-        }
-
-        if (!ValidacaoImpostoDeRenda.rendimentosValidos(rendimentos)) {
-            System.out.println("Rendimento negativo encontrado.");
-            return;
-        }
-
-        if (!ValidacaoImpostoDeRenda.despesasValidas(despesas)) {
-            System.out.println("Despesa negativa encontrada.");
-            return;
-        }
-
-        if (!ValidacaoImpostoDeRenda.menosDeCincoRendimentos(rendimentos)) {
-            System.out.println("Mais de 5 rendimentos encontrados.");
-            return;
+        for (Validacao validacao : validacoes) {
+            if (!validacao.validar()) {
+                System.out.println("Erro de validação: " + validacao.getClass().getSimpleName());
+                return;
+            }
         }
 
         CalculadoraImpostoDeRenda calculadora = new CalculadoraImpostoDeRenda();
@@ -42,7 +32,6 @@ public class ImpostoDeRenda {
         relatorio.gerarRelatorio(this, impostoDevido);
     }
 
-    // Getters para os atributos
     public String getCpfContribuinte() {
         return cpfContribuinte;
     }

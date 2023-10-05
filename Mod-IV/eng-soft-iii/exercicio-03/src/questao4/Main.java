@@ -3,6 +3,11 @@ package questao4;
 import java.util.ArrayList;
 import java.util.List;
 
+import questao4.validacoes.Validacao;
+import questao4.validacoes.ValidacaoCPF;
+import questao4.validacoes.ValidacaoDespesas;
+import questao4.validacoes.ValidacaoRendimentos;
+
 public class Main {
     public static void main(String[] args) {
 
@@ -14,8 +19,14 @@ public class Main {
         despesas.add(1000.0);
         despesas.add(800.0);
 
-        ImpostoDeRenda imposto = new ImpostoDeRenda("12345678901", rendimentos, despesas);
+        String cpf = "12345678901";
 
+        List<Validacao> validacoes = new ArrayList<>();
+        validacoes.add(new ValidacaoCPF(cpf)); 
+        validacoes.add(new ValidacaoRendimentos(rendimentos)); 
+        validacoes.add(new ValidacaoDespesas(despesas)); 
+        
+        ImpostoDeRenda imposto = new ImpostoDeRenda(cpf, rendimentos, despesas, validacoes);
         imposto.processar();
     }
 }
