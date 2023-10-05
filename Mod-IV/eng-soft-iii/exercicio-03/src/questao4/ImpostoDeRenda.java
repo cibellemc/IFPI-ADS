@@ -15,26 +15,22 @@ public class ImpostoDeRenda {
 
     public void processar() {
         // validações
-        if (cpfContribuinte.isEmpty() || cpfContribuinte.length() != 11) {
+        if (!ValidacaoImpostoDeRenda.cpfValido(cpfContribuinte)) {
             System.out.println("CPF inválido.");
             return;
         }
 
-        for (Double valor : rendimentos) {
-            if (valor < 0) {
-                System.out.println("Rendimento negativo encontrado.");
-                return;
-            }
+        if (!ValidacaoImpostoDeRenda.rendimentosValidos(rendimentos)) {
+            System.out.println("Rendimento negativo encontrado.");
+            return;
         }
 
-        for (Double valor : despesas) {
-            if (valor < 0) {
-                System.out.println("Despesa negativa encontrada.");
-                return;
-            }
+        if (!ValidacaoImpostoDeRenda.despesasValidas(despesas)) {
+            System.out.println("Despesa negativa encontrada.");
+            return;
         }
 
-        if (rendimentos.size() > 5) {
+        if (!ValidacaoImpostoDeRenda.menosDeCincoRendimentos(rendimentos)) {
             System.out.println("Mais de 5 rendimentos encontrados.");
             return;
         }
