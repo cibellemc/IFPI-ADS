@@ -8,7 +8,7 @@
 
 constexpr int MAX_RECURSION_LEVEL = 1; // Define o número máximo de níveis de recursão permitidos
 
-// Função para processar um arquivo DICOM e movê-lo
+// Função para processar um arquivo DICOM
 void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diretorioPai) {
     try {
         // Crie um leitor DICOM da ITK
@@ -38,24 +38,24 @@ void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diret
         using DictionaryType = itk::MetaDataDictionary;
         using MetaDataStringType = itk::MetaDataObject<std::string>;
 
-        // Obtém o nome do paciente (tag DICOM 0010|0010)
-        std::string patientName;
-        auto patientNameItr = dictionary.Find("0010|0020");
-        if (patientNameItr != dictionary.End()) {
-            itk::MetaDataObjectBase::Pointer entry = patientNameItr->second;
+        // Obtém o nome do paciente (tag DICOM 0010|0020)
+        std::string patientID;
+        auto patientIDItr = dictionary.Find("0010|0020");
+        if (patientIDItr != dictionary.End()) {
+            itk::MetaDataObjectBase::Pointer entry = patientIDItr->second;
             MetaDataStringType::Pointer entryvalue = dynamic_cast<MetaDataStringType*>(entry.GetPointer());
             if (entryvalue) {
-                patientName = entryvalue->GetMetaDataObjectValue();
+                patientID = entryvalue->GetMetaDataObjectValue();
             }
         }
 
-        // Crie a pasta do paciente com base no nome (se ainda não existir)
-        std::filesystem::path patientFolder = std::filesystem::path(diretorioPai) / patientName;
+        // Construa o caminho de destino com base no ID do paciente
+        std::filesystem::path patientFolder = std::filesystem::path(diretorioPai) / patientID;
         if (!std::filesystem::exists(patientFolder)) {
             std::filesystem::create_directory(patientFolder);
         }
 
-        // Construa o caminho de destino
+        // Construa o caminho de destino final
         std::filesystem::path newFilePath = patientFolder / std::filesystem::path(filePath).filename();
 
         // Verifique se o arquivo já existe na pasta do paciente
@@ -64,7 +64,7 @@ void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diret
             std::filesystem::rename(filePath, newFilePath);
         }
         else {
-            std::cerr << "Arquivo ja existe na pasta do paciente: " << newFilePath << std::endl;
+            std::cerr << "Arquivo já existe na pasta do paciente: " << newFilePath << std::endl;
         }
     }
     catch (const std::filesystem::filesystem_error& ex) {
@@ -72,54 +72,36 @@ void ProcessarArquivoDICOM(const std::string& filePath, const std::string& diret
     }
 }
 
-// Função recursiva para processar um diretório e seus subdiretórios
-void ProcessarDiretorioRecursivamente(const std::string& diretorio, int nivelRecursao) {
-    try {
-        gdcm::Trace trace;
-        trace.DebugOff();
-        trace.WarningOff();
-        trace.ErrorOff();
+// Função para mover todos os arquivos de subdiretórios para um único diretório
+void MoverArquivosDeSubdiretorios(const std::string& diretorioPrincipal, const std::string& pastaDestino) {
+    for (const auto& entry : std::filesystem::directory_iterator(diretorioPrincipal)) {
+        if (entry.is_directory()) {
+            std::string subdiretorio = entry.path().string();
+            for (const auto& arquivoEntry : std::filesystem::directory_iterator(subdiretorio)) {
+                if (arquivoEntry.is_regular_file()) {
+                    std::string filePath = arquivoEntry.path().string();
+                    std::filesystem::path novoCaminho = std::filesystem::path(pastaDestino) / arquivoEntry.path().filename();
+                    std::filesystem::rename(filePath, novoCaminho);
 
-        // Verifique se o nível de recursão está dentro do limite
-        if (nivelRecursao > MAX_RECURSION_LEVEL) {
-            std::cout << "Limite de recursao atingido. Saindo do diretorio: " << diretorio << std::endl;
-            return;
-        }
-
-        // Verifique se o diretório existe
-        if (std::filesystem::is_directory(diretorio)) {
-            for (const auto& entry : std::filesystem::directory_iterator(diretorio)) {
-                if (entry.is_directory()) {
-                    std::string subDiretorio = entry.path().string();
-                    std::cout << "Processando subdiretorio: " << subDiretorio << std::endl;
-
-                    // Chamada recursiva para processar subdiretório com nível de recursão incrementado
-                    ProcessarDiretorioRecursivamente(subDiretorio, nivelRecursao + 1);
-                }
-                else if (entry.is_regular_file()) {
-                    // Processar apenas arquivos DICOM
-                    std::string filePath = entry.path().string();
-                    std::cout << "Processando arquivo DICOM: " << filePath << std::endl;
-
-                    // Chame a função para processar o arquivo DICOM e movê-lo para a pasta do paciente
-                    ProcessarArquivoDICOM(filePath, diretorio);
+                    // Após mover o arquivo para a pasta de destino, processe-o
+                    ProcessarArquivoDICOM(novoCaminho.string(), pastaDestino);
                 }
             }
         }
-        else {
-            std::cerr << "O diretorio nao existe." << std::endl;
-        }
-    }
-    catch (const std::filesystem::filesystem_error& ex) {
-        std::cerr << "Erro ao acessar o diretorio: " << ex.what() << std::endl;
     }
 }
 
 int main() {
-    std::string diretorioPrincipal = "C:\\OP\\Images\\20230714";
+    std::string diretorioPrincipal = "C:\\OP\\Images\\20230714"; // Diretório principal
+    std::string pastaDestino = "C:\\OP\\Images\\Pacients"; // Diretório de destino
 
-    // Chame a funcao para processar o diretorio principal com nivel de recursao inicial 0
-    ProcessarDiretorioRecursivamente(diretorioPrincipal, 0);
+    // Crie a pasta de destino, se ainda não existir
+    if (!std::filesystem::exists(pastaDestino)) {
+        std::filesystem::create_directory(pastaDestino);
+    }
+
+    // Mova todos os arquivos de subdiretórios para a pasta de destino e processe-os
+    MoverArquivosDeSubdiretorios(diretorioPrincipal, pastaDestino);
 
     return 0;
 }
