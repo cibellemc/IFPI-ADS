@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Biblioteca.Context;
 using Biblioteca.Models;
@@ -19,13 +14,12 @@ namespace Biblioteca.Controllers
             _context = context;
         }
 
-        // GET: Autores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Autores.ToListAsync());
+            var autoresComLivros = await _context.Autores.Include(a => a.LivrosPublicados).ToListAsync();
+            return View(autoresComLivros);
         }
 
-        // GET: Autores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,7 +28,9 @@ namespace Biblioteca.Controllers
             }
 
             var autor = await _context.Autores
+                .Include(a => a.LivrosPublicados)  
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (autor == null)
             {
                 return NotFound();
@@ -43,15 +39,11 @@ namespace Biblioteca.Controllers
             return View(autor);
         }
 
-        // GET: Autores/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Autores/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Pseudonimo,Id,Nome,Telefone,Endereco")] Autor autor)
@@ -65,7 +57,6 @@ namespace Biblioteca.Controllers
             return View(autor);
         }
 
-        // GET: Autores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,9 +72,6 @@ namespace Biblioteca.Controllers
             return View(autor);
         }
 
-        // POST: Autores/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Pseudonimo,Id,Nome,Telefone,Endereco")] Autor autor)
@@ -116,7 +104,6 @@ namespace Biblioteca.Controllers
             return View(autor);
         }
 
-        // GET: Autores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +121,6 @@ namespace Biblioteca.Controllers
             return View(autor);
         }
 
-        // POST: Autores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

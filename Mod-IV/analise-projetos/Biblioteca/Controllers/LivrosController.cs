@@ -19,13 +19,15 @@ namespace Biblioteca.Controllers
             _context = context;
         }
 
-        // GET: Livros
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Livros.ToListAsync());
+            var livros = await _context.Livros
+                .Include(l => l.Autores)
+                .ToListAsync();
+
+            return View(livros);
         }
 
-        // GET: Livros/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,7 +36,9 @@ namespace Biblioteca.Controllers
             }
 
             var livro = await _context.Livros
+                .Include(l => l.Autores) 
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (livro == null)
             {
                 return NotFound();
@@ -43,29 +47,39 @@ namespace Biblioteca.Controllers
             return View(livro);
         }
 
-        // GET: Livros/Create
         public IActionResult Create()
         {
+            ViewBag.Autores = _context.Autores.ToList(); 
             return View();
         }
 
-        // POST: Livros/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,AnoPublicacao,Genero,Disponivel")] Livro livro)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,AnoPublicacao,Genero,Disponivel,AutoresIds")] Livro livro)
         {
             if (ModelState.IsValid)
             {
+                // Adicione o livro ao contexto
                 _context.Add(livro);
+
+                // Obtenha os autores selecionados
+                var autoresSelecionados = _context.Autores.Where(a => livro.AutoresIds.Contains(a.Id)).ToList();
+
+                // Associe os autores ao livro
+                livro.Autores = autoresSelecionados;
+
+                // Salve as alterações
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
+
+            // Se houver erros de validação, você pode precisar recarregar a lista de autores
+            ViewBag.Autores = _context.Autores.ToList();
+
             return View(livro);
         }
 
-        // GET: Livros/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,9 +95,6 @@ namespace Biblioteca.Controllers
             return View(livro);
         }
 
-        // POST: Livros/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,AnoPublicacao,Genero,Disponivel")] Livro livro)
@@ -116,7 +127,6 @@ namespace Biblioteca.Controllers
             return View(livro);
         }
 
-        // GET: Livros/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -134,7 +144,6 @@ namespace Biblioteca.Controllers
             return View(livro);
         }
 
-        // POST: Livros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
