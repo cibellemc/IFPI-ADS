@@ -1,0 +1,42 @@
+Sobre Interface Segregation Principle (ISP):
+
+1. Qual a principal imagem relacionada ao princípio e qual a explicação sobre ela?
+
+2. Por que devemos segregar implementações através do uso de interfaces?
+R - Geramos facilidade na manutenção, pois temos especificidade nas classes clientes, diminuímos o acoplamento e ganhamos coesão e eficiência.
+
+3. Podemos dizer que esse princípio é correlato ao Single Responsability Principle
+pelo fato de que classes e interfaces devem ter um único “foco” (SRP) e que as
+interfaces com métodos não correlatos devem ser segregadas (ISP)?
+R - Sim, ambos  compartilham a ideia de que as classes/interfaces devem ter um único "foco", promovendo a coesão.
+
+4. Comente as seguintes frases à luz do ISP:
+a. “Nenhum cliente deve ser forçado a depender de métodos que ele não usa”;
+R - As interfaces devem ser específicas para as necessidades das classes que as implementam, evitando que clientes dependam de funcionalidades que não são úteis. 
+
+b. “Classes não devem ser forçadas a implementar interfaces que não usam”;
+R - Forçar uma classe a implementar métodos que não são utilizados por ela viola o ISP, pois cria uma dependência desnecessária
+
+
+Sobre Dependency Invertion Principle (DIP):
+
+5. Qual a principal imagem relacionada ao princípio e qual a explicação sobre ela?
+
+6. O que você entende por programar para Interfaces?
+
+7. Cite um exemplo em que uma mudança em uma dependência, por exemplo, banco
+de dados, ou mecanismo de autenticação ou conexão via sockets poderia impactar
+uma implementação de outros módulos.
+
+8. Estude o conteúdo do link abaixo e explique como o DIP se aplicaria:
+https://pt.stackoverflow.com/questions/101692/como-funciona-o-padr%C3%A3o-
+repository
+
+
+
+9. Você acha que esse princípio deveria ser um dos primeiros em um eventual
+“check-list” de princípios SOLID a aplicarmos?
+R - Acredito que sim, pois já resolveria os demais princípios.
+
+10. Numa visão geral, considera que se começarmos pelos 4 primeiros princípios SOLID, fatalmente o DIP já estaria implementado?
+R - Sim, os demais princípios já focam na utilização de interfaces para reduzir o acoplamento e favorecer a composição ao invés de herança e a substituição.
