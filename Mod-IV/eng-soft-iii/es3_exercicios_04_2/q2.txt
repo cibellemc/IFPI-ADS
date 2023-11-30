@@ -1,0 +1,40 @@
+2. Cliente poderia ser uma classe separada que compõe a Conta.
+
+public class Conta {
+    private double saldo;
+    private String numeroConta;
+    private Cliente cliente;
+
+    public Conta(String numeroConta, double saldoInicial, Cliente cliente) {
+        this.numeroConta = numeroConta;
+        this.saldo = saldoInicial;
+        this.cliente = cliente;
+    }
+
+    public void depositar(double valor) {
+        saldo += valor;
+    }
+
+    public void sacar(double valor) {
+        if (valor > saldo) {
+            throw new IllegalArgumentException("Saldo insuficiente.");
+        }
+        saldo -= valor;
+    }
+
+    // Outros métodos relevantes...
+}
+
+public class Cliente {
+    private String nome;
+    private String cpf;
+    private String endereco;
+
+    public Cliente(String nome, String cpf, String endereco) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.endereco = endereco;
+    }
+
+    // Métodos específicos do cliente...
+}

@@ -1,0 +1,26 @@
+1. A classe derivada não poderia ser substituída pela classe pai, pois o comportamento do método sacar muda.
+
+Solução: 
+a). interface que seria implementada por ContaBancaria e ContaPoupanca,
+b). composição, criando uma  instância de ContaBancaria em ContaPoupanca e adicionando comportamento específico apenas quando necessário (no caso do valor do saque superar o limite)
+
+public class ContaPoupanca {
+    private ContaBancaria contaBancaria;
+
+    public ContaPoupanca(double saldoInicial) {
+        this.contaBancaria = new ContaBancaria(saldoInicial);
+    }
+
+    @Override
+    public void sacar(double valor) {
+        if (valor > 1000) {
+            throw new RuntimeException("Não pode sacar mais de 1000 em uma poupança");
+        }
+        contaBancaria.sacar(valor);
+    }
+
+    public double getSaldo() {
+        return contaBancaria.getSaldo();
+    }
+}
+
