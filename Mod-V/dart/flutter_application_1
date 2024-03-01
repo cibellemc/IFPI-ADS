@@ -1,0 +1,95 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'demo',
+      theme: ThemeData(
+        primarySwatch: Colors.cyan,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      home: const MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final List<String> entries = <String>['A', 'B', 'C'];
+  final List<int> colorCodes = <int>[600, 500, 100];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text("ff"),
+          backgroundColor: Colors.blue,
+        ),
+        /*        body: const Center(
+          child: Row(
+            children: [
+              Text("texto"),
+              Text("texto 2"),
+            ],
+          ),
+        ),*/
+        body: /*ListView(
+          padding: const EdgeInsets.all(0),
+          children: <Widget>[
+            Container(
+              height: 50,
+              color: Colors.amber[600],
+              child: const Center(
+                child: Text("Entry A"),
+              ),
+            ),
+            Container(
+              height: 50,
+              color: Colors.amber[600],
+              child: const Center(
+                child: Text("Entry B"),
+              ),
+            ),
+          ],
+        ),*/
+            ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: entries.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Container(
+              height: 50,
+              color: Colors.amber[colorCodes[index]],
+              child: Center(child: Text("Entry ${entries[index]}")),
+            );
+          },
+        ),
+        drawer: const Drawer(
+          child: Column(children: [
+            Text("Saldo"),
+            Text("Extrato"),
+            Text("Pagamento"),
+          ]),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: 'Settings')
+          ],
+        ));
+  }
+}
