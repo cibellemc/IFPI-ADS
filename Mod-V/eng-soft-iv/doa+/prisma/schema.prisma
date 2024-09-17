@@ -1,0 +1,89 @@
+// schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // Pode ser ajustado para o banco de dados que estiver utilizando
+  url      = env("DATABASE_URL")
+}
+
+model Doador {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  contato     String
+  cpfCnpj     String    @unique
+  tipo        TipoDoador
+  historicoDeDoacoes Doacao[]
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Doacao {
+  id          Int      @id @default(autoincrement())
+  valor       Float
+  data        DateTime  @default(now())
+  formaDePagamento FormaPagamento
+  projeto     Projeto?  @relation(fields: [projetoId], references: [id])
+  projetoId   Int?
+  doador      Doador    @relation(fields: [doadorId], references: [id])
+  doadorId    Int
+  recibo      Recibo?
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Projeto {
+  id          Int      @id @default(autoincrement())
+  nome        String
+  descricao   String
+  objetivos   String
+  metas       String
+  orcamento   Float
+  despesas    Despesa[]
+  doacoes     Doacao[]
+  progresso   Float     @default(0.0)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Despesa {
+  id          Int      @id @default(autoincrement())
+  valor       Float
+  descricao   String
+  comprovante String
+  projeto     Projeto   @relation(fields: [projetoId], references: [id])
+  projetoId   Int
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Recibo {
+  id          Int      @id @default(autoincrement())
+  doacao      Doacao   @relation(fields: [doacaoId], references: [id])
+  doacaoId    Int      @unique
+  url         String   // URL do recibo gerado
+  enviado     Boolean  @default(false)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+// Enum para diferenciar tipos de doadores
+enum TipoDoador {
+  PESSOA_FISICA
+  PESSOA_JURIDICA
+  VOLUNTARIO
+}
+
+// Enum para as formas de pagamento
+enum FormaPagamento {
+  CARTAO
+  BOLETO
+  TRANSFERENCIA
+  OUTROS
+}
